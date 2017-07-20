@@ -13,6 +13,12 @@ defmodule Registrar.Web.UserControllerTest do
     Registrar.User.create_user(%{"email" => @email, "password" => @password})
     res = post(conn, "/user/login", %{email: @email, password: @password})
     assert res.status == 200
+
+    headers = res.resp_headers
+      |> Enum.into(%{})
+
+    assert headers["authorization"]
+    assert headers["x-expires"]
   end
 
   test "POST /user/login with incorrect credentials", %{conn: conn} do
