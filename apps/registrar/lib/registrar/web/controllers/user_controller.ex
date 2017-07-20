@@ -7,6 +7,11 @@ defmodule Registrar.Web.UserController do
         conn
         |> put_status(:created)
         |> render(user)
+
+      {:error, changeset} ->
+        conn
+        |> put_status(422)
+        |> json(changeset.errors)
     end
   end
 
