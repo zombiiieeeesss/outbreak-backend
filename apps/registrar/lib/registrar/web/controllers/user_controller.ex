@@ -9,4 +9,16 @@ defmodule Registrar.Web.UserController do
         |> render(user)
     end
   end
+
+  def login(conn, params) do
+    case Registrar.User.login(params) do
+      {:ok, user, jwt} ->
+        conn
+        |> put_status(:ok)
+        |> put_resp_header("authorization", "Bearer #{jwt}")
+        |> render("login.json", %{user: user, jwt: jwt})
+
+      {:error, _} -> send_resp(conn, 401, "Unauthorized")
+  end
+  end
 end

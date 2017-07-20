@@ -20,7 +20,7 @@ defmodule Registrar.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {Registrar.Application, []},
-     extra_applications: [:db, :logger, :runtime_tools]]
+     extra_applications: [:comeonin, :db, :logger, :guardian, :runtime_tools]]
   end
 
   # Specifies which paths to compile per environment.
@@ -31,10 +31,12 @@ defmodule Registrar.Mixfile do
   #
   # Type `mix help deps` for examples and options.
   defp deps do
-    [{:phoenix, "~> 1.3.0-rc"},
+    [{:phoenix, "~> 1.3.0-rc", override: true},
      {:phoenix_pubsub, "~> 1.0"},
      {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"},
-     {:db, in_umbrella: true}]
+     {:comeonin, "~> 3.2"},
+     {:db, in_umbrella: true},
+     {:guardian, "~> 0.14"}]
   end
 end

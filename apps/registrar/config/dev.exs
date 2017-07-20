@@ -13,6 +13,13 @@ config :registrar, Registrar.Web.Endpoint,
   check_origin: false,
   watchers: []
 
+config :guardian, Guardian,
+ issuer: "Registrar",
+ ttl: { 30, :days },
+ allowed_drift: 2000,
+ secret_key: "cHvvEICoN0azBi61y6np0nC35e9cObFsH3Yio6LbEtFkwCG7qzqo/qFtVJ+TLTsA",
+ serializer: Registrar.GuardianSerializer
+
 # ## SSL Support
 #
 # In order to use HTTPS in development, a self-signed

@@ -18,6 +18,13 @@ config :registrar, Registrar.Web.Endpoint,
   url: [host: "example.com", port: 80],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
+config :guardian, Guardian,
+ issuer: "Registrar",
+ ttl: { 30, :days },
+ allowed_drift: 2000,
+ secret_key: System.get_env("GUARDIAN_KEY"),
+ serializer: Registrar.GuardianSerializer
+
 # Do not print debug messages in production
 config :logger, level: :info
 

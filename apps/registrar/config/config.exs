@@ -17,6 +17,13 @@ config :registrar, Registrar.Web.Endpoint,
   pubsub: [name: Registrar.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
+config :guardian, Guardian,
+ issuer: "Registrar",
+ ttl: { 30, :days },
+ allowed_drift: 2000,
+ secret_key: "cHvvEICoN0azBi61y6np0nC35e9cObFsH3Yio6LbEtFkwCG7qzqo/qFtVJ+TLTsA",
+ serializer: MyApp.GuardianSerializer
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
