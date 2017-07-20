@@ -1,3 +1,0 @@
-# OutbreakBackend
-
-**TODO: Add description**
