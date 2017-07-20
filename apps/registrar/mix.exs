@@ -37,6 +37,7 @@ defmodule Registrar.Mixfile do
      {:cowboy, "~> 1.0"},
      {:comeonin, "~> 3.2"},
      {:db, in_umbrella: true},
-     {:guardian, "~> 0.14"}]
+     {:guardian, "~> 0.14"},
+     {:credo, "~> 0.8.4"}]
   end
 end

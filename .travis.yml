@@ -1,0 +1,27 @@
+language: elixir
+elixir:
+  - 1.4.4
+otp_release:
+  - 18.1
+sudo: false # to use faster container based build environment
+notifications:
+  slack:
+    rooms:
+      - zombiiieeeesss:0Aaf3cWax9OKGd8En4ZJlBrF#ci
+before_script:
+  - mix do compile
+  - export PATH=~/.mix:$PATH
+  - cd ./apps/db
+  - mix do ecto.create, ecto.migrate
+  - cd ../..
+addons:
+  postgresql: "9.4"
+branches:
+  only:
+    - master
+    - develop
+env:
+  - MIX_ENV=test
+script:
+  - ./scripts/test.sh
+  # - mix credo --strict
