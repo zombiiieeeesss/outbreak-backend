@@ -20,7 +20,7 @@ config :registrar, Registrar.Web.Endpoint,
 
 config :guardian, Guardian,
  issuer: "Registrar",
- ttl: { 30, :days },
+ ttl: { 1, :days },
  allowed_drift: 2000,
  secret_key: System.get_env("GUARDIAN_KEY"),
  serializer: Registrar.GuardianSerializer

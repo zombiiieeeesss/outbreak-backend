@@ -8,7 +8,7 @@ defmodule Registrar.User do
   def create_user(attrs) do
     attrs
     |> Authorization.hash_password
-    |> DB.User.create_user
+    |> DB.User.create
   end
 
   def login(attrs), do: Authorization.authorize(attrs)

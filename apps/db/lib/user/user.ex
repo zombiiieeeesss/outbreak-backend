@@ -13,7 +13,7 @@ defmodule DB.User do
 
   @fields [:email, :password]
 
-  def create_user(attrs) do
+  def create(attrs) do
     %User{}
     |> changeset(attrs)
     |> DB.Repo.insert
@@ -21,6 +21,10 @@ defmodule DB.User do
 
   def get_by_email(email) do
     DB.Repo.get_by(User, email: email)
+  end
+
+  def get(id) do
+    DB.Repo.get(User, id)
   end
 
   defp changeset(struct, params) do

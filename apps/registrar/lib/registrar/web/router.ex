@@ -14,5 +14,6 @@ defmodule Registrar.Web.Router do
 
     post "/", UserController, :create
     post "/login", UserController, :login
+    post "/refresh", UserController, :refresh
   end
 end
