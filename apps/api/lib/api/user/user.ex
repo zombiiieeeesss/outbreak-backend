@@ -5,10 +5,8 @@ defmodule API.User do
 
   alias API.User.{Authorization}
 
-  def create_user(attrs) do
-    attrs
-    |> Authorization.hash_password
-    |> DB.User.create
+  def create(attrs) do
+    DB.User.create(attrs)
   end
 
   def login(attrs), do: Authorization.authorize(attrs)
