@@ -8,7 +8,7 @@ config :api, API.Web.Endpoint,
 
 config :guardian, Guardian,
  issuer: "API",
- ttl: { 30, :days },
+ ttl: { 1, :days },
  allowed_drift: 2000,
  secret_key: "cHvvEICoN0azBi61y6np0nC35e9cObFsH3Yio6LbEtFkwCG7qzqo/qFtVJ+TLTsA",
  serializer: API.GuardianSerializer
