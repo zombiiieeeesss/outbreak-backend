@@ -20,7 +20,7 @@ defmodule API.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {API.Application, []},
-     extra_applications: [:comeonin, :db, :logger, :guardian, :runtime_tools]]
+     extra_applications: [:db, :logger, :guardian, :runtime_tools]]
   end
 
   # Specifies which paths to compile per environment.
@@ -35,7 +35,6 @@ defmodule API.Mixfile do
      {:phoenix_pubsub, "~> 1.0"},
      {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"},
-     {:comeonin, "~> 3.2"},
      {:db, in_umbrella: true},
      {:guardian, "~> 0.14"},
      {:credo, "~> 0.8.4"}]

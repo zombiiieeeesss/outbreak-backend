@@ -19,14 +19,15 @@ defmodule Db.Mixfile do
   defp elixirc_paths(_), do: ["lib"]
 
   def application do
-    [extra_applications: [:logger, :postgrex, :ecto],
+    [extra_applications: [:logger, :postgrex, :ecto, :comeonin],
      mod: {DB.Application, []}]
   end
 
   defp deps do
     [
       {:ecto, "~> 2.1"},
-      {:postgrex, "~> 0.13.3"}
+      {:postgrex, "~> 0.13.3"},
+      {:comeonin, "~> 3.2"},
     ]
   end
 end

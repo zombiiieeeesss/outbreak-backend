@@ -2,7 +2,7 @@ defmodule API.Web.UserController do
   use API.Web, :controller
 
   def create(conn, params) do
-    case API.User.create_user(params) do
+    case API.User.create(params) do
       {:ok, user} ->
         conn
         |> put_status(:created)

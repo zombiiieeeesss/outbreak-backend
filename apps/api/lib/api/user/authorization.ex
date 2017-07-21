@@ -20,10 +20,6 @@ defmodule API.User.Authorization do
     Comeonin.Bcrypt.dummy_checkpw
     false
   end
-  defp check_password(password, user), do: Comeonin.Bcrypt.checkpw(password, user.password)
 
-  def hash_password(%{"password" => password} = params) do
-    hashed_password = Comeonin.Bcrypt.hashpwsalt(password)
-    Map.put(params, "password", hashed_password)
-  end
+  defp check_password(password, user), do: Comeonin.Bcrypt.checkpw(password, user.encrypted_password)
 end
