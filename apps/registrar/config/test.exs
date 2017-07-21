@@ -15,3 +15,7 @@ config :guardian, Guardian,
 
 # Print only warnings and errors during test
 config :logger, level: :warn
+
+# Reduce complexity of encryption in tests, speeding them up
+config :comeonin, :bcrypt_log_rounds, 4
+config :comeonin, :pbkdf2_rounds, 1

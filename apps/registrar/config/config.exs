@@ -17,6 +17,9 @@ config :registrar, Registrar.Web.Endpoint,
   pubsub: [name: Registrar.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
+# This app does not have any Repos
+config :registrar, ecto_repos: []
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
