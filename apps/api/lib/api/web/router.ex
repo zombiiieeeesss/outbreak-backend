@@ -9,6 +9,12 @@ defmodule API.Web.Router do
     plug Guardian.Plug.VerifyHeader
   end
 
+  scope "/", API.Web do
+    pipe_through :api
+
+    get "/up", UpController, :up
+  end
+
   scope "/user", API.Web do
     pipe_through :api
 
