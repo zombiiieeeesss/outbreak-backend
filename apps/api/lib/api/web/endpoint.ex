@@ -36,6 +36,8 @@ defmodule API.Web.Endpoint do
     key: "_api_key",
     signing_salt: "OlNIdaVT"
 
+  plug CORSPlug
+
   plug API.Web.Router
 
   @doc """

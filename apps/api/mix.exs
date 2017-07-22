@@ -35,6 +35,7 @@ defmodule API.Mixfile do
      {:phoenix_pubsub, "~> 1.0"},
      {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"},
+     {:cors_plug, "~> 1.2"},
      {:db, in_umbrella: true},
      {:guardian, "~> 0.14"},
      {:credo, "~> 0.8.4"}]
