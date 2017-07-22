@@ -15,8 +15,10 @@ use Mix.Config
 # which you typically run after static files are built.
 config :api, API.Web.Endpoint,
   on_init: {API.Web.Endpoint, :load_from_system_env, []},
-  url: [host: "example.com", port: 80],
-  cache_static_manifest: "priv/static/cache_manifest.json"
+  url: [scheme: "https", host: "murmuring-savannah-86345.herokuapp.com", port: 443],
+  force_ssl: [rewrite_on: [:x_forwarded_proto]],
+  cache_static_manifest: "priv/static/cache_manifest.json",
+  secret_key_base: System.get_env("SECRET_KEY_BASE")
 
 config :guardian, Guardian,
  issuer: "API",
@@ -65,7 +67,3 @@ config :logger, level: :info
 #
 #     config :api, API.Web.Endpoint, server: true
 #
-
-# Finally import the config/prod.secret.exs
-# which should be versioned separately.
-import_config "prod.secret.exs"
