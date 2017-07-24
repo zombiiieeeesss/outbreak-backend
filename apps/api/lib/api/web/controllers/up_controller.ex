@@ -22,6 +22,6 @@ defmodule API.Web.UpController do
     DB.User.get(1)
     :ok
   rescue
-    err -> :error
+    _err -> :error
   end
 end

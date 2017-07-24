@@ -15,7 +15,7 @@ defmodule API.Web.Router do
     get "/up", UpController, :up
   end
 
-  scope "/user", API.Web do
+  scope "/users", API.Web do
     pipe_through :api
 
     post "/", UserController, :create
