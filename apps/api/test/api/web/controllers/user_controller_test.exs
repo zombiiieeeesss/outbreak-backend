@@ -18,7 +18,7 @@ defmodule API.Web.UserControllerTest do
 
   test "POST /user/login with correct credentials", %{conn: conn} do
     API.User.create(@user_params)
-    res = post(conn, "/users/login", %{email: @email, password: @password})
+    res = post(conn, "/users/login", %{username: @username, password: @password})
     assert res.status == 201
 
     headers = res.resp_headers
@@ -30,7 +30,7 @@ defmodule API.Web.UserControllerTest do
 
   test "POST /user/login with incorrect credentials", %{conn: conn} do
     API.User.create(@user_params)
-    res = post(conn, "/users/login", %{email: @email, password: "hacking"})
+    res = post(conn, "/users/login", %{username: @username, password: "hacking"})
     assert res.status == 401
   end
 

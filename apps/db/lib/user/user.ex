@@ -21,8 +21,8 @@ defmodule DB.User do
     |> DB.Repo.insert
   end
 
-  def get_by_email(email) do
-    DB.Repo.get_by(User, email: email)
+  def get_by_username(username) do
+    DB.Repo.get_by(User, username: username)
   end
 
   def get(id) do
