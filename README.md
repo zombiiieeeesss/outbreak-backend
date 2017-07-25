@@ -4,4 +4,4 @@
 
 [![Build Status](https://travis-ci.org/zombiiieeeesss/outbreak-backend.svg?branch=master)](https://travis-ci.org/zombiiieeeesss/outbreak-backend)
 
-[View the API Docs](https://github.com/zombiiieeeesss/outbreak-backend/blob/develop/api_docs/README.md)
+[View the API Docs](https://github.com/zombiiieeeesss/outbreak-backend/tree/master/api_docs)
