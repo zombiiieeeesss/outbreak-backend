@@ -31,7 +31,8 @@
 ```json
 {
     "id": 1,
-    "email": "dude@dude.dude"
+    "email": "dude@dude.dude",
+    "username": "thedude"
 }
 ```
 
@@ -67,7 +68,8 @@ When a user logs in, the response will include a JSON Web Token (JWT) that can b
 {
     "user": {
         "id": 1,
-        "email": "dude@dude.dude"
+        "email": "dude@dude.dude",
+	"username": "thedude"
     },
     "jwt": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJVc2VyOjEiLCJleHAiOjE1MDEwMzY5OTUsImlhdCI6MTUwMDk1MDU5NSwiaXNzIjoiQVBJIiwianRpIjoiZWIxYWIzYmItMDZhNi00MjI5LWI1ZDUtZTUxM2JlMTJlYTU0IiwicGVtIjp7fSwic3ViIjoiVXNlcjoxIiwidHlwIjoiYWNjZXNzIn0.AvyI2nd9YjGRydRgsGpg6sdGeu3FA373rvef6HU7z0bMXhua6B06OedPYmLFcwiQZG2PioJ_dsq7eSCpFnHAtQ"
 }
