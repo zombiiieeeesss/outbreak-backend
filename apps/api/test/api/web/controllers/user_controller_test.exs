@@ -14,6 +14,11 @@ defmodule API.Web.UserControllerTest do
   test "POST /user", %{conn: conn} do
     res = post(conn, "/users", @user_params)
     assert res.status == 201
+
+    body = json_response(res)
+    assert body.id
+    assert body.email == @email
+    assert body.username == @username
   end
 
   test "POST /user/login with correct credentials", %{conn: conn} do
