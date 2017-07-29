@@ -21,6 +21,15 @@ defmodule API.Web.UserControllerTest do
     assert body.username == @username
   end
 
+  test "POST /user when the changeset is invalid", %{conn: conn} do
+    API.User.create(@user_params)
+    res = post(conn, "/users", @user_params)
+    assert res.status == 422
+
+    body = json_response(res)
+    assert body.errors
+  end
+
   test "POST /user/login with correct credentials", %{conn: conn} do
     API.User.create(@user_params)
     res = post(conn, "/users/login", %{username: @username, password: @password})

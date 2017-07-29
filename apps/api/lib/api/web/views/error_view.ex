@@ -1,12 +1,19 @@
 defmodule API.Web.ErrorView do
   use API.Web, :view
 
-  def render("404.json", _assigns) do
-    %{errors: %{detail: "Page not found"}}
+  def render("422.json", changeset) do
+    errors = Ecto.Changeset.traverse_errors(changeset, &format_changeset_errors/1)
+    %{errors: errors}
   end
 
   def render("500.json", _assigns) do
     %{errors: %{detail: "Internal server error"}}
+  end
+
+  defp format_changeset_errors({msg, opts}) do
+    Enum.reduce(opts, msg, fn({key, value}, acc) ->
+      String.replace(acc, "%{#{key}}", to_string(value))
+    end)
   end
 
   # In case no render clause matches or no
