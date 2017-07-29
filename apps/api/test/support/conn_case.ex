@@ -19,6 +19,7 @@ defmodule API.Web.ConnCase do
     quote do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
+      import API.Web.Controller.TestHelper
       import API.Web.Router.Helpers
 
       # The default endpoint for testing

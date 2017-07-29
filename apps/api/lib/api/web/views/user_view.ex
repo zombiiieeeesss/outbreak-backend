@@ -9,7 +9,8 @@ defmodule API.Web.UserView do
   defp render_user(user) do
     %{
       id: user.id,
-      email: user.email
+      email: user.email,
+      username: user.username
     }
   end
 end
