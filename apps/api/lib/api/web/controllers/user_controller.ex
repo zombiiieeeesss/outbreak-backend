@@ -11,7 +11,7 @@ defmodule API.Web.UserController do
       {:error, changeset} ->
         conn
         |> put_status(422)
-        |> json(changeset.errors)
+        |> render(API.Web.ErrorView, "422.json", changeset)
     end
   end
 
