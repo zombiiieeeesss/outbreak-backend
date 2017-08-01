@@ -35,11 +35,17 @@ defmodule API.Web.UserControllerTest do
     res = post(conn, "/users/login", %{username: @username, password: @password})
     assert res.status == 201
 
-    headers = res.resp_headers
-      |> Enum.into(%{})
+    headers = response_headers(res)
 
     assert headers["authorization"]
     assert headers["x-expires"]
+
+    body = json_response(res)
+    assert body.user.id
+    assert body.user.email == @email
+    assert body.user.username == @username
+    assert body.auth.token
+    assert body.auth.expires_at
   end
 
   test "POST /user/login with incorrect credentials", %{conn: conn} do
@@ -57,13 +63,16 @@ defmodule API.Web.UserControllerTest do
       |> put_req_header("authorization", token)
       |> post("/users/refresh")
 
-    headers = res.resp_headers
-        |> Enum.into(%{})
+      assert res.status == 201
 
-    assert headers["authorization"]
-    assert headers["x-expires"]
+      headers = response_headers(res)
 
-    assert res.status == 201
+      assert headers["authorization"]
+      assert headers["x-expires"]
+
+      body = json_response(res)
+      assert body.auth.token
+      assert body.auth.expires_at
   end
 
   test "POST /user/refresh with a invalid token", %{conn: conn} do
