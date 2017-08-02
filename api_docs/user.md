@@ -71,7 +71,10 @@ When a user logs in, the response will include a JSON Web Token (JWT) that can b
         "email": "dude@dude.dude",
 	"username": "thedude"
     },
-    "jwt": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJVc2VyOjEiLCJleHAiOjE1MDEwMzY5OTUsImlhdCI6MTUwMDk1MDU5NSwiaXNzIjoiQVBJIiwianRpIjoiZWIxYWIzYmItMDZhNi00MjI5LWI1ZDUtZTUxM2JlMTJlYTU0IiwicGVtIjp7fSwic3ViIjoiVXNlcjoxIiwidHlwIjoiYWNjZXNzIn0.AvyI2nd9YjGRydRgsGpg6sdGeu3FA373rvef6HU7z0bMXhua6B06OedPYmLFcwiQZG2PioJ_dsq7eSCpFnHAtQ"
+    "auth": {
+    	"token": 	"eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJVc2VyOjEiLCJleHAiOjE1MDEwMzY5OTUsImlhdCI6MTUwMDk1MDU5NSwiaXNzIjoiQVBJIiwianRpIjoiZWIxYWIzYmItMDZhNi00MjI5LWI1ZDUtZTUxM2JlMTJlYTU0IiwicGVtIjp7fSwic3ViIjoiVXNlcjoxIiwidHlwIjoiYWNjZXNzIn0.AvyI2nd9YjGRydRgsGpg6sdGeu3FA373rvef6HU7z0bMXhua6B06OedPYmLFcwiQZG2PioJ_dsq7eSCpFnHAtQ",
+	"expires_at": 1501719859
+    }
 }
 ```
 
@@ -89,6 +92,10 @@ None
 **Example response:**
 ```json
 {
-    "jwt": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJVc2VyOjEiLCJleHAiOjE1MDEwMzc1NzYsImlhdCI6MTUwMDk1MTE3NiwiaXNzIjoiQVBJIiwianRpIjoiMGIxMGJkZjYtYmE0NC00M2I3LWE2YzQtZTYwMWFmNzIzZWVmIiwibmJmIjoxNTAwOTUxMTc1LCJwZW0iOnt9LCJzdWIiOiJVc2VyOjEiLCJ0eXAiOiJhY2Nlc3MifQ.PJe85H6XL0bZKo12VkpMkjuibP_K4jsEnl0y7JIjgwC4y5Ce8UI8yW2jy5D90vYbp6xm6h9C30PI8nf7dSrrJQ"
+    
+    "auth": {
+    	"token": 	"eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJVc2VyOjEiLCJleHAiOjE1MDEwMzY5OTUsImlhdCI6MTUwMDk1MDU5NSwiaXNzIjoiQVBJIiwianRpIjoiZWIxYWIzYmItMDZhNi00MjI5LWI1ZDUtZTUxM2JlMTJlYTU0IiwicGVtIjp7fSwic3ViIjoiVXNlcjoxIiwidHlwIjoiYWNjZXNzIn0.AvyI2nd9YjGRydRgsGpg6sdGeu3FA373rvef6HU7z0bMXhua6B06OedPYmLFcwiQZG2PioJ_dsq7eSCpFnHAtQ",
+	"expires_at": 1501719859
+    }
 }
 ```
