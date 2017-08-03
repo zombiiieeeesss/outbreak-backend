@@ -7,11 +7,7 @@ defmodule UserTest do
     password: "ihavethehighground"
   }
 
-  def is_valid(changeset) do
-    %Ecto.Changeset{valid?: valid} = changeset
-
-    valid
-  end
+  defp is_valid(%Ecto.Changeset{valid?: valid}), do: valid
 
   describe "changesets" do
     test "changeset is valid with username, email, password" do

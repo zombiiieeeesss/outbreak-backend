@@ -1,6 +1,7 @@
 defmodule DB.User do
   use Ecto.Schema
   import Ecto.Changeset
+  import Ecto.Query
 
   alias DB.User
 
@@ -22,16 +23,15 @@ defmodule DB.User do
   end
 
   def get_by_username(username) do
-    DB.Repo.get_by(User, username: username)
+    from(
+      u in User,
+      where: fragment("lower(username) = ?", ^String.downcase(username))
+    )
+    |> DB.Repo.one
   end
 
   def get(id) do
     DB.Repo.get(User, id)
-  end
-
-  defp changeset(struct, params) do
-    struct
-    |> cast(params, @fields)
   end
 
   def registration_changeset(struct, params) do
