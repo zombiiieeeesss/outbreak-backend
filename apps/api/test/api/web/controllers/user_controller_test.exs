@@ -41,6 +41,7 @@ defmodule API.Web.UserControllerTest do
     assert headers["x-expires"]
 
     body = json_response(res)
+
     assert body.user.id
     assert body.user.email == @email
     assert body.user.username == @username
