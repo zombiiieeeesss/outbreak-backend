@@ -23,7 +23,10 @@ defmodule API.Web.UserController do
         |> authorization_headers(token, exp)
         |> render(%{user: user, token: token, exp: exp})
 
-      {:error, _} -> send_resp(conn, 401, "Unauthorized")
+      {:error, _} ->
+        conn
+        |> put_status(401)
+        |> json(%{errors: ["Invalid Username or Password"]})
     end
   end
 
@@ -36,7 +39,10 @@ defmodule API.Web.UserController do
         |> authorization_headers(token, exp)
         |> render(%{token: token, exp: exp})
 
-      {:error, _} -> send_resp(conn, 401, "Unauthorized")
+      {:error, _} ->
+        conn
+        |> put_status(401)
+        |> json(%{errors: ["Invalid Token"]})
     end
   end
 
