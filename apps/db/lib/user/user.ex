@@ -1,4 +1,9 @@
 defmodule DB.User do
+  @moduledoc """
+  This module encapsulates the functionality of the `users` table,
+  providing create and retrieve utility functions, as well as
+  Ecto changesets.
+  """
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -47,7 +52,7 @@ defmodule DB.User do
 
   defp generate_encrypted_password(changeset) do
     case changeset do
-      %Ecto.Changeset{valid?: true, changes: %{password: password}}->
+      %Ecto.Changeset{valid?: true, changes: %{password: password}} ->
         put_change(changeset, :encrypted_password, Comeonin.Bcrypt.hashpwsalt(password))
       _ ->
         changeset
