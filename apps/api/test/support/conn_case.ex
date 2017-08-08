@@ -27,7 +27,6 @@ defmodule API.Web.ConnCase do
     end
   end
 
-
   setup _tags do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(DB.Repo)
     {:ok, conn: Phoenix.ConnTest.build_conn()}
