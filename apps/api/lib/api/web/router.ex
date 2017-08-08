@@ -15,11 +15,13 @@ defmodule API.Web.Router do
     get "/up", UpController, :up
   end
 
-  scope "/users", API.Web do
+ scope "/v1", API.Web do
     pipe_through :api
 
-    post "/", UserController, :create
-    post "/login", UserController, :login
-    post "/refresh", UserController, :refresh
+    scope "/users" do
+      post "/", UserController, :create
+      post "/login", UserController, :login
+      post "/refresh", UserController, :refresh
+    end
   end
 end
