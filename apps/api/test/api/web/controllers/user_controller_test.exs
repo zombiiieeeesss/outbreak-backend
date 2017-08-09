@@ -4,6 +4,7 @@ defmodule API.Web.UserControllerTest do
   @username "Dude"
   @email "email@email.com"
   @password "password"
+  @base_url "/v1/users"
 
   @user_params %{
     "username" => @username,
@@ -12,7 +13,7 @@ defmodule API.Web.UserControllerTest do
   }
 
   test "POST /user", %{conn: conn} do
-    res = post(conn, "/users", @user_params)
+    res = post(conn, @base_url, @user_params)
     assert res.status == 201
 
     body = json_response(res)
@@ -23,7 +24,7 @@ defmodule API.Web.UserControllerTest do
 
   test "POST /user when the changeset is invalid", %{conn: conn} do
     API.User.create(@user_params)
-    res = post(conn, "/users", @user_params)
+    res = post(conn, @base_url, @user_params)
     assert res.status == 422
 
     body = json_response(res)
@@ -33,8 +34,7 @@ defmodule API.Web.UserControllerTest do
   test "POST /user/login with correct credentials", %{conn: conn} do
     API.User.create(@user_params)
 
-    #upcase the username here to test the case insensitivity
-    res = post(conn, "/users/login", %{username: String.upcase(@username), password: @password})
+    res = post(conn, "#{@base_url}/login", %{username: String.upcase(@username), password: @password})
     assert res.status == 201
 
     headers = response_headers(res)
@@ -53,7 +53,7 @@ defmodule API.Web.UserControllerTest do
 
   test "POST /user/login with incorrect credentials", %{conn: conn} do
     API.User.create(@user_params)
-    res = post(conn, "/users/login", %{username: @username, password: "hacking"})
+    res = post(conn, "#{@base_url}/login", %{username: @username, password: "hacking"})
     assert res.status == 401
   end
 
@@ -64,7 +64,7 @@ defmodule API.Web.UserControllerTest do
     res =
       conn
       |> put_req_header("authorization", token)
-      |> post("/users/refresh")
+      |> post("#{@base_url}/refresh")
 
       assert res.status == 201
 
@@ -84,7 +84,7 @@ defmodule API.Web.UserControllerTest do
     res =
       conn
       |> put_req_header("authorization", "badtoken")
-      |> post("/users/refresh")
+      |> post("#{@base_url}/refresh")
 
     assert res.status == 401
   end

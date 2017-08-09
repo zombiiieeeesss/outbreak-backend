@@ -21,7 +21,7 @@ config :api, API.Web.Endpoint,
 
 config :guardian, Guardian,
  issuer: "API",
- ttl: { 1, :days },
+ ttl: {1, :days},
  allowed_drift: 2000,
  secret_key: System.get_env("GUARDIAN_KEY"),
  serializer: API.GuardianSerializer

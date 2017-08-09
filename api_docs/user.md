@@ -2,7 +2,7 @@
 
 ### Creating a User
 
-`POST /users/`
+`POST /v1/users/`
 
 **Headers:**
 
@@ -40,7 +40,7 @@
 
 When a user logs in, the response will include a JSON Web Token (JWT) that can be used to make requests. It will also be available in the `authorization` header, alongside an `x-expires` header, which gives the expiration date.
 
-`POST /users/login/`
+`POST /v1/users/login/`
 
 **Headers**:
 
@@ -80,11 +80,11 @@ When a user logs in, the response will include a JSON Web Token (JWT) that can b
 
 ### Refreshing a token
 
-`POST /users/refresh/`
+`POST /v1/users/refresh/`
 
 **Headers:**
 
-`Authorization: your-jwt`
+`Authorization: your-token`
 
 **Parameters:**
 None
