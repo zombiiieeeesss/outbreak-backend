@@ -22,6 +22,7 @@ defmodule DB.ModelCase do
       import Ecto.Changeset
       import Ecto.Query
       import DB.ModelCase
+      import DB.Model.TestHelper
     end
   end
 
@@ -33,16 +34,5 @@ defmodule DB.ModelCase do
     end
 
     :ok
-  end
-
-  def user_params do
-    %{username: UUID.uuid4(), password: "123123123", email: "#{UUID.uuid4()}@"}
-  end
-
-  @doc """
-  Creates a random user.
-  """
-  def create_user do
-    %DB.User{} |> DB.User.registration_changeset(user_params()) |> DB.Repo.insert!
   end
 end
