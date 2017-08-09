@@ -2,6 +2,8 @@ defmodule API.Web.Router do
   use API.Web, :router
 
   pipeline :api do
+    plug Guardian.Plug.VerifyHeader
+    plug Guardian.Plug.LoadResource
     plug :accepts, ["json"]
   end
 
@@ -23,5 +25,7 @@ defmodule API.Web.Router do
       post "/login", UserController, :login
       post "/refresh", UserController, :refresh
     end
+
+    resources "/games", GameController, only: [:create]
   end
 end

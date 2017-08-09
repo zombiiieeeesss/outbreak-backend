@@ -10,6 +10,10 @@ defmodule API.Web.ErrorView do
     %{errors: %{detail: "Internal server error"}}
   end
 
+  def render("401.json", _) do
+    %{errors: ["Invalid Token"]}
+  end
+
   defp format_changeset_errors({msg, opts}) do
     Enum.reduce(opts, msg, fn({key, value}, acc) ->
       String.replace(acc, "%{#{key}}", to_string(value))
