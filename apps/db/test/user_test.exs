@@ -9,8 +9,6 @@ defmodule UserTest do
     password: "ihavethehighground"
   }
 
-  defp is_valid(%Ecto.Changeset{valid?: valid}), do: valid
-
   describe "changesets" do
     test "changeset is valid with username, email, password" do
       changeset = User.registration_changeset(%User{}, @params)

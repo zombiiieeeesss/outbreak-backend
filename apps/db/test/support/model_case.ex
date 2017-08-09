@@ -21,6 +21,8 @@ defmodule DB.ModelCase do
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
+      import DB.ModelCase
+      import DB.Model.TestHelper
     end
   end
 
