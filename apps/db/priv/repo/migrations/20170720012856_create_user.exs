@@ -10,7 +10,7 @@ defmodule DB.Repo.Migrations.CreateUser do
       timestamps()
     end
 
-    create unique_index(:users, :username)
-    create unique_index(:users, :email)
+    create unique_index(:users, ["lower(username)"], name: :lowercase_username)
+    create unique_index(:users, ["lower(email)"], name: :lowercase_email)
   end
 end

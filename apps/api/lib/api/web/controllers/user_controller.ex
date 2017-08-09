@@ -5,7 +5,7 @@ defmodule API.Web.UserController do
     case API.User.create(params) do
       {:ok, user} ->
         conn
-        |> put_status(:created)
+        |> put_status(201)
         |> render(user)
 
       {:error, changeset} ->

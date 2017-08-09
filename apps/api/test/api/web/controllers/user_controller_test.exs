@@ -1,7 +1,7 @@
 defmodule API.Web.UserControllerTest do
   use API.Web.ConnCase
 
-  @username "dude"
+  @username "Dude"
   @email "email@email.com"
   @password "password"
   @base_url "/v1/users"
@@ -33,7 +33,8 @@ defmodule API.Web.UserControllerTest do
 
   test "POST /user/login with correct credentials", %{conn: conn} do
     API.User.create(@user_params)
-    res = post(conn, "#{@base_url}/login", %{username: @username, password: @password})
+
+    res = post(conn, "#{@base_url}/login", %{username: String.upcase(@username), password: @password})
     assert res.status == 201
 
     headers = response_headers(res)

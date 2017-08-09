@@ -6,6 +6,7 @@ defmodule DB.User do
   """
   use Ecto.Schema
   import Ecto.Changeset
+  import Ecto.Query
 
   alias DB.User
 
@@ -27,16 +28,15 @@ defmodule DB.User do
   end
 
   def get_by_username(username) do
-    DB.Repo.get_by(User, username: username)
+    DB.Repo.one(
+      from(
+        u in User,
+        where: fragment("lower(username) = ?", ^String.downcase(username))
+    ))
   end
 
   def get(id) do
     DB.Repo.get(User, id)
-  end
-
-  defp changeset(struct, params) do
-    struct
-    |> cast(params, @fields)
   end
 
   def registration_changeset(struct, params) do
@@ -45,8 +45,8 @@ defmodule DB.User do
     |> validate_required(@fields)
     |> validate_format(:email, ~r/@/)
     |> validate_length(:password, min: 8)
-    |> unique_constraint(:email)
-    |> unique_constraint(:username)
+    |> unique_constraint(:email, name: :lowercase_email)
+    |> unique_constraint(:username, name: :lowercase_username)
     |> generate_encrypted_password
   end
 
