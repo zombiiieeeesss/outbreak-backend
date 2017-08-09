@@ -45,8 +45,8 @@ defmodule DB.User do
     |> validate_required(@fields)
     |> validate_format(:email, ~r/@/)
     |> validate_length(:password, min: 8)
-    |> unique_constraint(:email)
-    |> unique_constraint(:username)
+    |> unique_constraint(:email, name: :lowercase_email)
+    |> unique_constraint(:username, name: :lowercase_username)
     |> generate_encrypted_password
   end
 
