@@ -18,6 +18,8 @@ defmodule DB.Game do
   end
 
   @fields [:status, :title, :round_length]
+  @required_fields [:status, :round_length]
+  @accepted_statuses ~w(pending active complete)
 
   def create(attrs) do
     %Game{}
@@ -28,6 +30,7 @@ defmodule DB.Game do
   defp changeset(struct, params) do
     struct
     |> cast(params, @fields)
-    |> validate_required(@fields)
+    |> validate_required(@required_fields)
+    |> validate_inclusion(:status, @accepted_statuses)
   end
 end
