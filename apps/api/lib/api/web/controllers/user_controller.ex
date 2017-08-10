@@ -31,7 +31,7 @@ defmodule API.Web.UserController do
   end
 
   def refresh(conn, _params) do
-    token = get_token(conn)
+    token = Guardian.Plug.current_token(conn)
     case Guardian.refresh!(token) do
       {:ok, token, %{"exp" => exp}} ->
         conn
@@ -46,15 +46,15 @@ defmodule API.Web.UserController do
     end
   end
 
+  def unauthenticated(conn, _params) do
+    conn
+    |> put_status(401)
+    |> render(API.Web.ErrorView, "401.json")
+  end
+
   defp authorization_headers(conn, token, exp) do
     conn
     |> put_resp_header("authorization", token)
     |> put_resp_header("x-expires", Integer.to_string(exp))
-  end
-
-  defp get_token(conn) do
-    conn.req_headers
-    |> Enum.into(%{})
-    |> Map.get("authorization")
   end
 end

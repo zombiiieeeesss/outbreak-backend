@@ -2,13 +2,9 @@ defmodule API.Web.Router do
   use API.Web, :router
 
   pipeline :api do
+    plug :accepts, ["json"]
     plug Guardian.Plug.VerifyHeader
     plug Guardian.Plug.LoadResource
-    plug :accepts, ["json"]
-  end
-
-  pipeline :auth do
-    plug Guardian.Plug.VerifyHeader
   end
 
   scope "/", API.Web do

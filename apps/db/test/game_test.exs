@@ -29,7 +29,7 @@ defmodule GameTest do
     end
 
     test "without title" do
-      {:ok, user} = Game.create(%{@params | title: nil})
+      assert {:ok, _user} = Game.create(%{@params | title: nil})
     end
   end
 end
