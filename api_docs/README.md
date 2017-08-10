@@ -4,3 +4,5 @@
   - [Create](https://github.com/zombiiieeeesss/outbreak-backend/blob/master/api_docs/user.md#creating-a-user)
   - [Log in](https://github.com/zombiiieeeesss/outbreak-backend/blob/master/api_docs/user.md#logging-in)
   - [Refresh](https://github.com/zombiiieeeesss/outbreak-backend/blob/master/api_docs/user.md#refreshing-a-token)
+- [Game](https://github.com/zombiiieeeesss/outbreak-backend/blob/master/api_docs/game.md)
+  - [Create](https://github.com/zombiiieeeesss/outbreak-backend/blob/master/api_docs/game.md#create)
