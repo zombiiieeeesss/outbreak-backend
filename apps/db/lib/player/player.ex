@@ -13,6 +13,7 @@ defmodule DB.Player do
   schema "players" do
     belongs_to :user, User
     belongs_to :game, Game
+
     timestamps()
   end
 
