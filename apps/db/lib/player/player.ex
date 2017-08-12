@@ -29,5 +29,7 @@ defmodule DB.Player do
     struct
     |> cast(params, @fields)
     |> validate_required(@fields)
+    |> assoc_constraint(:user)
+    |> assoc_constraint(:game)
   end
 end
