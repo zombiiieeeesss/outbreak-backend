@@ -1,4 +1,4 @@
-defmodule UserTest do
+defmodule DB.UserTest do
   use DB.ModelCase
 
   alias DB.User

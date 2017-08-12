@@ -7,12 +7,14 @@ defmodule DB.Game do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias DB.Game
+  alias DB.{Game, Player, Repo, User}
 
   schema "games" do
     field :status, :string
     field :title, :string
     field :round_length, :integer
+
+    many_to_many :users, User, join_through: Player
 
     timestamps()
   end
@@ -24,7 +26,7 @@ defmodule DB.Game do
   def create(attrs) do
     %Game{}
     |> changeset(attrs)
-    |> DB.Repo.insert
+    |> Repo.insert
   end
 
   defp changeset(struct, params) do
