@@ -1,15 +1,25 @@
 defmodule API.Web.GameController do
   use API.Web, :controller
+  alias Ecto.Multi
+
   plug Guardian.Plug.EnsureAuthenticated, handler: __MODULE__
 
   def create(conn, params) do
-    case API.Game.create(params) do
-      {:ok, game} ->
+    user = Guardian.Plug.current_resource(conn)
+
+    multi =
+      Multi.new
+      |> Multi.run(:game, fn(_) -> API.Game.create(params) end)
+      |> Multi.run(:player, fn(%{game: game}) ->
+        API.Player.create(user.id, game.id)
+      end)
+
+    case DB.Repo.transaction(multi) do
+      {:ok, result} ->
         conn
         |> put_status(:created)
-        |> render(game)
-
-      {:error, changeset} ->
+        |> render(result.game)
+      {:error, _, changeset, _} ->
         conn
         |> put_status(422)
         |> render(API.Web.ErrorView, "422.json", changeset)

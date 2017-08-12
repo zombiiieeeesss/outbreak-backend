@@ -8,7 +8,7 @@ defmodule DB.Player do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias DB.{Game, Player, User}
+  alias DB.{Game, Player, Repo, User}
 
   schema "players" do
     belongs_to :user, User
@@ -21,7 +21,7 @@ defmodule DB.Player do
   def create(user_id, game_id) do
     %Player{}
     |> changeset(%{user_id: user_id, game_id: game_id})
-    |> DB.Repo.insert
+    |> Repo.insert
   end
 
   defp changeset(struct, params) do

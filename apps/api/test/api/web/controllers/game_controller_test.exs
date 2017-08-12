@@ -25,7 +25,7 @@ defmodule API.Web.GameControllerTest do
       {:ok, %{user: user, token: token, claims: full_claims}}
     end
 
-    test "with valid params", %{conn: conn, token: token} do
+    test "with valid params", %{conn: conn, token: token, user: user} do
       res =
         conn
         |> put_req_header("authorization", token)
@@ -37,6 +37,12 @@ defmodule API.Web.GameControllerTest do
       assert body.title == @title
       assert body.status == @status
       assert body.round_length == @round_length
+
+      [assoc_user] =
+        DB.Repo.get(DB.Game, body.id)
+        |> DB.Repo.preload(:users)
+        |> Map.get(:users)
+      assert assoc_user.id == user.id
     end
 
     test "with invalid params", %{conn: conn, token: token} do
