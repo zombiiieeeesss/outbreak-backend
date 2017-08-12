@@ -1,4 +1,4 @@
-defmodule GameTest do
+defmodule DB.GameTest do
   use DB.ModelCase
 
   alias DB.Game
@@ -11,11 +11,11 @@ defmodule GameTest do
 
   describe "#create" do
     test "with valid params" do
-      {:ok, user} = Game.create(@params)
+      {:ok, game} = Game.create(@params)
 
-      assert user.title == @params.title
-      assert user.status == @params.status
-      assert user.round_length == @params.round_length
+      assert game.title == @params.title
+      assert game.status == @params.status
+      assert game.round_length == @params.round_length
     end
 
     test "with no params" do
