@@ -23,6 +23,12 @@ defmodule DB.Game do
   @required_fields [:status, :round_length]
   @accepted_statuses ~w(pending active complete)
 
+  def list_by_user(user) do
+    user
+    |> Ecto.assoc(:games)
+    |> Repo.all
+  end
+
   def create(attrs) do
     %Game{}
     |> changeset(attrs)

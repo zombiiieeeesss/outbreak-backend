@@ -8,13 +8,15 @@ defmodule DB.User do
   import Ecto.Changeset
   import Ecto.Query
 
-  alias DB.User
+  alias DB.{Game, Player, User}
 
   schema "users" do
     field :username, :string
     field :email, :string
     field :password, :string, virtual: true
     field :encrypted_password, :string
+
+    many_to_many :games, Game, join_through: Player
 
     timestamps()
   end
