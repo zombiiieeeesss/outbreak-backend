@@ -6,6 +6,7 @@ defmodule DB.Game do
   """
   use Ecto.Schema
   import Ecto.Changeset
+  import Ecto.Query
 
   alias DB.{Game, Player, Repo, User}
 
@@ -22,6 +23,17 @@ defmodule DB.Game do
   @fields [:status, :title, :round_length]
   @required_fields [:status, :round_length]
   @accepted_statuses ~w(pending active complete)
+
+  def list_by_user(%User{} = user) do
+    list_by_user(user.id)
+  end
+
+  def list_by_user(user_id) do
+    Repo.all(
+      from g in Game,
+        join: p in Player, on: p.user_id == ^user_id
+    )
+  end
 
   def create(attrs) do
     %Game{}
