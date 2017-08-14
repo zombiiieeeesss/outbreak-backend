@@ -22,6 +22,6 @@ defmodule API.Web.Router do
       post "/refresh", UserController, :refresh
     end
 
-    resources "/games", GameController, only: [:create]
+    resources "/games", GameController, only: [:index, :create]
   end
 end
