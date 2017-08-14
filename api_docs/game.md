@@ -1,5 +1,24 @@
 # Game
 
+### List
+
+`GET /v1/games/`
+
+**Headers:**
+`Authorization: your-token`
+
+**Example Response:**
+```json
+[
+  {
+    "title": "zombieland",
+    "status": "pending",
+    "round_length": 5,
+    "id": 11
+  }
+]
+```
+
 ### Create
 
 `POST /v1/games/`

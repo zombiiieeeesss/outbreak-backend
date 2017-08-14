@@ -4,6 +4,17 @@ defmodule API.Web.GameController do
 
   plug Guardian.Plug.EnsureAuthenticated, handler: __MODULE__
 
+  def index(conn, _params) do
+    games =
+      conn
+      |> Guardian.Plug.current_resource
+      |> API.Game.list
+
+    conn
+    |> put_status(:ok)
+    |> render(games: games)
+  end
+
   def create(conn, params) do
     user = Guardian.Plug.current_resource(conn)
 
