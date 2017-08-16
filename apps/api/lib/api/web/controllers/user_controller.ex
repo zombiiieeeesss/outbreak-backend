@@ -46,6 +46,12 @@ defmodule API.Web.UserController do
     end
   end
 
+  def unauthenticated(conn, _params) do
+    conn
+    |> put_status(401)
+    |> render(API.Web.ErrorView, "401.json")
+  end
+
   defp authorization_headers(conn, token, exp) do
     conn
     |> put_resp_header("authorization", token)
