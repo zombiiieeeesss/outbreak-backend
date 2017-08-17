@@ -30,6 +30,8 @@ defmodule API.Web.Router do
     # All routes after this pipeline will require authentication
     pipe_through :auth
 
+    get "/users", UserController, :search
+
     resources "/games", GameController, only: [:index, :create]
   end
 end
