@@ -2,6 +2,8 @@ defmodule API.Web.GameController do
   use API.Web, :controller
   alias Ecto.Multi
 
+  action_fallback API.Web.FallbackController
+
   def index(conn, _params) do
     games =
       conn
@@ -23,15 +25,12 @@ defmodule API.Web.GameController do
         API.Player.create(user.id, game.id)
       end)
 
-    case DB.Repo.transaction(multi) do
-      {:ok, result} ->
+      with {:ok, result} <-
+        DB.Repo.transaction(multi)
+      do
         conn
         |> put_status(:created)
         |> render(result.game)
-      {:error, _, changeset, _} ->
-        conn
-        |> put_status(422)
-        |> render(API.Web.ErrorView, "422.json", changeset)
-    end
+      end
   end
 end

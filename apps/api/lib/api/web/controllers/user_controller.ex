@@ -1,17 +1,15 @@
 defmodule API.Web.UserController do
   use API.Web, :controller
 
-  def create(conn, params) do
-    case API.User.create(params) do
-      {:ok, user} ->
-        conn
-        |> put_status(201)
-        |> render(user)
+  action_fallback API.Web.FallbackController
 
-      {:error, changeset} ->
-        conn
-        |> put_status(422)
-        |> render(API.Web.ErrorView, "422.json", changeset)
+  def create(conn, params) do
+    with {:ok, user} <-
+      API.User.create(params)
+    do
+      conn
+      |> put_status(201)
+      |> render(user)
     end
   end
 
