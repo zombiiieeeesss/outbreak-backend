@@ -9,5 +9,7 @@ defmodule DB.Repo.Migrations.CreateFriendship do
 
       timestamps()
     end
+
+    create unique_index(:friendships, [:requester_id, :requestee_id], name: :requester_requestee)
   end
 end
