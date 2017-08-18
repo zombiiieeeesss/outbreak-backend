@@ -14,3 +14,6 @@ addons:
   postgresql: "9.4"
 env:
   - MIX_ENV=test
+script:
+  - mix test
+  - mix credo
