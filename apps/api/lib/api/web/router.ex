@@ -9,7 +9,7 @@ defmodule API.Web.Router do
 
   pipeline :auth do
     plug Guardian.Plug.EnsureAuthenticated,
-      handler: API.Web.UserController
+      handler: API.Web.FallbackController
   end
 
   scope "/", API.Web do
