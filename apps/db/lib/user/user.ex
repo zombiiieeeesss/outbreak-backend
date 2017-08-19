@@ -8,18 +8,13 @@ defmodule DB.User do
   import Ecto.Changeset
   import Ecto.Query
 
-  alias DB.{Friendship, Game, Player, Repo, User}
+  alias DB.{FriendRequest, Game, Player, Repo, User}
 
   schema "users" do
     field :username, :string
     field :email, :string
     field :password, :string, virtual: true
     field :encrypted_password, :string
-
-    has_many :friend_requests, Friendship, foreign_key: :requestee_id
-    has_many :friend_requested, Friendship, foreign_key: :requester_id
-    has_many :friends_requesting_user, through: [:friend_requests, :requester]
-    has_many :friends_user_requested, through: [:friend_requested, :requestee]
 
     many_to_many :games, Game, join_through: Player
 

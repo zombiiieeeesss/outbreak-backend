@@ -1,8 +1,8 @@
-# Friendship
+# FriendRequest
 
 ### Create
 
-`POST /v1/friendship/`
+`POST /v1/friend-requests/`
 
 **Headers:**
 

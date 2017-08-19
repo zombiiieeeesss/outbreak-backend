@@ -1,7 +1,7 @@
-defmodule DB.FriendshipTest do
+defmodule DB.FriendRequestTest do
   use DB.ModelCase
 
-  alias DB.{Friendship, User}
+  alias DB.{FriendRequest, User}
 
   @user_one_params %{
     username: "Obi-Wan",
@@ -20,20 +20,20 @@ defmodule DB.FriendshipTest do
       {:ok, user_one} = User.create(@user_one_params)
       {:ok, user_two} = User.create(@user_two_params)
 
-      {:ok, friendship} = Friendship.create(user_one.id, user_two.id, "pending")
+      {:ok, friend_request} = FriendRequest.create(user_one.id, user_two.id, "pending")
 
-      friendship =
-        friendship
+      friend_request =
+        friend_request
         |> Repo.preload([:requester, :requestee])
 
-      assert friendship.requester.id == user_one.id
-      assert friendship.requestee.id == user_two.id
+      assert friend_request.requester.id == user_one.id
+      assert friend_request.requestee.id == user_two.id
     end
 
     test "with invalid requester id" do
       {:ok, user} = User.create(@user_one_params)
 
-      {:error, changeset} = Friendship.create(user.id, 2 * user.id, "pending")
+      {:error, changeset} = FriendRequest.create(user.id, 2 * user.id, "pending")
 
       refute changeset.valid?
     end
@@ -41,7 +41,7 @@ defmodule DB.FriendshipTest do
     test "with invalid requestee id" do
       {:ok, user} = User.create(@user_one_params)
 
-      {:error, changeset} = Friendship.create(2 * user.id, user.id, "pending")
+      {:error, changeset} = FriendRequest.create(2 * user.id, user.id, "pending")
 
       refute changeset.valid?
     end
@@ -49,17 +49,17 @@ defmodule DB.FriendshipTest do
     test "with invalid status" do
       {:ok, user} = User.create(@user_one_params)
 
-      {:error, changeset} = Friendship.create(1, user.id, "itscomplicated")
+      {:error, changeset} = FriendRequest.create(1, user.id, "itscomplicated")
 
       refute changeset.valid?
     end
 
-    test "with creating the same friendship relationship twice is invalid" do
+    test "with creating the same friend_request relationship twice is invalid" do
       {:ok, user_one} = User.create(@user_one_params)
       {:ok, user_two} = User.create(@user_two_params)
 
-      {:ok, _friendship} = Friendship.create(user_one.id, user_two.id, "pending")
-      {:error, changeset} = Friendship.create(user_one.id, user_two.id, "pending")
+      {:ok, _friend_request} = FriendRequest.create(user_one.id, user_two.id, "pending")
+      {:error, changeset} = FriendRequest.create(user_one.id, user_two.id, "pending")
 
       refute changeset.valid?
     end

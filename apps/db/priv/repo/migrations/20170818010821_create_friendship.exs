@@ -1,8 +1,8 @@
-defmodule DB.Repo.Migrations.CreateFriendship do
+defmodule DB.Repo.Migrations.CreateFriendRequest do
   use Ecto.Migration
 
   def change do
-    create table(:friendships) do
+    create table(:friend_requests) do
       add :requester_id, references(:users, on_delete: :delete_all)
       add :requestee_id, references(:users, on_delete: :delete_all)
       add :status, :string
@@ -10,6 +10,6 @@ defmodule DB.Repo.Migrations.CreateFriendship do
       timestamps()
     end
 
-    create unique_index(:friendships, [:requester_id, :requestee_id], name: :requester_requestee)
+    create unique_index(:friend_requests, [:requester_id, :requestee_id], name: :requester_requestee)
   end
 end

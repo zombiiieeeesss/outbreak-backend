@@ -1,4 +1,4 @@
-defmodule API.Web.FriendshipController do
+defmodule API.Web.FriendRequestController do
   use API.Web, :controller
 
   action_fallback API.Web.FallbackController
@@ -6,12 +6,12 @@ defmodule API.Web.FriendshipController do
   def create(conn, %{"requestee_id" => requestee_id}) do
     user = Guardian.Plug.current_resource(conn)
 
-    with {:ok, friendship} <-
-      API.Friendship.create(user.id, requestee_id)
+    with {:ok, friend_request} <-
+      API.FriendRequest.create(user.id, requestee_id)
     do
       conn
       |> put_status(201)
-      |> render(friendship)
+      |> render(friend_request)
     end
   end
 end

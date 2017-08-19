@@ -1,7 +1,7 @@
-defmodule API.Web.FriendshipControllerTest do
+defmodule API.Web.FriendRequestControllerTest do
   use API.Web.ConnCase
 
-  @base_url "/v1/friendships"
+  @base_url "/v1/friend-requests"
 
   setup do
     {:ok, user_one} = API.User.create(%{
