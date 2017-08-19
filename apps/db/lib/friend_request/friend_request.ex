@@ -13,18 +13,18 @@ defmodule DB.FriendRequest do
   schema "friend_requests" do
     field :status, :string
 
-    belongs_to :requester, User
-    belongs_to :requestee, User
+    belongs_to :requesting_user, User
+    belongs_to :requested_user, User
 
     timestamps()
   end
 
-  @fields [:requester_id, :requestee_id, :status]
+  @fields [:requesting_user_id, :requested_user_id, :status]
   @accepted_statuses ~w(pending accepted)
 
-  def create(requester_id, requestee_id, status) do
+  def create(requesting_user_id, requested_user_id, status) do
     %FriendRequest{}
-    |> changeset(%{requester_id: requester_id, requestee_id: requestee_id, status: status})
+    |> changeset(%{requesting_user_id: requesting_user_id, requested_user_id: requested_user_id, status: status})
     |> Repo.insert
   end
 
@@ -32,8 +32,8 @@ defmodule DB.FriendRequest do
     struct
     |> cast(params, @fields)
     |> validate_required(@fields)
-    |> assoc_constraint(:requester)
-    |> assoc_constraint(:requestee)
+    |> assoc_constraint(:requesting_user)
+    |> assoc_constraint(:requested_user)
     |> validate_inclusion(:status, @accepted_statuses)
     |> unique_constraint(:requester_requestee, [name: :requester_requestee])
   end

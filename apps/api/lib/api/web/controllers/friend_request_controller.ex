@@ -3,11 +3,11 @@ defmodule API.Web.FriendRequestController do
 
   action_fallback API.Web.FallbackController
 
-  def create(conn, %{"requestee_id" => requestee_id}) do
+  def create(conn, %{"requested_user_id" => requested_user_id}) do
     user = Guardian.Plug.current_resource(conn)
 
     with {:ok, friend_request} <-
-      API.FriendRequest.create(user.id, requestee_id)
+      API.FriendRequest.create(user.id, requested_user_id)
     do
       conn
       |> put_status(201)

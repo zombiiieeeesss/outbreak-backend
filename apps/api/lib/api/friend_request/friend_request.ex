@@ -3,7 +3,7 @@ defmodule API.FriendRequest do
   Context for friend requests
   """
 
-  def create(requester_id, requestee_id) do
-    DB.FriendRequest.create(requester_id, requestee_id, "pending")
+  def create(requesting_user_id, requested_user_id) do
+    DB.FriendRequest.create(requesting_user_id, requested_user_id, "pending")
   end
 end

@@ -24,10 +24,10 @@ defmodule DB.FriendRequestTest do
 
       friend_request =
         friend_request
-        |> Repo.preload([:requester, :requestee])
+        |> Repo.preload([:requesting_user, :requested_user])
 
-      assert friend_request.requester.id == user_one.id
-      assert friend_request.requestee.id == user_two.id
+      assert friend_request.requesting_user.id == user_one.id
+      assert friend_request.requested_user.id == user_two.id
     end
 
     test "with invalid requester id" do

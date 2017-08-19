@@ -25,7 +25,7 @@ defmodule API.Web.FriendRequestControllerTest do
       res =
         conn
         |> put_req_header("authorization", token)
-        |> post(@base_url, %{requestee_id: user_two.id})
+        |> post(@base_url, %{requested_user_id: user_two.id})
 
       assert res.status == 201
 
@@ -37,7 +37,7 @@ defmodule API.Web.FriendRequestControllerTest do
       res =
         conn
         |> put_req_header("authorization", token)
-        |> post(@base_url, %{requestee_id: 2 * user_two.id})
+        |> post(@base_url, %{requested_user_id: 2 * user_two.id})
       assert res.status == 422
     end
 

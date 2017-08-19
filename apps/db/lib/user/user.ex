@@ -8,7 +8,7 @@ defmodule DB.User do
   import Ecto.Changeset
   import Ecto.Query
 
-  alias DB.{FriendRequest, Game, Player, Repo, User}
+  alias DB.{Game, Player, Repo, User}
 
   schema "users" do
     field :username, :string
