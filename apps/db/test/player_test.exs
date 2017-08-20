@@ -1,17 +1,11 @@
 defmodule DB.PlayerTest do
   use DB.ModelCase
 
-  alias DB.{Game, Player, Repo}
-
-  @game_params %{
-    title: "Obi-Wan's Game",
-    status: "pending",
-    round_length: 100
-  }
+  alias DB.{Player, Repo}
 
   describe "#create" do
     test "with valid params" do
-      {:ok, game} = Game.create(@game_params)
+      {:ok, game} = create_game()
       {:ok, user} = create_user()
 
       {:ok, player} = Player.create(user.id, game.id)

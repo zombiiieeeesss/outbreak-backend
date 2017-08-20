@@ -1,9 +1,8 @@
 defmodule DB.User.Factory do
-  # with Ecto
   use ExMachina.Ecto, repo: DB.Repo
 
   def create_user do
-    user_params
+    user_params()
     |> DB.User.create
   end
 

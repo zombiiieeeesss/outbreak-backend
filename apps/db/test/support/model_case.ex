@@ -23,7 +23,9 @@ defmodule DB.ModelCase do
       import Ecto.Query
       import DB.ModelCase
       import DB.Model.TestHelper
+
       import DB.User.Factory
+      import DB.Game.Factory
     end
   end
 
