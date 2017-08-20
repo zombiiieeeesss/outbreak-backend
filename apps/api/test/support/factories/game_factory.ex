@@ -5,6 +5,7 @@ defmodule API.Game.Factory do
     status
     |> game_params
     |> API.Game.create
+    |> elem(1)
   end
 
   defp game_params(status) do

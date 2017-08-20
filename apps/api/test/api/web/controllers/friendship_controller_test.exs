@@ -4,8 +4,8 @@ defmodule API.Web.FriendRequestControllerTest do
   @base_url "/v1/friend-requests"
 
   setup do
-    {:ok, user_one} = create_user()
-    {:ok, user_two} = create_user()
+    user_one = create_user()
+    user_two = create_user()
 
     {:ok, token, _full_claims} = Guardian.encode_and_sign(user_one)
     {:ok, %{user_one: user_one, user_two: user_two, token: token}}

@@ -13,7 +13,7 @@ defmodule API.Web.GameControllerTest do
   }
 
   setup do
-    {:ok, user} = create_user()
+    user = create_user()
     {:ok, token, full_claims} = Guardian.encode_and_sign(user)
     {:ok, %{user: user, token: token, claims: full_claims}}
   end

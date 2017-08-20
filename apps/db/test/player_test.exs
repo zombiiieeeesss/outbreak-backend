@@ -5,8 +5,8 @@ defmodule DB.PlayerTest do
 
   describe "#create" do
     test "with valid params" do
-      {:ok, game} = create_game()
-      {:ok, user} = create_user()
+      game = create_game()
+      user = create_user()
 
       {:ok, player} = Player.create(user.id, game.id)
       player =
@@ -18,7 +18,7 @@ defmodule DB.PlayerTest do
     end
 
     test "with invalid game id" do
-      {:ok, user} = create_user()
+      user = create_user()
 
       {:error, changeset} = Player.create(user.id, 3)
 

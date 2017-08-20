@@ -35,8 +35,8 @@ defmodule DB.GameTest do
 
   describe "#list_by_user" do
     test "given a user struct, returns a list of games for that user" do
+      user = create_user()
       {:ok, game} = Game.create(@params)
-      {:ok, user} = create_user()
       {:ok, _player} = Player.create(user.id, game.id)
 
       assert [^game] = DB.Game.list_by_user(user)

@@ -4,6 +4,7 @@ defmodule API.User.Factory do
   def create_user do
     user_params()
     |> API.User.create
+    |> elem(1)
   end
 
   defp user_params do
