@@ -6,6 +6,7 @@ defmodule DB.FriendRequest do
   join table between users.
   """
   use Ecto.Schema
+  import Ecto.Query
   import Ecto.Changeset
 
   alias DB.{FriendRequest, Repo, User}
@@ -26,6 +27,16 @@ defmodule DB.FriendRequest do
     %FriendRequest{}
     |> changeset(%{requesting_user_id: requesting_user_id, requested_user_id: requested_user_id, status: status})
     |> Repo.insert
+  end
+
+  def list_by_user(user_id) do
+    query = from(f in FriendRequest,
+      where: f.requesting_user_id == ^user_id or f.requested_user_id == ^user_id,
+      preload: [:requesting_user, :requested_user],
+      select: f
+    )
+
+    Repo.all(query)
   end
 
   defp changeset(struct, params) do

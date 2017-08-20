@@ -47,4 +47,15 @@ defmodule DB.FriendRequestTest do
       refute changeset.valid?
     end
   end
+
+  describe "#list_by_user" do
+    test "with valid params", %{user_one: user_one} do
+      create_friend_request(%{requesting_user_id: user_one.id})
+      create_friend_request(%{requesting_user_id: user_one.id})
+      create_friend_request(%{requesting_user_id: user_one.id})
+
+      frs = FriendRequest.list_by_user(user_one.id)
+      assert length(frs) == 3
+    end
+  end
 end

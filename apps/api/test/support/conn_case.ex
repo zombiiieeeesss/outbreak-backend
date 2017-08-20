@@ -24,6 +24,7 @@ defmodule API.Web.ConnCase do
 
       import API.User.Factory
       import API.Game.Factory
+      import API.FriendRequest.Factory
 
       # The default endpoint for testing
       @endpoint API.Web.Endpoint

@@ -12,7 +12,7 @@ defmodule API.Web.FriendRequestControllerTest do
   end
 
   describe "#create" do
-    test "with valid params", %{conn: conn, user_two: user_two, token: token} do
+    test "with valid params", %{conn: conn, user_one: user_one, user_two: user_two, token: token} do
       res =
         conn
         |> put_req_header("authorization", token)
@@ -21,7 +21,11 @@ defmodule API.Web.FriendRequestControllerTest do
       assert res.status == 201
 
       body = json_response(res)
+
       assert body.id
+      assert body.status == "pending"
+      assert body.requesting_user_id == user_one.id
+      assert body.friend.id == user_two.id
     end
 
     test "with invalid params", %{conn: conn, token: token, user_two: user_two} do
@@ -35,6 +39,31 @@ defmodule API.Web.FriendRequestControllerTest do
     test "with invalid auth credentials", %{conn: conn} do
       res = post(conn, @base_url, %{})
       assert res.status == 401
+    end
+  end
+
+  describe "#index" do
+    test "with a valid request", %{conn: conn, token: token, user_one: user_one} do
+      create_friend_request(%{requesting_user_id: user_one.id})
+      create_friend_request(%{requested_user_id: user_one.id})
+      create_friend_request(%{requesting_user_id: user_one.id})
+      create_friend_request(%{requested_user_id: user_one.id})
+
+      res =
+        conn
+        |> put_req_header("authorization", token)
+        |> get(@base_url)
+
+      assert res.status == 200
+
+      body = json_response(res)
+      assert length(body) == 4
+
+      [fr | _tail] = body
+      assert fr.id
+      assert fr.status == "pending"
+      assert fr.requesting_user_id
+      assert fr.friend
     end
   end
 end

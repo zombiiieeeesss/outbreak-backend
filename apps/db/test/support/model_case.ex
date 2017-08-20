@@ -26,6 +26,7 @@ defmodule DB.ModelCase do
 
       import DB.User.Factory
       import DB.Game.Factory
+      import DB.FriendRequest.Factory
     end
   end
 
