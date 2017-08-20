@@ -1,7 +1,7 @@
 defmodule DB.PlayerTest do
   use DB.ModelCase
 
-  alias DB.{Game, Player, Repo, User}
+  alias DB.{Game, Player, Repo}
 
   @game_params %{
     title: "Obi-Wan's Game",
@@ -9,16 +9,10 @@ defmodule DB.PlayerTest do
     round_length: 100
   }
 
-  @user_params %{
-    username: "Obi-Wan",
-    email: "obi-wan@jedicouncil.org",
-    password: "ihavethehighground"
-  }
-
   describe "#create" do
     test "with valid params" do
       {:ok, game} = Game.create(@game_params)
-      {:ok, user} = User.create(@user_params)
+      {:ok, user} = create_user()
 
       {:ok, player} = Player.create(user.id, game.id)
       player =
@@ -30,7 +24,7 @@ defmodule DB.PlayerTest do
     end
 
     test "with invalid game id" do
-      {:ok, user} = User.create(@user_params)
+      {:ok, user} = create_user()
 
       {:error, changeset} = Player.create(user.id, 3)
 

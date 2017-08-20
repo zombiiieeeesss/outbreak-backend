@@ -1,24 +1,12 @@
 defmodule DB.FriendRequestTest do
   use DB.ModelCase
 
-  alias DB.{FriendRequest, User}
-
-  @user_one_params %{
-    username: "Obi-Wan",
-    email: "obi-wan@jedicouncil.org",
-    password: "ihavethehighground"
-  }
-
-  @user_two_params %{
-    username: "Yoda",
-    email: "yoda@jedicouncil.org",
-    password: "ihavethehighground"
-  }
+  alias DB.{FriendRequest}
 
   describe "#create" do
     test "with valid params" do
-      {:ok, user_one} = User.create(@user_one_params)
-      {:ok, user_two} = User.create(@user_two_params)
+      {:ok, user_one} = create_user()
+      {:ok, user_two} = create_user()
 
       {:ok, friend_request} = FriendRequest.create(user_one.id, user_two.id, "pending")
 
@@ -31,7 +19,7 @@ defmodule DB.FriendRequestTest do
     end
 
     test "with invalid requester id" do
-      {:ok, user} = User.create(@user_one_params)
+      {:ok, user} = create_user()
 
       {:error, changeset} = FriendRequest.create(user.id, 2 * user.id, "pending")
 
@@ -39,7 +27,7 @@ defmodule DB.FriendRequestTest do
     end
 
     test "with invalid requestee id" do
-      {:ok, user} = User.create(@user_one_params)
+      {:ok, user} = create_user()
 
       {:error, changeset} = FriendRequest.create(2 * user.id, user.id, "pending")
 
@@ -47,7 +35,7 @@ defmodule DB.FriendRequestTest do
     end
 
     test "with invalid status" do
-      {:ok, user} = User.create(@user_one_params)
+      {:ok, user} = create_user()
 
       {:error, changeset} = FriendRequest.create(1, user.id, "itscomplicated")
 
@@ -55,8 +43,8 @@ defmodule DB.FriendRequestTest do
     end
 
     test "with creating the same friend_request relationship twice is invalid" do
-      {:ok, user_one} = User.create(@user_one_params)
-      {:ok, user_two} = User.create(@user_two_params)
+      {:ok, user_one} = create_user()
+      {:ok, user_two} = create_user()
 
       {:ok, _friend_request} = FriendRequest.create(user_one.id, user_two.id, "pending")
       {:error, changeset} = FriendRequest.create(user_one.id, user_two.id, "pending")

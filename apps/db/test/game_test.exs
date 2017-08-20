@@ -1,18 +1,12 @@
 defmodule DB.GameTest do
   use DB.ModelCase
 
-  alias DB.{User, Game, Player}
+  alias DB.{Game, Player}
 
   @params %{
     title: "Obi-Wan's Game",
     status: "pending",
     round_length: 100
-  }
-
-  @user_params %{
-    username: "Obi-Wan",
-    email: "obi-wan@jedicouncil.org",
-    password: "ihavethehighground"
   }
 
   describe "#create" do
@@ -42,7 +36,7 @@ defmodule DB.GameTest do
   describe "#list_by_user" do
     test "given a user struct, returns a list of games for that user" do
       {:ok, game} = Game.create(@params)
-      {:ok, user} = User.create(@user_params)
+      {:ok, user} = create_user()
       {:ok, _player} = Player.create(user.id, game.id)
 
       assert [^game] = DB.Game.list_by_user(user)
