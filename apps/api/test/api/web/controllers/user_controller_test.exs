@@ -79,8 +79,6 @@ defmodule API.Web.UserControllerTest do
   end
 
   test "POST /user/refresh with a invalid token", %{conn: conn} do
-    {:ok, _user} = API.User.create(@user_params)
-
     res =
       conn
       |> put_req_header("authorization", "badtoken")

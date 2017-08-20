@@ -12,14 +12,8 @@ defmodule API.Web.GameControllerTest do
     "round_length" => @round_length
   }
 
-  @user_params %{
-    "username" => "Dude",
-    "email" => "dude@dude.dude",
-    "password" => "dudedooood"
-  }
-
   setup do
-    {:ok, user} = API.User.create(@user_params)
+    {:ok, user} = create_user()
     {:ok, token, full_claims} = Guardian.encode_and_sign(user)
     {:ok, %{user: user, token: token, claims: full_claims}}
   end
