@@ -18,19 +18,18 @@ defmodule API.FriendRequest do
   end
 
   def list(user_id) do
-    friend_requests =
-      user_id
-      |> DB.FriendRequest.list_by_user
-      |> Enum.map(fn(fr) ->
-        determine_friend_key(fr, user_id)
-      end)
-
-    {:ok, friend_requests}
+    user_id
+    |> DB.FriendRequest.list_by_user
+    |> Enum.map(fn(fr) ->
+      determine_friend_key(fr, user_id)
+    end)
   end
 
   defp determine_friend_key(fr, user_id) do
-    requesting_user_id = fr.requesting_user_id
-    requested_user_id = fr.requested_user_id
+    %DB.FriendRequest{
+      requesting_user_id: requesting_user_id,
+      requested_user_id: requested_user_id
+    } = fr
 
     case user_id do
       ^requesting_user_id ->

@@ -23,13 +23,13 @@ defmodule DB.FriendRequestTest do
     end
 
     test "with invalid requester id", %{user_one: user} do
-      {:error, changeset} = FriendRequest.create(user.id, 2 * user.id, "pending")
+      {:error, changeset} = FriendRequest.create(user.id, 0, "pending")
 
       refute changeset.valid?
     end
 
     test "with invalid requestee id", %{user_one: user} do
-      {:error, changeset} = FriendRequest.create(2 * user.id, user.id, "pending")
+      {:error, changeset} = FriendRequest.create(0, user.id, "pending")
 
       refute changeset.valid?
     end

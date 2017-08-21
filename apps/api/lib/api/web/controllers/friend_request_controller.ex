@@ -18,7 +18,7 @@ defmodule API.Web.FriendRequestController do
   def index(conn, _params) do
     user = Guardian.Plug.current_resource(conn)
 
-    with {:ok, friend_requests} <-
+    with friend_requests when is_list(friend_requests) <-
       API.FriendRequest.list(user.id)
     do
       conn

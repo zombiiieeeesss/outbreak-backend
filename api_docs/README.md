@@ -1,6 +1,7 @@
 # API Documentation
 
 - [FriendRequest](https://github.com/zombiiieeeesss/outbreak-backend/blob/master/api_docs/friend_request.md)
+  - [List](https://github.com/zombiiieeeesss/outbreak-backend/blob/master/api_docs/friend_request.md#list)
   - [Create](https://github.com/zombiiieeeesss/outbreak-backend/blob/master/api_docs/friend_request.md#create)
 - [User](https://github.com/zombiiieeeesss/outbreak-backend/blob/master/api_docs/user.md)
   - [Create](https://github.com/zombiiieeeesss/outbreak-backend/blob/master/api_docs/user.md#creating-a-user)
