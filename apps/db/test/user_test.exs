@@ -49,4 +49,50 @@ defmodule DB.UserTest do
         |> DB.Repo.insert
     end
   end
+
+  describe "#search_users" do
+    setup do
+      {:ok, user} = DB.User.create(@params)
+      {:ok, user: user}
+    end
+
+    test "by exact username returns a user", %{user: user} do
+      [searched_user] = DB.User.search_users(username: @params.username)
+      assert searched_user.username == user.username
+    end
+
+    test "by exact username, case insensitive, returns a user", %{user: user} do
+      [searched_user] =
+        DB.User.search_users(username: String.upcase(@params.username))
+      assert searched_user.username == user.username
+    end
+
+    test "by fuzzy username, distance 4 returns a user", %{user: user} do
+      [searched_user] = DB.User.search_users(username: "obi")
+      assert searched_user.username == user.username
+    end
+
+    test "by fuzzy username, distance 5 or greater returns nothing" do
+      assert [] = DB.User.search_users(username: "ob")
+    end
+
+    test "by exact email returns a user", %{user: user} do
+      [searched_user] = DB.User.search_users(email: @params.email)
+      assert searched_user.username == user.username
+    end
+
+    test "by exact email, case insensitive returns a user", %{user: user} do
+      [searched_user] = DB.User.search_users(email: String.upcase(@params.email))
+      assert searched_user.username == user.username
+    end
+
+    test "by fuzzy email, distance 4 returns a user", %{user: user} do
+      [searched_user] = DB.User.search_users(email: "obiwan@jedicouncil.net")
+      assert searched_user.username == user.username
+    end
+
+    test "by fuzzy email, distance 5 or greater returns nothing" do
+      assert [] = DB.User.search_users(email: "obi-wan")
+    end
+  end
 end
