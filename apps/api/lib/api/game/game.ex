@@ -9,5 +9,4 @@ defmodule API.Game do
   def create(attrs) do
     DB.Game.create(attrs)
   end
-
 end

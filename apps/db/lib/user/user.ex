@@ -8,7 +8,7 @@ defmodule DB.User do
   import Ecto.Changeset
   import Ecto.Query
 
-  alias DB.{Game, Player, User}
+  alias DB.{Game, Player, Repo, User}
 
   @levenshtein Application.get_env(:db, :levenshtein_distance)
 
@@ -28,7 +28,7 @@ defmodule DB.User do
   def create(attrs) do
     %User{}
     |> registration_changeset(attrs)
-    |> DB.Repo.insert
+    |> Repo.insert
   end
 
   def get_by_username(username) do
@@ -70,7 +70,7 @@ defmodule DB.User do
   end
 
   def get(id) do
-    DB.Repo.get(User, id)
+    Repo.get(User, id)
   end
 
   def registration_changeset(struct, params) do

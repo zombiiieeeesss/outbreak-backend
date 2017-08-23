@@ -1,6 +1,8 @@
 defmodule API.Web.UserController do
   use API.Web, :controller
 
+  action_fallback API.Web.FallbackController
+
   def search(conn, %{"email" => email}) do
     users = API.User.search_users(email: email)
 
@@ -24,16 +26,12 @@ defmodule API.Web.UserController do
   end
 
   def create(conn, params) do
-    case API.User.create(params) do
-      {:ok, user} ->
-        conn
-        |> put_status(201)
-        |> render(user)
-
-      {:error, changeset} ->
-        conn
-        |> put_status(422)
-        |> render(API.Web.ErrorView, "422.json", changeset)
+    with {:ok, user} <-
+      API.User.create(params)
+    do
+      conn
+      |> put_status(201)
+      |> render(user)
     end
   end
 
@@ -66,12 +64,6 @@ defmodule API.Web.UserController do
         |> put_status(401)
         |> json(%{errors: ["Invalid Token"]})
     end
-  end
-
-  def unauthenticated(conn, _params) do
-    conn
-    |> put_status(401)
-    |> render(API.Web.ErrorView, "401.json")
   end
 
   defp authorization_headers(conn, token, exp) do

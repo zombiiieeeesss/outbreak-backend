@@ -9,7 +9,7 @@ defmodule API.Web.Router do
 
   pipeline :auth do
     plug Guardian.Plug.EnsureAuthenticated,
-      handler: API.Web.UserController
+      handler: API.Web.FallbackController
   end
 
   scope "/", API.Web do
@@ -33,5 +33,6 @@ defmodule API.Web.Router do
     get "/users", UserController, :search
 
     resources "/games", GameController, only: [:index, :create]
+    resources "/friend-requests", FriendRequestController, only: [:create]
   end
 end
