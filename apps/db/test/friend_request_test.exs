@@ -60,6 +60,7 @@ defmodule DB.FriendRequestTest do
 
       {:ok, _friend_request} = FriendRequest.create(user_one.id, user_two.id, "pending")
       {:error, changeset} = FriendRequest.create(user_one.id, user_two.id, "pending")
+      {:error, _changeset} = FriendRequest.create(user_two.id, user_one.id, "pending")
 
       refute changeset.valid?
     end
