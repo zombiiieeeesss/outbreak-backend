@@ -25,7 +25,7 @@ defmodule API.Web.UserView do
     %{users: Enum.map(users, &render_user/1)}
   end
 
-  defp render_user(user) do
+  def render_user(user) do
     %{
       id: user.id,
       email: user.email,

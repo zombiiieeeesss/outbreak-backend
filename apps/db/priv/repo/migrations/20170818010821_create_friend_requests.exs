@@ -10,6 +10,8 @@ defmodule DB.Repo.Migrations.CreateFriendRequest do
       timestamps()
     end
 
+    create index(:friend_requests, :requesting_user_id)
+    create index(:friend_requests, :requested_user_id)
     create unique_index(:friend_requests, ["greatest(requesting_user_id,requested_user_id)", "least(requesting_user_id,requested_user_id)"], name: :requester_requestee)
   end
 end

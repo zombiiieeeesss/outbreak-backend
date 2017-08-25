@@ -3,7 +3,7 @@ defmodule API.Game.Factory do
 
   def create_game(attrs \\ %{}) do
     build(:game_params, attrs)
-    |> DB.Game.create
+    |> API.Game.create
     |> elem(1)
   end
 

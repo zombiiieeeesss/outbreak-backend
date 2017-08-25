@@ -8,5 +8,8 @@ defmodule DB.Repo.Migrations.CreatePlayer do
 
       timestamps()
     end
+
+    create index(:players, :user_id)
+    create index(:players, :game_id)
   end
 end

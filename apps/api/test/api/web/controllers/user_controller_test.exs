@@ -29,7 +29,7 @@ defmodule API.Web.UserControllerTest do
       assert res.status == 200
       body = json_response(res)
       assert [user] = body.users
-      assert user["username"] == @username
+      assert user.username == @username
     end
 
     test "by email returns users", %{conn: conn, token: token} do
@@ -41,7 +41,7 @@ defmodule API.Web.UserControllerTest do
       assert res.status == 200
       body = json_response(res)
       assert [user] = body.users
-      assert user["email"] == @email
+      assert user.email == @email
     end
 
     test "with invalid parameter returns an error", %{conn: conn, token: token} do

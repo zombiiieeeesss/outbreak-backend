@@ -1,5 +1,28 @@
 # FriendRequest
 
+### List
+
+`GET /v1/friend-requests`
+
+**Headers:**
+`Authorization: your-token`
+
+**Example Response:**
+```json
+[
+  {
+    "friend": {
+      "email": "email-24@example.com",
+      "id": 2556,
+      "username": "email-24@example.com"
+    },
+    "id": 692,
+    "requesting_user_id": 2555,
+    "status": "pending"
+  }
+]
+```
+
 ### Create
 
 `POST /v1/friend-requests/`
@@ -27,6 +50,13 @@
 
 ```json
 {
-  "id": 10
+  "friend": {
+    "email": "email-24@example.com",
+    "id": 2556,
+    "username": "email-24@example.com"
+  },
+  "id": 692,
+  "requesting_user_id": 2555,
+  "status": "pending"
 }
 ```

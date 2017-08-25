@@ -23,13 +23,13 @@ defmodule DB.FriendRequestTest do
     end
 
     test "with invalid requester id", %{user_one: user} do
-      {:error, changeset} = FriendRequest.create(user.id, 2 * user.id, "pending")
+      {:error, changeset} = FriendRequest.create(user.id, 0, "pending")
 
       refute changeset.valid?
     end
 
     test "with invalid requestee id", %{user_one: user} do
-      {:error, changeset} = FriendRequest.create(2 * user.id, user.id, "pending")
+      {:error, changeset} = FriendRequest.create(0, user.id, "pending")
 
       refute changeset.valid?
     end
@@ -46,6 +46,17 @@ defmodule DB.FriendRequestTest do
       {:error, _changeset} = FriendRequest.create(user_two.id, user_one.id, "pending")
 
       refute changeset.valid?
+    end
+  end
+
+  describe "#list_by_user" do
+    test "with valid params", %{user_one: user_one} do
+      create_friend_request(%{requesting_user_id: user_one.id})
+      create_friend_request(%{requesting_user_id: user_one.id})
+      create_friend_request(%{requesting_user_id: user_one.id})
+
+      frs = FriendRequest.list_by_user(user_one.id)
+      assert length(frs) == 3
     end
   end
 end
