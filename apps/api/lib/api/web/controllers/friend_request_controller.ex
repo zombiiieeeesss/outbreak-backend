@@ -18,12 +18,10 @@ defmodule API.Web.FriendRequestController do
   def index(conn, _params) do
     user = Guardian.Plug.current_resource(conn)
 
-    with friend_requests when is_list(friend_requests) <-
-      API.FriendRequest.list(user.id)
-    do
-      conn
-      |> put_status(200)
-      |> render(%{friend_requests: friend_requests})
-    end
+    friend_requests = API.FriendRequest.list(user.id)
+
+    conn
+    |> put_status(200)
+    |> render(%{friend_requests: friend_requests})
   end
 end
