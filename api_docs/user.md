@@ -1,5 +1,41 @@
 # User
 
+### Searching for Users
+
+`GET /v1/users/`
+
+This endpoint performs a fuzzy search for Users. It does this by calculating the Levenshtein distance, returning up to 10 entries with a distance of no greater than 5. It takes query params, either `username` or `email`.
+
+**Headers:**
+
+`Authorization: your-token`
+
+**Query Parameters:**
+
+`username` or `email`
+
+**Example Request:**
+`GET /v1/users/?username=thedude`
+
+**Example Response:**
+```json
+{
+    "users": [
+        {
+            "username": "thedude",
+            "id": 2,
+            "email": "dude@dude"
+        },
+        {
+            "username": "dude",
+            "id": 1,
+            "email": "dude@dude.dude"
+        }
+    ]
+}
+```
+
+
 ### Creating a User
 
 `POST /v1/users/`

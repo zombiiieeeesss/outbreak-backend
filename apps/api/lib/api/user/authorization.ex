@@ -6,7 +6,7 @@ defmodule API.User.Authorization do
   alias API.User.{Authentication}
 
   def authorize(%{"username" => username, "password" => password}) do
-    with user when is_map(user) <- DB.User.get_by_username(username),
+    with user when is_map(user) <- API.User.get_by_username(username),
                            true <- check_password(password, user)
     do
       {jwt, exp} = Authentication.generate_token(user)

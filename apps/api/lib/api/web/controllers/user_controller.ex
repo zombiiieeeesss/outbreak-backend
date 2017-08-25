@@ -3,6 +3,28 @@ defmodule API.Web.UserController do
 
   action_fallback API.Web.FallbackController
 
+  def search(conn, %{"email" => email}) do
+    users = API.User.search_users(email: email)
+
+    conn
+    |> put_status(:ok)
+    |> render(%{users: users})
+  end
+
+  def search(conn, %{"username" => username}) do
+    users = API.User.search_users(username: username)
+    conn
+    |> put_status(:ok)
+    |> render(%{users: users})
+  end
+
+  def search(conn, _params) do
+    msg = "Missing search parameter. Choose `email` or `username`."
+    conn
+    |> put_status(:bad_request)
+    |> json(%{errors: [msg]})
+  end
+
   def create(conn, params) do
     with {:ok, user} <-
       API.User.create(params)

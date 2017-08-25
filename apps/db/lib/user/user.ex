@@ -10,6 +10,8 @@ defmodule DB.User do
 
   alias DB.{Game, Player, Repo, User}
 
+  @levenshtein Application.get_env(:db, :levenshtein_distance)
+
   schema "users" do
     field :username, :string
     field :email, :string
@@ -35,6 +37,36 @@ defmodule DB.User do
         u in User,
         where: fragment("lower(username) = ?", ^String.downcase(username))
     ))
+  end
+
+  @doc """
+  Searches for users by `username`. Uses levenshtein distance
+  to determine matches, up to a distance of 5.
+  """
+  def search_users(username: query_string) do
+    DB.Repo.all(
+      from u in User,
+      where: fragment(
+        "levenshtein(lower(?), lower(?))", u.username, ^query_string
+      ) < @levenshtein,
+      order_by: fragment("levenshtein(lower(?), lower(?))", u.username, ^query_string),
+      limit: 10
+    )
+  end
+
+  @doc """
+  Searches for users by `email`. Uses levenshtein distance
+  to determine matches, up to a distance of 5.
+  """
+  def search_users(email: query_string) do
+    DB.Repo.all(
+      from u in User,
+      where: fragment(
+        "levenshtein(lower(?), lower(?))", u.email, ^query_string
+      ) < @levenshtein,
+      order_by: fragment("levenshtein(lower(?), lower(?))", u.email, ^query_string),
+      limit: 10
+    )
   end
 
   def get(id) do
