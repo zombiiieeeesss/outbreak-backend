@@ -43,6 +43,7 @@ defmodule DB.FriendRequestTest do
     test "with creating the same friend_request relationship twice is invalid", %{user_one: user_one, user_two: user_two} do
       {:ok, _friend_request} = FriendRequest.create(user_one.id, user_two.id, "pending")
       {:error, changeset} = FriendRequest.create(user_one.id, user_two.id, "pending")
+      {:error, _changeset} = FriendRequest.create(user_two.id, user_one.id, "pending")
 
       refute changeset.valid?
     end
