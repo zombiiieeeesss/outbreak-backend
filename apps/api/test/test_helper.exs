@@ -1,4 +1,5 @@
 ExUnit.start()
+{:ok, _} = Application.ensure_all_started(:ex_machina)
 
 defmodule API.Web.Controller.TestHelper do
   def json_response(res) do
