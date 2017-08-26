@@ -10,7 +10,7 @@ defmodule DB.User do
 
   alias DB.{Game, Player, Repo, User}
 
-  @levenshtein Application.get_env(:db, :levenshtein_distance)
+  defp levenshtein_distance, do: Application.get_env(:db, :levenshtein_distance)
 
   schema "users" do
     field :username, :string
@@ -48,7 +48,7 @@ defmodule DB.User do
       from u in User,
       where: fragment(
         "levenshtein(lower(?), lower(?))", u.username, ^query_string
-      ) < @levenshtein,
+      ) < ^levenshtein_distance(),
       order_by: fragment("levenshtein(lower(?), lower(?))", u.username, ^query_string),
       limit: 10
     )
@@ -63,7 +63,7 @@ defmodule DB.User do
       from u in User,
       where: fragment(
         "levenshtein(lower(?), lower(?))", u.email, ^query_string
-      ) < @levenshtein,
+      ) < ^levenshtein_distance(),
       order_by: fragment("levenshtein(lower(?), lower(?))", u.email, ^query_string),
       limit: 10
     )
