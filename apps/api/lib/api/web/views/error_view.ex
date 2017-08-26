@@ -1,6 +1,8 @@
 defmodule API.Web.ErrorView do
   use API.Web, :view
 
+  def render("400.json", %{errors: errors}), do: %{errors: errors}
+
   def render("422.json", changeset) do
     errors = Ecto.Changeset.traverse_errors(changeset, &format_changeset_errors/1)
     %{errors: errors}

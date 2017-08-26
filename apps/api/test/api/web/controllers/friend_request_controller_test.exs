@@ -66,4 +66,28 @@ defmodule API.Web.FriendRequestControllerTest do
       assert fr.friend
     end
   end
+
+  describe "#delete" do
+    test "with a valid request", %{conn: conn, token: token, user_one: user_one} do
+      fr = create_friend_request(%{requested_user_id: user_one.id})
+
+      res =
+        conn
+        |> put_req_header("authorization", token)
+        |> delete("#{@base_url}/#{fr.id}")
+
+      assert res.status == 200
+
+      refute DB.Repo.get(DB.FriendRequest, fr.id)
+    end
+
+    test "when the friend request does not exist", %{conn: conn, token: token} do
+      res =
+        conn
+        |> put_req_header("authorization", token)
+        |> delete("#{@base_url}/0")
+
+      assert res.status == 400
+    end
+  end
 end

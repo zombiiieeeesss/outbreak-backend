@@ -17,6 +17,8 @@ defmodule API.FriendRequest do
       end
   end
 
+  def delete(id), do: DB.FriendRequest.delete(id)
+
   def list(user_id) do
     user_id
     |> DB.FriendRequest.list_by_user

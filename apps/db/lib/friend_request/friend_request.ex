@@ -29,6 +29,13 @@ defmodule DB.FriendRequest do
     |> Repo.insert
   end
 
+  def delete(id) do
+    case Repo.get(FriendRequest, id) do
+      nil -> {:error, ["friend request does not exist"]}
+      fr -> Repo.delete(fr)
+    end
+  end
+
   def list_by_user(user_id) do
     query = from(f in FriendRequest,
       where: f.requesting_user_id == ^user_id or f.requested_user_id == ^user_id,
