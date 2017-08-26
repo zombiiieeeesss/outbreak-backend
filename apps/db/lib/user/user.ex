@@ -40,31 +40,19 @@ defmodule DB.User do
   end
 
   @doc """
-  Searches for users by `username`. Uses levenshtein distance
-  to determine matches, up to a distance of 5.
+  Searches for users by `email` or `username`. Uses levenshtein distance
+  to determine matches, up to a given distance
   """
-  def search_users(username: query_string) do
+  def search_users(query) do
     DB.Repo.all(
       from u in User,
       where: fragment(
-        "levenshtein(lower(?), lower(?))", u.username, ^query_string
+        "levenshtein(lower(?), lower(?))", u.username, ^query
       ) < ^levenshtein_distance(),
-      order_by: fragment("levenshtein(lower(?), lower(?))", u.username, ^query_string),
-      limit: 10
-    )
-  end
-
-  @doc """
-  Searches for users by `email`. Uses levenshtein distance
-  to determine matches, up to a distance of 5.
-  """
-  def search_users(email: query_string) do
-    DB.Repo.all(
-      from u in User,
-      where: fragment(
-        "levenshtein(lower(?), lower(?))", u.email, ^query_string
+      or_where: fragment(
+        "levenshtein(lower(?), lower(?))", u.email, ^query
       ) < ^levenshtein_distance(),
-      order_by: fragment("levenshtein(lower(?), lower(?))", u.email, ^query_string),
+      order_by: fragment("levenshtein(lower(?), lower(?))", u.username, ^query),
       limit: 10
     )
   end
