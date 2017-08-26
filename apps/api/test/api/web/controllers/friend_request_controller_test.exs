@@ -90,4 +90,36 @@ defmodule API.Web.FriendRequestControllerTest do
       assert res.status == 400
     end
   end
+
+  describe "#update" do
+    test "with a valid request", %{conn: conn, token: token, user_one: user_one} do
+      fr = create_friend_request(%{requesting_user_id: user_one.id, status: "pending"})
+
+      res =
+        conn
+        |> put_req_header("authorization", token)
+        |> patch("#{@base_url}/#{fr.id}", %{status: "accepted"})
+
+      assert res.status == 201
+
+      body = json_response(res)
+
+      assert body.id == fr.id
+      assert body.status == "accepted"
+      assert body.requesting_user_id == user_one.id
+      assert body.friend.id == fr.requested_user_id
+
+      fr = DB.Repo.get(DB.FriendRequest, fr.id)
+      assert fr.status == "accepted"
+    end
+
+    test "when the friend request does not exist", %{conn: conn, token: token} do
+      res =
+        conn
+        |> put_req_header("authorization", token)
+        |> patch("#{@base_url}/0", %{status: "accepted"})
+
+      assert res.status == 400
+    end
+  end
 end

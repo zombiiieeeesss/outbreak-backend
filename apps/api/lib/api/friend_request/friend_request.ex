@@ -7,10 +7,7 @@ defmodule API.FriendRequest do
       case DB.FriendRequest.create(requesting_user_id, requested_user_id, "pending") do
         {:ok, friend_request} ->
           friend_request =
-            friend_request
-            |> DB.Repo.preload([:requesting_user, :requested_user])
-            |> determine_friend_key(requesting_user_id)
-
+            process_friend_request(friend_request, requesting_user_id)
           {:ok, friend_request}
 
         error -> error
@@ -19,12 +16,29 @@ defmodule API.FriendRequest do
 
   def delete(id), do: DB.FriendRequest.delete(id)
 
+  def update(user_id, fr_id, params) do
+    case DB.FriendRequest.update(fr_id, params) do
+      {:ok, friend_request} ->
+        friend_request =
+          process_friend_request(friend_request, user_id)
+        {:ok, friend_request}
+
+      error -> error
+    end
+  end
+
   def list(user_id) do
     user_id
     |> DB.FriendRequest.list_by_user
     |> Enum.map(fn(fr) ->
       determine_friend_key(fr, user_id)
     end)
+  end
+
+  defp process_friend_request(friend_request, user_id) do
+    friend_request
+    |> DB.Repo.preload([:requesting_user, :requested_user])
+    |> determine_friend_key(user_id)
   end
 
   defp determine_friend_key(fr, user_id) do

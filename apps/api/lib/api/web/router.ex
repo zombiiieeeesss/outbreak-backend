@@ -31,7 +31,7 @@ defmodule API.Web.Router do
     pipe_through :auth
 
     resources "/games", GameController, only: [:create, :index]
-    resources "/friend-requests", FriendRequestController, only: [:create, :delete, :index]
+    resources "/friend-requests", FriendRequestController, only: [:create, :delete, :index, :update]
     get "/users", UserController, :search
   end
 end
