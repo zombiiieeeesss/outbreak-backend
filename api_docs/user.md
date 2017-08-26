@@ -4,18 +4,14 @@
 
 `GET /v1/users/`
 
-This endpoint performs a fuzzy search for Users. It does this by calculating the Levenshtein distance, returning up to 10 entries with a distance of no greater than 5. It takes query params, either `username` or `email`.
+This endpoint performs a fuzzy search for Users. It does this by calculating the Levenshtein distance, returning up to 10 entries with a distance of no greater than the configured limit (defaults to 5). It takes query params, either `username` or `email`.
 
 **Headers:**
 
 `Authorization: your-token`
 
-**Query Parameters:**
-
-`username` or `email`
-
 **Example Request:**
-`GET /v1/users/?username=thedude`
+`GET /v1/users/?q=thedude`
 
 **Example Response:**
 ```json
