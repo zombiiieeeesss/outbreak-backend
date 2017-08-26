@@ -24,7 +24,7 @@ defmodule API.Web.UserControllerTest do
       res =
         conn
         |> put_req_header("authorization", token)
-        |> get(@base_url, %{username: @username})
+        |> get(@base_url, %{q: @username})
 
       assert res.status == 200
       body = json_response(res)
@@ -36,7 +36,7 @@ defmodule API.Web.UserControllerTest do
       res =
         conn
         |> put_req_header("authorization", token)
-        |> get(@base_url, %{email: @email})
+        |> get(@base_url, %{q: @email})
 
       assert res.status == 200
       body = json_response(res)
@@ -49,6 +49,15 @@ defmodule API.Web.UserControllerTest do
         conn
         |> put_req_header("authorization", token)
         |> get(@base_url, %{zombie: "brains"})
+
+      assert res.status == 400
+    end
+
+    test "with no parameter returns an error", %{conn: conn, token: token} do
+      res =
+        conn
+        |> put_req_header("authorization", token)
+        |> get(@base_url, %{})
 
       assert res.status == 400
     end

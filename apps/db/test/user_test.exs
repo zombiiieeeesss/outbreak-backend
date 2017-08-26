@@ -57,42 +57,42 @@ defmodule DB.UserTest do
     end
 
     test "by exact username returns a user", %{user: user} do
-      [searched_user] = DB.User.search_users(username: @params.username)
+      [searched_user] = DB.User.search_users(@params.username)
       assert searched_user.username == user.username
     end
 
     test "by exact username, case insensitive, returns a user", %{user: user} do
       [searched_user] =
-        DB.User.search_users(username: String.upcase(@params.username))
+        DB.User.search_users(String.upcase(@params.username))
       assert searched_user.username == user.username
     end
 
     test "by fuzzy username, distance 4 returns a user", %{user: user} do
-      [searched_user] = DB.User.search_users(username: "obi")
+      [searched_user] = DB.User.search_users("obi")
       assert searched_user.username == user.username
     end
 
     test "by fuzzy username, distance 5 or greater returns nothing" do
-      assert [] = DB.User.search_users(username: "ob")
+      assert [] = DB.User.search_users("ob")
     end
 
     test "by exact email returns a user", %{user: user} do
-      [searched_user] = DB.User.search_users(email: @params.email)
+      [searched_user] = DB.User.search_users(@params.email)
       assert searched_user.username == user.username
     end
 
     test "by exact email, case insensitive returns a user", %{user: user} do
-      [searched_user] = DB.User.search_users(email: String.upcase(@params.email))
+      [searched_user] = DB.User.search_users(String.upcase(@params.email))
       assert searched_user.username == user.username
     end
 
     test "by fuzzy email, distance 4 returns a user", %{user: user} do
-      [searched_user] = DB.User.search_users(email: "obiwan@jedicouncil.net")
+      [searched_user] = DB.User.search_users("obiwan@jedicouncil.net")
       assert searched_user.username == user.username
     end
 
     test "by fuzzy email, distance 5 or greater returns nothing" do
-      assert [] = DB.User.search_users(email: "obi-wan")
+      assert [] = DB.User.search_users("@jedicouncil")
     end
   end
 end
