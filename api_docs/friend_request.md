@@ -69,3 +69,41 @@
 
 `Content-Type: application/json` <br />
 `Authorization: your-token`
+
+### Update
+
+`PATCH /v1/friend-requests/:id`
+
+**Headers:**
+
+`Content-Type: application/json` <br />
+`Authorization: your-token`
+
+**Parameters:**
+
+|**Name**|**Type**|**Required**|**Description**|
+| ------------ |-------- | ---------- | ------------- |
+| status       | string  | Yes        | The status of the updated friend request |
+
+**Example Request:**
+
+```json
+{
+  "status": "accepted"
+}
+```
+
+**Example Response:**
+
+```json
+{
+  "friend": {
+    "email": "email-24@example.com",
+    "id": 2556,
+    "username": "email-24@example.com"
+  },
+  "id": 692,
+  "requesting_user_id": 2555,
+  "status": "accepted"
+}
+```

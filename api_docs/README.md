@@ -4,6 +4,7 @@
   - [List](https://github.com/zombiiieeeesss/outbreak-backend/blob/master/api_docs/friend_request.md#list)
   - [Create](https://github.com/zombiiieeeesss/outbreak-backend/blob/master/api_docs/friend_request.md#create)
   - [Delete](https://github.com/zombiiieeeesss/outbreak-backend/blob/master/api_docs/friend_request.md#delete)
+  - [Update](https://github.com/zombiiieeeesss/outbreak-backend/blob/master/api_docs/friend_request.md#update)
 - [User](https://github.com/zombiiieeeesss/outbreak-backend/blob/master/api_docs/user.md)
   - [Search](https://github.com/zombiiieeeesss/outbreak-backend/blob/master/api_docs/user.md#searching-for-users)
   - [Create](https://github.com/zombiiieeeesss/outbreak-backend/blob/master/api_docs/user.md#creating-a-user)
