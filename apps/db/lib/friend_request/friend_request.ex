@@ -36,6 +36,16 @@ defmodule DB.FriendRequest do
     end
   end
 
+  def update(id, params) do
+    case Repo.get(FriendRequest, id) do
+      nil -> {:error, ["friend request does not exist"]}
+      fr ->
+        fr
+        |> changeset(params)
+        |> Repo.update
+    end
+  end
+
   def list_by_user(user_id) do
     query = from(f in FriendRequest,
       where: f.requesting_user_id == ^user_id or f.requested_user_id == ^user_id,

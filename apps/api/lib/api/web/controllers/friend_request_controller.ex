@@ -11,7 +11,7 @@ defmodule API.Web.FriendRequestController do
     do
       conn
       |> put_status(201)
-      |> render(%{friend_request: friend_request})
+      |> render("friend_request.json", %{friend_request: friend_request})
     end
   end
 
@@ -31,6 +31,18 @@ defmodule API.Web.FriendRequestController do
     do
       conn
       |> put_status(200)
+    end
+  end
+
+  def update(conn, %{"id" => fr_id, "status" => status}) do
+    user = Guardian.Plug.current_resource(conn)
+
+    with {:ok, friend_request} <-
+      API.FriendRequest.update(user.id, fr_id, %{status: status})
+    do
+      conn
+      |> put_status(201)
+      |> render("friend_request.json", %{friend_request: friend_request})
     end
   end
 end

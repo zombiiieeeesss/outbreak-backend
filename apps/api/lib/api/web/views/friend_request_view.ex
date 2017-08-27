@@ -3,7 +3,7 @@ defmodule API.Web.FriendRequestView do
 
   alias API.Web.UserView
 
-  def render("create.json", %{friend_request: friend_request}) do
+  def render("friend_request.json", %{friend_request: friend_request}) do
     render_friend_request(friend_request)
   end
 
