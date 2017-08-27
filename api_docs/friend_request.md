@@ -25,7 +25,7 @@
 
 ### Create
 
-`POST /v1/friend-requests/`
+`POST /v1/friend-requests`
 
 **Headers:**
 
@@ -60,3 +60,12 @@
   "status": "pending"
 }
 ```
+
+### Delete
+
+`DELETE /v1/friend-requests/:id`
+
+**Headers:**
+
+`Content-Type: application/json` <br />
+`Authorization: your-token`

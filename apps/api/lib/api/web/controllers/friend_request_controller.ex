@@ -24,4 +24,13 @@ defmodule API.Web.FriendRequestController do
     |> put_status(200)
     |> render(%{friend_requests: friend_requests})
   end
+
+  def delete(conn, %{"id" => id}) do
+    with {:ok, _} <-
+      API.FriendRequest.delete(id)
+    do
+      conn
+      |> put_status(200)
+    end
+  end
 end

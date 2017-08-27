@@ -59,4 +59,16 @@ defmodule DB.FriendRequestTest do
       assert length(frs) == 3
     end
   end
+
+  describe "#delete" do
+    test "with valid params", %{user_one: user_one} do
+      fr = create_friend_request(%{requesting_user_id: user_one.id})
+
+      assert {:ok, _} = FriendRequest.delete(fr.id)
+    end
+
+    test "when the friend request does not exist" do
+      assert {:error, _} = FriendRequest.delete(0)
+    end
+  end
 end
