@@ -10,5 +10,5 @@ defmodule API.User do
   def login(attrs), do: Authorization.authorize(attrs)
 
   def get_by_username(username), do: DB.User.get_by_username(username)
-  def search_users(query, options), do: DB.User.search_users(query, options)
+  def search_users(query, options \\ []), do: DB.User.search_users(query, options)
 end
