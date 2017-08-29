@@ -29,6 +29,11 @@ defmodule DB.FriendRequest do
     |> Repo.insert
   end
 
+  def create(requesting_user_id, requested_user_id)
+    when requesting_user_id == requested_user_id do
+      {:error, ["Users cannot request themselves"]}
+  end
+
   def delete(id) do
     case Repo.get(FriendRequest, id) do
       nil -> {:error, ["friend request does not exist"]}
