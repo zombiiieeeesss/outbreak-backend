@@ -94,5 +94,19 @@ defmodule DB.UserTest do
     test "by fuzzy email, distance 5 or greater returns nothing" do
       assert [] = DB.User.search_users("@jedicouncil")
     end
+
+    test "with an `except` option excludes a user by username", %{user: user} do
+      params = %{@params | username: "Obi Wan", email: "obiwan@jedicouncil"}
+      {:ok, other_user} = DB.User.create(params)
+      [result] = DB.User.search_users(@params.username, except: user)
+      assert result.username == other_user.username
+    end
+
+    test "with an `except` option excludes a user by email", %{user: user} do
+      params = %{@params | username: "Old Ben Kenobi", email: "obi-wan@jedicouncil"}
+      {:ok, other_user} = DB.User.create(params)
+      [result] = DB.User.search_users(@params.email, except: user)
+      assert result.email == other_user.email
+    end
   end
 end

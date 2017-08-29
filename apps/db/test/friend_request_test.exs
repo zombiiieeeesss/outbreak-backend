@@ -47,6 +47,12 @@ defmodule DB.FriendRequestTest do
 
       refute changeset.valid?
     end
+
+    test "with the same id for requesting and requested returns and error",
+      %{user_one: user} do
+        msg = ["Users cannot request themselves"]
+        {:error, ^msg} = FriendRequest.create(user.id, user.id)
+    end
   end
 
   describe "#list_by_user" do

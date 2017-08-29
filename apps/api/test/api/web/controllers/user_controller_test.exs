@@ -15,33 +15,41 @@ defmodule API.Web.UserControllerTest do
   describe "#search" do
     setup do
       {:ok, user} = API.User.create(@user_params)
+      params = %{
+        @user_params |
+          "username" => "Duder",
+          "email" => "edude@email.com"
+      }
+      {:ok, searchable_user} = API.User.create(params)
       {:ok, token, _} = Guardian.encode_and_sign(user)
 
-      {:ok, %{token: token}}
+      {:ok, %{token: token, searchable_user: searchable_user}}
     end
 
-    test "by username returns users", %{conn: conn, token: token} do
-      res =
-        conn
-        |> put_req_header("authorization", token)
-        |> get(@base_url, %{q: @username})
+    test "by username returns users other than the requesting user",
+      %{conn: conn, token: token, searchable_user: searchable_user} do
+        res =
+          conn
+          |> put_req_header("authorization", token)
+          |> get(@base_url, %{q: @username})
 
-      assert res.status == 200
-      body = json_response(res)
-      assert [user] = body.users
-      assert user.username == @username
+        assert res.status == 200
+        body = json_response(res)
+        assert [user] = body.users
+        assert user.username == searchable_user.username
     end
 
-    test "by email returns users", %{conn: conn, token: token} do
-      res =
-        conn
-        |> put_req_header("authorization", token)
-        |> get(@base_url, %{q: @email})
+    test "by email returns users other than the requesting user",
+      %{conn: conn, token: token, searchable_user: searchable_user} do
+        res =
+          conn
+          |> put_req_header("authorization", token)
+          |> get(@base_url, %{q: @email})
 
-      assert res.status == 200
-      body = json_response(res)
-      assert [user] = body.users
-      assert user.email == @email
+        assert res.status == 200
+        body = json_response(res)
+        assert [user] = body.users
+        assert user.email == searchable_user.email
     end
 
     test "with invalid parameter returns an error", %{conn: conn, token: token} do

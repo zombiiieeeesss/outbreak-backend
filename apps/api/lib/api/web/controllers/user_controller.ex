@@ -4,7 +4,8 @@ defmodule API.Web.UserController do
   action_fallback API.Web.FallbackController
 
   def search(conn, %{"q" => query}) do
-    users = API.User.search_users(query)
+    current_user = Guardian.Plug.current_resource(conn)
+    users = API.User.search_users(query, except: current_user)
 
     conn
     |> put_status(:ok)
