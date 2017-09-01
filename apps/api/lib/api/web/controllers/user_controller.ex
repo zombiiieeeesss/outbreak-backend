@@ -30,17 +30,13 @@ defmodule API.Web.UserController do
   end
 
   def login(conn, params) do
-    case API.User.login(params) do
-      {:ok, user, token, exp} ->
-        conn
-        |> put_status(201)
-        |> authorization_headers(token, exp)
-        |> render(%{user: user, token: token, exp: exp})
-
-      {:error, _} ->
-        conn
-        |> put_status(401)
-        |> json(%{errors: ["Invalid Username or Password"]})
+    with {:ok, user, token, exp} <-
+      API.User.login(params)
+    do
+      conn
+      |> put_status(201)
+      |> authorization_headers(token, exp)
+      |> render(%{user: user, token: token, exp: exp})
     end
   end
 

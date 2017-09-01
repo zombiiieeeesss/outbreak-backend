@@ -31,19 +31,19 @@ defmodule DB.FriendRequest do
 
   def create(requesting_user_id, requested_user_id)
     when requesting_user_id == requested_user_id do
-      {:error, ["Users cannot request themselves"]}
+      {:error, 400, ["Users cannot request themselves"]}
   end
 
   def delete(id) do
     case Repo.get(FriendRequest, id) do
-      nil -> {:error, ["friend request does not exist"]}
+      nil -> {:error, 400, ["friend request does not exist"]}
       fr -> Repo.delete(fr)
     end
   end
 
   def update(id, params) do
     case Repo.get(FriendRequest, id) do
-      nil -> {:error, ["friend request does not exist"]}
+      nil -> {:error, 400, ["friend request does not exist"]}
       fr ->
         fr
         |> changeset(params)
