@@ -12,11 +12,6 @@ defmodule API.Web.PlayerController do
         conn
         |> put_status(:created)
         |> render(%{player: player})
-      else
-        :error ->
-          conn
-          |> put_status(401)
-          |> json(%{errors: ["User does not own game"]})
       end
   end
 end

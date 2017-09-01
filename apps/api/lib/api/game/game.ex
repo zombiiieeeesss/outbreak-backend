@@ -15,7 +15,7 @@ defmodule API.Game do
 
     case game.owner_id do
       ^user_id -> :ok
-      _ -> :error
+      _ -> {:error, 401, ["User does not own game"]}
     end
   end
 end
