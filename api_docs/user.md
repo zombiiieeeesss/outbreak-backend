@@ -2,7 +2,7 @@
 
 ### Searching for Users
 
-`GET /v1/users/`
+`GET /v1/users`
 
 This endpoint performs a fuzzy search for Users. It does this by calculating the Levenshtein distance, returning up to 10 entries with a distance of no greater than the configured limit (defaults to 5). It takes query params, either `username` or `email`.
 
@@ -34,7 +34,7 @@ This endpoint performs a fuzzy search for Users. It does this by calculating the
 
 ### Creating a User
 
-`POST /v1/users/`
+`POST /v1/users`
 
 **Headers:**
 
@@ -72,7 +72,7 @@ This endpoint performs a fuzzy search for Users. It does this by calculating the
 
 When a user logs in, the response will include a JSON Web Token (JWT) that can be used to make requests. It will also be available in the `authorization` header, alongside an `x-expires` header, which gives the expiration date.
 
-`POST /v1/users/login/`
+`POST /v1/users/login`
 
 **Headers**:
 
@@ -112,7 +112,7 @@ When a user logs in, the response will include a JSON Web Token (JWT) that can b
 
 ### Refreshing a token
 
-`POST /v1/users/refresh/`
+`POST /v1/users/refresh`
 
 **Headers:**
 
@@ -124,7 +124,7 @@ None
 **Example response:**
 ```json
 {
-    
+
     "auth": {
     	"token": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJVc2VyOjEiLCJleHAiOjE1MDEwMzY5OTUsImlhdCI6MTUwMDk1MDU5NSwiaXNzIjoiQVBJIiwianRpIjoiZWIxYWIzYmItMDZhNi00MjI5LWI1ZDUtZTUxM2JlMTJlYTU0IiwicGVtIjp7fSwic3ViIjoiVXNlcjoxIiwidHlwIjoiYWNjZXNzIn0.AvyI2nd9YjGRydRgsGpg6sdGeu3FA373rvef6HU7z0bMXhua6B06OedPYmLFcwiQZG2PioJ_dsq7eSCpFnHAtQ",
 	"expires_at": 1501719859

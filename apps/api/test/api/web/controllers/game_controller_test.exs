@@ -31,6 +31,7 @@ defmodule API.Web.GameControllerTest do
       assert body.title == @title
       assert body.status == @status
       assert body.round_length == @round_length
+      assert body.owner_id == user.id
 
       [assoc_user] =
         DB.Game
@@ -55,9 +56,9 @@ defmodule API.Web.GameControllerTest do
   end
 
   describe "#index" do
-    setup context do
-      {:ok, game} = API.Game.create(@game_params)
-      {:ok, _player} = API.Player.create(context.user.id, game.id)
+    setup %{user: user} do
+      game = create_game()
+      {:ok, _player} = API.Player.create(user.id, game.id)
 
       {:ok, %{game: game}}
     end

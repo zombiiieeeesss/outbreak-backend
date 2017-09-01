@@ -2,7 +2,7 @@
 
 ### List
 
-`GET /v1/games/`
+`GET /v1/games`
 
 **Headers:**
 `Authorization: your-token`
@@ -14,6 +14,7 @@
     "title": "zombieland",
     "status": "pending",
     "round_length": 5,
+    "owner_id": 1,
     "id": 11
   }
 ]
@@ -21,7 +22,7 @@
 
 ### Create
 
-`POST /v1/games/`
+`POST /v1/games`
 
 **Headers:**
 
@@ -53,6 +54,7 @@
   "title": "zombieland",
   "status": "pending",
   "round_length": 5,
+  "owner_id": 1,
   "id": 10
 }
 ```

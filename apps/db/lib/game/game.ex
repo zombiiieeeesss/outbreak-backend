@@ -12,6 +12,7 @@ defmodule DB.Game do
   schema "games" do
     field :status, :string
     field :title, :string
+    field :owner_id, :integer
     field :round_length, :integer
 
     many_to_many :users, User, join_through: Player
@@ -19,8 +20,8 @@ defmodule DB.Game do
     timestamps()
   end
 
-  @fields [:status, :title, :round_length]
-  @required_fields [:status, :round_length]
+  @fields [:status, :title, :owner_id, :round_length]
+  @required_fields [:status, :round_length, :owner_id]
   @accepted_statuses ~w(pending active complete)
 
   def list_by_user(user) do
