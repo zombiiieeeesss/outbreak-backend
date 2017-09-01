@@ -34,7 +34,7 @@ defmodule API.Web.GameController do
       do
         conn
         |> put_status(:created)
-        |> render(result.game)
+        |> render(%{game: result.game})
       end
   end
 end

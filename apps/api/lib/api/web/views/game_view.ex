@@ -5,7 +5,7 @@ defmodule API.Web.GameView do
     Enum.map(games, &render_game/1)
   end
 
-  def render("create.json", game), do: render_game(game)
+  def render("create.json", %{game: game}), do: render_game(game)
 
   defp render_game(game) do
     %{

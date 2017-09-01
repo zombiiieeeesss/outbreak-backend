@@ -24,6 +24,8 @@ defmodule DB.Game do
   @required_fields [:status, :round_length, :owner_id]
   @accepted_statuses ~w(pending active complete)
 
+  def get(game_id), do: Repo.get(Game, game_id)
+
   def list_by_user(user) do
     user
     |> Ecto.assoc(:games)
