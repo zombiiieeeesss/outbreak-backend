@@ -24,8 +24,8 @@ defmodule API.Web.PlayerControllerTest do
 
       body = json_response(res)
       assert body.id
+      assert body.user.id == user_added_to_game.id
       assert body.game_id == game.id
-      assert body.user_id == user_added_to_game.id
       assert body.status == "user-pending"
     end
 

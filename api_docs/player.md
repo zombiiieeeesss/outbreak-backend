@@ -30,7 +30,11 @@
 ```json
 {
   "id": 1,
-  "user_id": 3,
+  "user": {
+      "username": "thedude",
+      "id": 3,
+      "email": "dude@dude"
+  },
   "game_id": 5,
   "status": "user-pending"
 }

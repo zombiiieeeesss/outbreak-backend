@@ -4,10 +4,17 @@ defmodule API.Player do
   """
 
   def create(user_id, game_id) do
-    DB.Player.create(%{
+    case DB.Player.create(%{
       user_id: user_id,
       game_id: game_id,
       status: "user-pending"
-    })
+    }) do
+      {:ok, player} ->
+        player =
+          player
+          |> DB.Repo.preload(:user)
+        {:ok, player}
+      error -> error
+    end
   end
 end
