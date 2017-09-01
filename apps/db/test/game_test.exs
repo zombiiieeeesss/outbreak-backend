@@ -1,7 +1,7 @@
 defmodule DB.GameTest do
   use DB.ModelCase
 
-  alias DB.{Game, Player}
+  alias DB.{Game}
 
   @params %{
     title: "Obi-Wan's Game",
@@ -39,7 +39,7 @@ defmodule DB.GameTest do
     test "given a user struct, returns a list of games for that user" do
       user = create_user()
       {:ok, game} = Game.create(@params)
-      {:ok, _player} = Player.create(user.id, game.id)
+      create_player(%{user_id: user.id, game_id: game.id})
 
       assert [^game] = DB.Game.list_by_user(user)
     end

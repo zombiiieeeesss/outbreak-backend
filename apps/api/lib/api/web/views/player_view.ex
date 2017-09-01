@@ -7,7 +7,8 @@ defmodule API.Web.PlayerView do
     %{
       id: player.id,
       game_id: player.game_id,
-      user_id: player.user_id
+      user_id: player.user_id,
+      status: player.status,
     }
   end
 end

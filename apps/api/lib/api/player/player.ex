@@ -4,6 +4,10 @@ defmodule API.Player do
   """
 
   def create(user_id, game_id) do
-    DB.Player.create(user_id, game_id)
+    DB.Player.create(%{
+      user_id: user_id,
+      game_id: game_id,
+      status: "user-pending"
+    })
   end
 end

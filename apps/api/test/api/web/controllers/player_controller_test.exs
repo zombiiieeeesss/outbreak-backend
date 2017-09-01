@@ -26,6 +26,7 @@ defmodule API.Web.PlayerControllerTest do
       assert body.id
       assert body.game_id == game.id
       assert body.user_id == user_added_to_game.id
+      assert body.status == "user-pending"
     end
 
     test "when the user does not own the game", %{conn: conn, token: token} do

@@ -31,6 +31,7 @@
 {
   "id": 1,
   "user_id": 3,
-  "game_id": 5
+  "game_id": 5,
+  "status": "user-pending"
 }
 ```
