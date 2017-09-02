@@ -3,9 +3,6 @@
 use Mix.Config
 
 config :db,
-  ecto_repos: [DB.Repo],
-  levenshtein_distance:
-    System.get_env("LEVENSHTEIN_DISTANCE") || "5"
-    |> String.to_integer
+  ecto_repos: [DB.Repo]
 
 import_config "#{Mix.env}.exs"

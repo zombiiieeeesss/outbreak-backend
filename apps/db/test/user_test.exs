@@ -56,24 +56,28 @@ defmodule DB.UserTest do
       {:ok, user: user}
     end
 
-    test "by exact username returns a user", %{user: user} do
+    test "search works for searches close enough", %{user: user} do
       [searched_user] = DB.User.search_users(@params.username)
       assert searched_user.username == user.username
+
+      [searched_user] = DB.User.search_users("obi")
+      assert searched_user.username == user.username
+
+      assert [] = DB.User.search_users("ob")
     end
 
     test "by exact username, case insensitive, returns a user", %{user: user} do
       [searched_user] =
         DB.User.search_users(String.upcase(@params.username))
       assert searched_user.username == user.username
-    end
 
-    test "by fuzzy username, distance 4 returns a user", %{user: user} do
-      [searched_user] = DB.User.search_users("obi")
+      [searched_user] = DB.User.search_users("obiwan@jedicouncil.net")
       assert searched_user.username == user.username
-    end
 
-    test "by fuzzy username, distance 5 or greater returns nothing" do
-      assert [] = DB.User.search_users("ob")
+      [searched_user] = DB.User.search_users("@jedicouncil")
+      assert searched_user.username == user.username
+
+      assert [] = DB.User.search_users("icouncil")
     end
 
     test "by exact email returns a user", %{user: user} do
@@ -84,15 +88,6 @@ defmodule DB.UserTest do
     test "by exact email, case insensitive returns a user", %{user: user} do
       [searched_user] = DB.User.search_users(String.upcase(@params.email))
       assert searched_user.username == user.username
-    end
-
-    test "by fuzzy email, distance 4 returns a user", %{user: user} do
-      [searched_user] = DB.User.search_users("obiwan@jedicouncil.net")
-      assert searched_user.username == user.username
-    end
-
-    test "by fuzzy email, distance 5 or greater returns nothing" do
-      assert [] = DB.User.search_users("@jedicouncil")
     end
 
     test "with an `except` option excludes a user by username", %{user: user} do
