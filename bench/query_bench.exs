@@ -5,6 +5,6 @@ defmodule BenchmarkQueries do
   teardown_all _, do: Application.stop(:db)
 
   bench "search username/email" do
-    DB.User.search_users("abc")
+    API.User.search("abc", 2)
   end
 end

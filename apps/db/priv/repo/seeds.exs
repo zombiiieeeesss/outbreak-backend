@@ -7,13 +7,20 @@ defmodule DB.Seed do
 
   defp create_user do
     {:ok, user} = DB.User.create(%{
-      username: FakerElixir.Name.name,
-      email: FakerElixir.Internet.email,
+      username: FakerElixir.Helper.unique!(:usernames, fn -> "#{FakerElixir.Internet.user_name}-#{rand_string()}" end),
+      email: FakerElixir.Helper.unique!(:emails, fn -> "#{rand_string()}-#{FakerElixir.Internet.email}" end),
       password: FakerElixir.Internet.password(:strong)
     })
 
     # credo:disable-for-next-line
     IO.inspect "Created User-- #{user.username}/#{user.id}"
+  end
+
+  defp rand_string do
+    5
+    |> :crypto.strong_rand_bytes
+    |> Base.encode64
+    |> binary_part(0, 5)
   end
 
   defp number_of_inserts do
