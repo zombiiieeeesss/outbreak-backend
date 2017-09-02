@@ -11,5 +11,9 @@ defmodule API.User do
 
   def get_by_username(username), do: DB.User.get_by_username(username)
 
-  def search_users(query, options \\ []), do: DB.User.search_users(query, options)
+  def search(query, user_id) do
+    query
+    |> DB.User.search
+    |> Enum.filter(fn(user) -> user.id != user_id end)
+  end
 end
