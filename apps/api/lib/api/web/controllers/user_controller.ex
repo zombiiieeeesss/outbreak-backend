@@ -5,7 +5,7 @@ defmodule API.Web.UserController do
 
   def search(conn, %{"q" => query}) do
     current_user = Guardian.Plug.current_resource(conn)
-    users = API.User.search(query, current_user.id)
+    users = API.User.search_users(query, except: current_user)
 
     conn
     |> put_status(:ok)

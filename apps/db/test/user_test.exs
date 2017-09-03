@@ -50,44 +50,58 @@ defmodule DB.UserTest do
     end
   end
 
-  describe "#search" do
+  describe "#search_users" do
     setup do
       {:ok, user} = DB.User.create(@params)
       {:ok, user: user}
     end
 
     test "search works for searches close enough", %{user: user} do
-      [searched_user] = DB.User.search(@params.username)
+      [searched_user] = DB.User.search_users(@params.username)
       assert searched_user.username == user.username
 
-      [searched_user] = DB.User.search("obi")
+      [searched_user] = DB.User.search_users("obi")
       assert searched_user.username == user.username
 
-      assert [] = DB.User.search("ob")
+      assert [] = DB.User.search_users("ob")
     end
 
     test "by exact username, case insensitive, returns a user", %{user: user} do
       [searched_user] =
-        DB.User.search(String.upcase(@params.username))
+        DB.User.search_users(String.upcase(@params.username))
       assert searched_user.username == user.username
 
-      [searched_user] = DB.User.search("obiwan@jedicouncil.net")
+      [searched_user] = DB.User.search_users("obiwan@jedicouncil.net")
       assert searched_user.username == user.username
 
-      [searched_user] = DB.User.search("@jedicouncil")
+      [searched_user] = DB.User.search_users("@jedicouncil")
       assert searched_user.username == user.username
 
-      assert [] = DB.User.search("icouncil")
+      assert [] = DB.User.search_users("icouncil")
     end
 
     test "by exact email returns a user", %{user: user} do
-      [searched_user] = DB.User.search(@params.email)
+      [searched_user] = DB.User.search_users(@params.email)
       assert searched_user.username == user.username
     end
 
     test "by exact email, case insensitive returns a user", %{user: user} do
-      [searched_user] = DB.User.search(String.upcase(@params.email))
+      [searched_user] = DB.User.search_users(String.upcase(@params.email))
       assert searched_user.username == user.username
+    end
+
+    test "with an `except` option excludes a user by username", %{user: user} do
+      params = %{@params | username: "Obi Wan", email: "obiwan@jedicouncil"}
+      {:ok, other_user} = DB.User.create(params)
+      [result] = DB.User.search_users(@params.username, except: user)
+      assert result.username == other_user.username
+    end
+
+    test "with an `except` option excludes a user by email", %{user: user} do
+      params = %{@params | username: "Old Ben Kenobi", email: "obi-wan@jedicouncil"}
+      {:ok, other_user} = DB.User.create(params)
+      [result] = DB.User.search_users(@params.email, except: user)
+      assert result.email == other_user.email
     end
   end
 end
