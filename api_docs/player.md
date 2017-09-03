@@ -20,22 +20,34 @@
 
 ```json
 {
-  "user_id": 3,
-  "game_id": 5
+  "user_ids": [727, 728],
+  "game_id": 93
 }
 ```
 
 **Example Response:**
 
 ```json
-{
-  "id": 1,
-  "user": {
-      "username": "thedude",
-      "id": 3,
-      "email": "dude@dude"
+[
+  {
+    "game_id": 93,
+    "id": 115,
+    "status": "user-pending",
+    "user": {
+      "email": "email-2@example.com",
+       "id": 727,
+       "username": "email-2@example.com"
+    }
   },
-  "game_id": 5,
-  "status": "user-pending"
-}
+  {
+    "game_id": 93,
+    "id": 116,
+    "status": "user-pending",
+    "user": {
+      "email": "email-3@example.com",
+      "id": 728,
+      "username": "email-3@example.com"
+    }
+  }
+]
 ```

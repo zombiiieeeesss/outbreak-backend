@@ -3,15 +3,15 @@ defmodule API.Web.PlayerController do
 
   action_fallback API.Web.FallbackController
 
-  def create(conn, %{"user_id" => user_id, "game_id" => game_id}) do
+  def create(conn, %{"user_ids" => user_ids, "game_id" => game_id}) do
     user = Guardian.Plug.current_resource(conn)
 
       with :ok <- API.Game.verify_owner(game_id, user.id),
-          {:ok, player} <- API.Player.create(user_id, game_id)
+          {:ok, players} <- API.Player.bulk_create(user_ids, game_id)
       do
         conn
         |> put_status(:created)
-        |> render(%{player: player})
+        |> render(%{players: players})
       end
   end
 end

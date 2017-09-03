@@ -8,6 +8,7 @@ defmodule DB.Player do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Ecto.Multi
   alias DB.{Game, Player, Repo, User}
 
   schema "players" do
@@ -26,6 +27,17 @@ defmodule DB.Player do
     %Player{}
     |> changeset(attrs)
     |> Repo.insert
+  end
+
+  def bulk_create(attr_list) do
+    multi = Multi.new
+
+    attr_list
+    |> Enum.with_index
+    |> Enum.reduce(multi, fn({attrs, i}, multi) ->
+      Multi.insert(multi, i, changeset(%Player{}, attrs))
+    end)
+    |> Repo.transaction
   end
 
   defp changeset(struct, params) do
