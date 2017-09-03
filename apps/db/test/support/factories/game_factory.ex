@@ -11,7 +11,8 @@ defmodule DB.Game.Factory do
     %{
       title: "Obi-Wan's Game",
       status: "pending",
-      round_length: 100
+      round_length: 100,
+      owner_id: DB.User.Factory.create_user().id
     }
   end
 end

@@ -20,7 +20,11 @@ defmodule API.Web.GameController do
 
     multi =
       Multi.new
-      |> Multi.run(:game, fn(_) -> API.Game.create(params) end)
+      |> Multi.run(:game, fn(_) ->
+        params
+        |> Map.put("owner_id", user.id)
+        |> API.Game.create
+      end)
       |> Multi.run(:player, fn(%{game: game}) ->
         API.Player.create(user.id, game.id)
       end)

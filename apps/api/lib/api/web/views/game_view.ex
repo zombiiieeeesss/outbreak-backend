@@ -10,6 +10,7 @@ defmodule API.Web.GameView do
   defp render_game(game) do
     %{
       id: game.id,
+      owner_id: game.owner_id,
       title: game.title,
       status: game.status,
       round_length: game.round_length

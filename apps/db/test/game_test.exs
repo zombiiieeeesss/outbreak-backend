@@ -6,7 +6,8 @@ defmodule DB.GameTest do
   @params %{
     title: "Obi-Wan's Game",
     status: "pending",
-    round_length: 100
+    round_length: 100,
+    owner_id: 1
   }
 
   describe "#create" do
@@ -16,6 +17,7 @@ defmodule DB.GameTest do
       assert game.title == @params.title
       assert game.status == @params.status
       assert game.round_length == @params.round_length
+      assert game.owner_id == @params.owner_id
     end
 
     test "with no params" do
