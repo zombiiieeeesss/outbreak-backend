@@ -58,18 +58,22 @@ defmodule API.Web.GameControllerTest do
   describe "#index" do
     setup %{user: user} do
       game = create_game()
-      {:ok, _player} = API.Player.create(user.id, game.id)
+      {:ok, player} = API.Player.create(user.id, game.id)
 
-      {:ok, %{game: game}}
+      {:ok, %{game: game, player: player}}
     end
 
-    test "returns a list of games", %{conn: conn, token: token} do
+    test "returns a list of games", %{conn: conn, token: token, player: player} do
       res =
         conn
         |> put_req_header("authorization", token)
         |> get(@base_url)
 
+      player_result = %{id: player.id, status: player.status}
+      [body] = json_response(res)
+
       assert res.status == 200
+      assert player_result == body.player
     end
   end
 end
