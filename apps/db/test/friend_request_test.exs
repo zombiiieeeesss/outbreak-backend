@@ -51,7 +51,7 @@ defmodule DB.FriendRequestTest do
     test "with the same id for requesting and requested returns and error",
       %{user_one: user} do
         msg = ["Users cannot request themselves"]
-        {:error, ^msg} = FriendRequest.create(user.id, user.id)
+        {:error, 400, ^msg} = FriendRequest.create(user.id, user.id)
     end
   end
 
@@ -74,7 +74,7 @@ defmodule DB.FriendRequestTest do
     end
 
     test "when the friend request does not exist" do
-      assert {:error, _} = FriendRequest.delete(0)
+      assert {:error, _, _} = FriendRequest.delete(0)
     end
   end
 end

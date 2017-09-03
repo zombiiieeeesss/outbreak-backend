@@ -12,7 +12,7 @@ defmodule API.User.Authorization do
       {jwt, exp} = Authentication.generate_token(user)
       {:ok, user, jwt, exp}
     else
-      _err -> {:error, :unauthorized}
+      _err -> {:error, 401, ["Invalid Username or Password"]}
     end
   end
 

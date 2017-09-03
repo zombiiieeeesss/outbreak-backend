@@ -32,6 +32,7 @@ defmodule API.Web.Router do
 
     resources "/games", GameController, only: [:create, :index]
     resources "/friend-requests", FriendRequestController, only: [:create, :delete, :index, :update]
+    resources "/players", PlayerController, only: [:create]
     get "/users", UserController, :search
   end
 end

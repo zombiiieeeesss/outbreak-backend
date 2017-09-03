@@ -16,6 +16,7 @@ defmodule DB.Game do
     field :round_length, :integer
 
     many_to_many :users, User, join_through: Player
+    has_many :players, Player
 
     timestamps()
   end
@@ -23,6 +24,8 @@ defmodule DB.Game do
   @fields [:status, :title, :owner_id, :round_length]
   @required_fields [:status, :round_length, :owner_id]
   @accepted_statuses ~w(pending active complete)
+
+  def get(game_id), do: Repo.get(Game, game_id)
 
   def list_by_user(user) do
     user

@@ -14,8 +14,12 @@
     "title": "zombieland",
     "status": "pending",
     "round_length": 5,
+    "player": {
+      "status": "user-pending",
+      "id": 1
+    },
     "owner_id": 1,
-    "id": 11
+    "id": 1
   }
 ]
 ```
@@ -54,7 +58,11 @@
   "title": "zombieland",
   "status": "pending",
   "round_length": 5,
+  "player": {
+    "status": "user-pending",
+    "id": 1
+  },
   "owner_id": 1,
-  "id": 10
+  "id": 1
 }
 ```

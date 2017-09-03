@@ -5,14 +5,18 @@ defmodule API.Web.GameController do
   action_fallback API.Web.FallbackController
 
   def index(conn, _params) do
+    user = Guardian.Plug.current_resource(conn)
+
     games =
-      conn
-      |> Guardian.Plug.current_resource
+      user
       |> API.Game.list
+      |> Enum.map(fn game ->
+        DB.Repo.preload(game, :players)
+      end)
 
     conn
     |> put_status(:ok)
-    |> render(games: games)
+    |> render(%{user: user, games: games})
   end
 
   def create(conn, params) do
@@ -32,9 +36,10 @@ defmodule API.Web.GameController do
       with {:ok, result} <-
         DB.Repo.transaction(multi)
       do
+        game = DB.Repo.preload(result.game, [:players])
         conn
         |> put_status(:created)
-        |> render(result.game)
+        |> render(%{user: user, game: game})
       end
   end
 end

@@ -11,17 +11,20 @@ defmodule DB.Player do
   alias DB.{Game, Player, Repo, User}
 
   schema "players" do
+    field :status, :string
+
     belongs_to :user, User
     belongs_to :game, Game
 
     timestamps()
   end
 
-  @fields [:user_id, :game_id]
+  @fields [:user_id, :game_id, :status]
+  @accepted_statuses ~w(user-pending active)
 
-  def create(user_id, game_id) do
+  def create(attrs) do
     %Player{}
-    |> changeset(%{user_id: user_id, game_id: game_id})
+    |> changeset(attrs)
     |> Repo.insert
   end
 
@@ -29,6 +32,7 @@ defmodule DB.Player do
     struct
     |> cast(params, @fields)
     |> validate_required(@fields)
+    |> validate_inclusion(:status, @accepted_statuses)
     |> assoc_constraint(:user)
     |> assoc_constraint(:game)
   end

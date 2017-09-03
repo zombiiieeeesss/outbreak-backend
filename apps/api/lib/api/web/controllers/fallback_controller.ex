@@ -3,7 +3,7 @@ defmodule API.Web.FallbackController do
 
   def call(conn, {:error, %Ecto.Changeset{} = changeset}), do: render_changeset_errors(conn, changeset)
   def call(conn, {:error, _, %Ecto.Changeset{} = changeset, _}), do: render_changeset_errors(conn, changeset)
-  def call(conn, {:error, errors}), do: render_errors(conn, errors)
+  def call(conn, {:error, status, errors}), do: render_errors(conn, status, errors)
 
   def unauthenticated(conn, _params) do
     conn
@@ -17,9 +17,9 @@ defmodule API.Web.FallbackController do
     |> render(API.Web.ErrorView, "422.json", changeset)
   end
 
-  defp render_errors(conn, errors) do
+  defp render_errors(conn, status, errors) do
     conn
-    |> put_status(400)
-    |> render(API.Web.ErrorView, "400.json", %{errors: errors})
+    |> put_status(status)
+    |> render(API.Web.ErrorView, "error.json", %{errors: errors})
   end
 end
