@@ -37,32 +37,11 @@ defmodule DB.User do
     ))
   end
 
-  def search_users(query, options \\ [])
-
-  @doc """
-  Searches for users by `email` or `username`. Uses levenshtein distance
-  to determine matches, up to a given distance, and ignores a
-  given user.
-  """
-  def search_users(search_term, except: %DB.User{} = user) do
+  def search_users(search_term, except: user_id) do
     DB.Repo.all(
       from u in User,
-      where: fragment("? % ?", u.username, ^search_term) and u.id != ^user.id,
-      or_where: fragment("? % ?", u.email, ^search_term) and u.id != ^user.id,
-      limit: 10,
-      order_by: fragment("greatest(similarity(?, ?), similarity(?, ?)) DESC", u.username, ^search_term, u.email, ^search_term)
-    )
-  end
-
-  @doc """
-  Searches for users by `email` or `username`. Uses levenshtein distance
-  to determine matches, up to a given distance
-  """
-  def search_users(search_term, _options) do
-    DB.Repo.all(
-      from u in User,
-      where: fragment("? % ?", u.username, ^search_term),
-      or_where: fragment("? % ?", u.email, ^search_term),
+      where: fragment("? % ?", u.username, ^search_term) and u.id != ^user_id,
+      or_where: fragment("? % ?", u.email, ^search_term) and u.id != ^user_id,
       limit: 10,
       order_by: fragment("greatest(similarity(?, ?), similarity(?, ?)) DESC", u.username, ^search_term, u.email, ^search_term)
     )
