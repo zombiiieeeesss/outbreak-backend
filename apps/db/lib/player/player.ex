@@ -40,6 +40,13 @@ defmodule DB.Player do
     |> Repo.transaction
   end
 
+  def delete(id) do
+    case Repo.get(Player, id) do
+      nil -> {:error, 404, ["Player does not exist"]}
+      player -> Repo.delete(player)
+    end
+  end
+
   defp changeset(struct, params) do
     struct
     |> cast(params, @fields)
