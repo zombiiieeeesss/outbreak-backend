@@ -36,7 +36,7 @@ defmodule DB.FriendRequest do
 
   def delete(id) do
     case Repo.get(FriendRequest, id) do
-      nil -> {:error, 400, ["friend request does not exist"]}
+      nil -> {:error, 404, ["friend request does not exist"]}
       fr -> Repo.delete(fr)
     end
   end
