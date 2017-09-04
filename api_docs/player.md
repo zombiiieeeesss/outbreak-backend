@@ -51,3 +51,11 @@
   }
 ]
 ```
+
+### Delete
+
+`DELETE /api/v1/players/:id`
+
+**Headers:**
+
+`Authorization: your-token`

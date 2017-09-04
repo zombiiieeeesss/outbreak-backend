@@ -76,7 +76,7 @@ defmodule API.Web.FriendRequestControllerTest do
         |> put_req_header("authorization", token)
         |> delete("#{@base_url}/#{fr.id}")
 
-      assert res.status == 200
+      assert res.status == 204
 
       refute DB.Repo.get(DB.FriendRequest, fr.id)
     end
@@ -87,7 +87,7 @@ defmodule API.Web.FriendRequestControllerTest do
         |> put_req_header("authorization", token)
         |> delete("#{@base_url}/0")
 
-      assert res.status == 400
+      assert res.status == 404
     end
   end
 

@@ -15,3 +15,4 @@
   - [Create](https://github.com/zombiiieeeesss/outbreak-backend/blob/master/api_docs/game.md#create)
 - [Player](https://github.com/zombiiieeeesss/outbreak-backend/blob/master/api_docs/player.md)
   - [Create](https://github.com/zombiiieeeesss/outbreak-backend/blob/master/api_docs/player.md#create)
+  - [Delete](https://github.com/zombiiieeeesss/outbreak-backend/blob/master/api_docs/player.md#delete)

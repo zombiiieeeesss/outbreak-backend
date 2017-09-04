@@ -30,7 +30,8 @@ defmodule API.Web.FriendRequestController do
       API.FriendRequest.delete(id)
     do
       conn
-      |> put_status(200)
+      |> put_status(204)
+      |> json("")
     end
   end
 

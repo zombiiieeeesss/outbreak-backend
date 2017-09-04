@@ -48,4 +48,34 @@ defmodule API.Web.PlayerControllerTest do
       assert res.status == 401
     end
   end
+
+  describe "#delete" do
+    setup context do
+      {:ok, player} = API.Player.create(context.user.id, context.game.id)
+
+      {:ok, %{player: player}}
+    end
+
+    test "with valid Player id returns No Content",
+      %{conn: conn, player: player, token: token} do
+        url = "#{@base_url}/#{player.id}"
+        res =
+          conn
+          |> put_req_header("authorization", token)
+          |> delete(url)
+
+        assert res.status == 204
+    end
+
+    test "with invalid Player id returns Not Found",
+      %{conn: conn, token: token} do
+        url = "#{@base_url}/123"
+        res =
+          conn
+          |> put_req_header("authorization", token)
+          |> delete(url)
+
+        assert res.status == 404
+    end
+  end
 end

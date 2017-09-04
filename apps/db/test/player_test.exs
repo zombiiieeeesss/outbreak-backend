@@ -39,4 +39,22 @@ defmodule DB.PlayerTest do
       assert %{errors: [status: _]} = changeset
     end
   end
+
+  describe "#delete" do
+    setup do
+      player = create_player()
+
+      {:ok, %{player: player}}
+    end
+
+    test "with valid Player id", %{player: player} do
+      {:ok, deleted_player} = Player.delete(player.id)
+      assert deleted_player.id == player.id
+      assert deleted_player.__meta__.state == :deleted
+    end
+
+    test "with invalid Player id" do
+      assert Player.delete(123) == {:error, 404, ["Player does not exist"]}
+    end
+  end
 end
