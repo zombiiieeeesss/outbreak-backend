@@ -10,8 +10,6 @@ defmodule DB.User do
 
   alias DB.{Game, Player, Repo, User}
 
-  defp levenshtein_distance, do: Application.get_env(:db, :levenshtein_distance)
-
   schema "users" do
     field :username, :string
     field :email, :string
@@ -39,46 +37,13 @@ defmodule DB.User do
     ))
   end
 
-  def search_users(query, options \\ [])
-
-  @doc """
-  Searches for users by `email` or `username`. Uses levenshtein distance
-  to determine matches, up to a given distance, and ignores a
-  given user.
-  """
-  def search_users(query, except: %DB.User{} = user) do
+  def search_users(search_term, except: user_id) do
     DB.Repo.all(
       from u in User,
-      where: fragment(
-        "levenshtein(lower(?), lower(?))",
-        u.username,
-        ^query
-      ) < ^levenshtein_distance() and u.id != ^user.id,
-      or_where: fragment(
-        "levenshtein(lower(?), lower(?))",
-        u.email,
-        ^query
-      ) < ^levenshtein_distance() and u.id != ^user.id,
-      order_by: fragment("levenshtein(lower(?), lower(?))", u.username, ^query),
-      limit: 10
-    )
-  end
-
-  @doc """
-  Searches for users by `email` or `username`. Uses levenshtein distance
-  to determine matches, up to a given distance
-  """
-  def search_users(query, _options) do
-    DB.Repo.all(
-      from u in User,
-      where: fragment(
-        "levenshtein(lower(?), lower(?))", u.username, ^query
-      ) < ^levenshtein_distance(),
-      or_where: fragment(
-        "levenshtein(lower(?), lower(?))", u.email, ^query
-      ) < ^levenshtein_distance(),
-      order_by: fragment("levenshtein(lower(?), lower(?))", u.username, ^query),
-      limit: 10
+      where: fragment("? % ?", u.username, ^search_term) and u.id != ^user_id,
+      or_where: fragment("? % ?", u.email, ^search_term) and u.id != ^user_id,
+      limit: 10,
+      order_by: fragment("greatest(similarity(?, ?), similarity(?, ?)) DESC", u.username, ^search_term, u.email, ^search_term)
     )
   end
 

@@ -27,6 +27,7 @@ defmodule Db.Mixfile do
     [
       {:ecto, "~> 2.1"},
       {:ex_machina, "~> 2.0", only: :test},
+      {:faker_elixir_octopus, "~> 1.0.0", only: :dev},
       {:postgrex, "~> 0.13.3"},
       {:comeonin, "~> 3.2"},
     ]

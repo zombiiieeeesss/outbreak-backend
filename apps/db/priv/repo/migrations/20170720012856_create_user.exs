@@ -12,5 +12,9 @@ defmodule DB.Repo.Migrations.CreateUser do
 
     create unique_index(:users, ["lower(username)"], name: :lowercase_username)
     create unique_index(:users, ["lower(email)"], name: :lowercase_email)
+
+    execute "CREATE extension if not exists pg_trgm;"
+    execute "CREATE INDEX users_username_trgm_index ON users USING gin (username gin_trgm_ops);"
+    execute "CREATE INDEX users_email_trgm_index ON users USING gin (email gin_trgm_ops);"
   end
 end
