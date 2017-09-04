@@ -14,4 +14,10 @@ defmodule API.Web.PlayerController do
         |> render(%{players: players})
       end
   end
+
+  def delete(conn, %{"id" => id}) do
+    with {:ok, _} <- API.Player.delete(id) do
+      conn |> put_status(:no_content) |> json("")
+    end
+  end
 end

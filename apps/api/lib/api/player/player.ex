@@ -36,6 +36,10 @@ defmodule API.Player do
     end
   end
 
+  def delete(player_id) do
+    DB.Player.delete(player_id)
+  end
+
   defp player_create_attrs(user_id, game_id) do
     %{
       user_id: user_id,
