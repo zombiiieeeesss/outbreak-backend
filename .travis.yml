@@ -17,4 +17,3 @@ env:
 script:
   - mix test
   - mix credo
-  - mix bench

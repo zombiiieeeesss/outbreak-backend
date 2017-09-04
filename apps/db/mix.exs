@@ -19,7 +19,7 @@ defmodule Db.Mixfile do
   defp elixirc_paths(_), do: ["lib"]
 
   def application do
-    [extra_applications: [:logger, :postgrex, :ecto, :comeonin, :faker_elixir_octopus],
+    [extra_applications: [:logger, :postgrex, :ecto, :comeonin],
      mod: {DB.Application, []}]
   end
 
@@ -27,7 +27,7 @@ defmodule Db.Mixfile do
     [
       {:ecto, "~> 2.1"},
       {:ex_machina, "~> 2.0", only: :test},
-      {:faker_elixir_octopus, "~> 1.0.0"},
+      {:faker_elixir_octopus, "~> 1.0.0", only: :dev},
       {:postgrex, "~> 0.13.3"},
       {:comeonin, "~> 3.2"},
     ]

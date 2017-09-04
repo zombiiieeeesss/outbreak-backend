@@ -20,6 +20,6 @@ defmodule OutbreakBackend.Umbrella.Mixfile do
   # Dependencies listed here are available only for this project
   # and cannot be accessed from applications inside the apps folder
   defp deps do
-    [{:benchfella, "~> 0.3.0"}]
+    [{:benchfella, "~> 0.3.0", only: :dev}]
   end
 end
