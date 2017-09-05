@@ -19,14 +19,14 @@ defmodule Db.Mixfile do
   defp elixirc_paths(_), do: ["lib"]
 
   def application do
-    [extra_applications: [:logger, :postgrex, :ecto, :comeonin],
+    [extra_applications: [:logger, :postgrex, :ecto, :comeonin, :factory],
      mod: {DB.Application, []}]
   end
 
   defp deps do
     [
       {:ecto, "~> 2.1"},
-      {:ex_machina, "~> 2.0", only: :test},
+      {:factory, in_umbrella: true, only: :test},
       {:faker_elixir_octopus, "~> 1.0.0", only: :dev},
       {:postgrex, "~> 0.13.3"},
       {:comeonin, "~> 3.2"},

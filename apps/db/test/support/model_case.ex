@@ -24,10 +24,10 @@ defmodule DB.ModelCase do
       import DB.ModelCase
       import DB.Model.TestHelper
 
-      import DB.User.Factory
-      import DB.Game.Factory
-      import DB.Player.Factory
-      import DB.FriendRequest.Factory
+      import Factory.User
+      import Factory.Game
+      import Factory.Player
+      import Factory.FriendRequest
     end
   end
 
