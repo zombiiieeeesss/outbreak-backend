@@ -18,8 +18,8 @@ defmodule DB.Seed do
 
   defp create_user do
     {:ok, user} = DB.User.create(%{
-      username: FakerElixir.Helper.unique!(:usernames, fn -> "#{FakerElixir.Internet.user_name}-#{rand_string()}" end),
-      email: FakerElixir.Helper.unique!(:emails, fn -> "#{rand_string()}-#{FakerElixir.Internet.email}" end),
+      username: FakerElixir.Helper.unique!(:usernames, fn -> "#{FakerElixir.Internet.user_name}#{rand_number()}" end),
+      email: FakerElixir.Helper.unique!(:emails, fn -> "#{rand_number()}-#{FakerElixir.Internet.email}" end),
       password: FakerElixir.Internet.password(:strong)
     })
 
@@ -69,12 +69,7 @@ defmodule DB.Seed do
     game
   end
 
-  defp rand_string do
-    5
-    |> :crypto.strong_rand_bytes
-    |> Base.encode64
-    |> binary_part(0, 5)
-  end
+  defp rand_number, do: :rand.uniform(1000)
 
   defp number_of_inserts do
     first_arg =
