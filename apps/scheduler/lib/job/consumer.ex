@@ -1,4 +1,7 @@
 defmodule Scheduler.Job.Consumer do
+  @moduledoc """
+  Responsible for processing jobs.
+  """
   use GenStage
 
   def start_link do
@@ -10,11 +13,11 @@ defmodule Scheduler.Job.Consumer do
   end
 
   def send_after(job, send_after_time) do
-    Process.send_after(self(), {:"$gen_cast", {:send, job}}, send_after_time)
+    Process.send_after(self(), {:"$gen_cast", {:consume, job}}, send_after_time)
   end
 
-  def handle_cast({:send, job}, state) do
-    IO.inspect job
+  def handle_cast({:consume, job}, state) do
+    #IO.inspect job
     {:noreply, [], state}
   end
 

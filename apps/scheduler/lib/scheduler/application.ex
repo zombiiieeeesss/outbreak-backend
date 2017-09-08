@@ -10,6 +10,7 @@ defmodule Scheduler.Application do
 
     # Define workers and child supervisors to be supervised
     children = [
+      #worker(Scheduler.Job.Set, []),
       #worker(Scheduler.Job.Producer, [0]),
       #worker(Scheduler.Job.ProducerConsumer, []),
       #worker(Scheduler.Job.Consumer, [])
