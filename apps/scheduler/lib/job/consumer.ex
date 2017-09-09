@@ -17,6 +17,9 @@ defmodule Scheduler.Job.Consumer do
   end
 
   def handle_cast({:execute, job}, state) do
+    # credo:disable-for-next-line
+    IO.inspect job
+    Scheduler.Job.Set.delete(job)
     {:noreply, [], state}
   end
 

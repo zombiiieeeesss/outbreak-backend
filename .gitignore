@@ -2,5 +2,6 @@
 /cover
 /deps
 /bench/snapshots
+/Mnesia.nonode@nohost
 erl_crash.dump
 *.ez

@@ -17,6 +17,10 @@ defmodule Scheduler.Job.Set do
     GenServer.call(__MODULE__, {:insert, job})
   end
 
+  def delete(job) do
+    GenServer.call(__MODULE__, {:delete, job})
+  end
+
   defp lookup(table, job_id) do
     case :ets.lookup(table, job_id) do
       [{^job_id, job}] -> {:ok, job}
@@ -33,5 +37,10 @@ defmodule Scheduler.Job.Set do
         :ets.insert(table, {job.id, job})
         {:reply, true, table}
     end
+  end
+
+  def handle_call({:delete, job}, _from, table) do
+    :ets.delete(table, job.id)
+    {:reply, [], table}
   end
 end

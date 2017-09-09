@@ -1,4 +1,7 @@
 defmodule Scheduler.Job do
+  @moduledoc """
+  Module defining job functions
+  """
   use Database
   require Amnesia.Helper
 
