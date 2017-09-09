@@ -5,14 +5,26 @@ defmodule Scheduler.Job.Producer do
   """
   use GenStage
 
-  def start_link(initial \\ 0) do
-    GenStage.start_link(__MODULE__, initial, name: __MODULE__)
+  def start_link do
+    GenStage.start_link(__MODULE__, :ok, name: __MODULE__)
   end
 
-  def init(counter), do: {:producer, counter}
+  def init(:ok) do
+    :timer.apply_interval(60 * 100, __MODULE__, :fetch_jobs, [])
+    {:producer, []}
+  end
+
+  def fetch_jobs do
+    GenServer.cast(__MODULE__, :fetch_jobs)
+  end
+
+  def handle_cast(:fetch_jobs, state) do
+    jobs = Scheduler.Job.fetch(60)
+    {:noreply, [], Enum.uniq(state ++ jobs)}
+  end
 
   def handle_demand(demand, state) do
-    jobs = Enum.map(state..state + demand - 1, fn(x) -> %{id: x} end)
-    {:noreply, jobs, (state + demand)}
+    {jobs, state} = Enum.split(state, demand)
+    {:noreply, jobs, state}
   end
 end

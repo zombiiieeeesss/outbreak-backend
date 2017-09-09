@@ -20,6 +20,9 @@ defmodule Scheduler.Mixfile do
   end
 
   defp deps do
-    [{:gen_stage, "~> 0.12.2"}]
+    [
+      {:amnesia, "~> 0.2.7"},
+      {:gen_stage, "~> 0.12.2"}
+    ]
   end
 end

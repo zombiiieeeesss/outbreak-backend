@@ -13,11 +13,10 @@ defmodule Scheduler.Job.Consumer do
   end
 
   def send_after(job, send_after_time) do
-    Process.send_after(self(), {:"$gen_cast", {:consume, job}}, send_after_time)
+    Process.send_after(self(), {:"$gen_cast", {:execute, job}}, send_after_time)
   end
 
-  def handle_cast({:consume, job}, state) do
-    #IO.inspect job
+  def handle_cast({:execute, job}, state) do
     {:noreply, [], state}
   end
 
