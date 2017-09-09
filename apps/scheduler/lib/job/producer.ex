@@ -10,21 +10,28 @@ defmodule Scheduler.Job.Producer do
   end
 
   def init(:ok) do
-    :timer.apply_interval(60 * 100, __MODULE__, :fetch_jobs, [])
-    {:producer, []}
+    :timer.apply_interval(60 * 100, __MODULE__, :cast_fetch_jobs, [])
+    {:producer, {fetch_jobs(), 0}}
   end
 
-  def fetch_jobs do
+  def cast_fetch_jobs do
     GenServer.cast(__MODULE__, :fetch_jobs)
   end
 
-  def handle_cast(:fetch_jobs, state) do
-    jobs = Scheduler.Job.fetch(60)
-    {:noreply, [], Enum.uniq(state ++ jobs)}
+  def handle_cast(:fetch_jobs, {pending_jobs, pending_demand}) do
+    dispatch_events(pending_jobs ++ fetch_jobs(), pending_demand)
   end
 
-  def handle_demand(demand, state) do
-    {jobs, state} = Enum.split(state, demand)
-    {:noreply, jobs, state}
+  def handle_demand(demand, {pending_jobs, _pending_demand}) do
+    dispatch_events(pending_jobs, demand)
   end
+
+  defp dispatch_events(jobs, demand) do
+    {events, pending_jobs} = Enum.split(jobs, demand)
+    demand = demand - length(events)
+
+    {:noreply, events, {pending_jobs, demand}}
+  end
+
+  defp fetch_jobs, do: Scheduler.Job.fetch(60)
 end
