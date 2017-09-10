@@ -3,14 +3,14 @@ defmodule API.Game.Factory do
 
   def create_game(attrs \\ %{}) do
     build(:game_params, attrs)
-    |> API.Game.create
+    |> DB.Game.create
     |> elem(1)
   end
 
   def game_params_factory do
     %{
       title: "Obi-Wan's Game",
-      status: "pending",
+      status: "qualifying",
       round_length: 100,
       owner_id: API.User.Factory.create_user().id
     }

@@ -23,7 +23,7 @@ defmodule DB.Game do
 
   @fields [:status, :title, :owner_id, :round_length]
   @required_fields [:status, :round_length, :owner_id]
-  @accepted_statuses ~w(pending active complete)
+  @accepted_statuses ~w(qualifying active complete)
 
   def get(game_id), do: Repo.get(Game, game_id)
 

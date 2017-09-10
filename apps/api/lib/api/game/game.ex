@@ -7,7 +7,9 @@ defmodule API.Game do
   end
 
   def create(attrs) do
-    DB.Game.create(attrs)
+    attrs
+    |> Map.put("status", "qualifying")
+    |> DB.Game.create
   end
 
   def verify_owner(game_id, user_id) do
