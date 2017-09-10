@@ -5,9 +5,9 @@ defmodule Scheduler.Job do
   use Database
   require Amnesia.Helper
 
-  def create(name, execute_at) do
+  def create(name, execute_at, params) do
     Amnesia.transaction do
-      %Job{name: name, execute_at: execute_at, timestamp: :erlang.system_time(:second)}
+      %Job{name: name, execute_at: execute_at, params: params, timestamp: :erlang.system_time(:second)}
       |> Job.write
     end
   end

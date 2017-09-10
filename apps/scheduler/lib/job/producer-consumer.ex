@@ -15,7 +15,11 @@ defmodule Scheduler.Job.ProducerConsumer  do
   end
 
   def handle_events(jobs, _from, state) do
-    filtered_jobs = Enum.filter(jobs, &Scheduler.Job.Set.insert(&1))
+    filtered_jobs =
+      jobs
+      |> Enum.filter(&Scheduler.Job.Set.insert(&1))
+      |> Enum.sort(fn(job_one, job_two) -> job_one.execute_at < job_two.execute_at end)
+
     {:noreply, filtered_jobs, state}
   end
 end
