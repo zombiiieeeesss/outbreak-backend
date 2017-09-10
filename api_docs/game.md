@@ -12,7 +12,7 @@
 [
   {
     "title": "zombieland",
-    "status": "pending",
+    "status": "qualifying",
     "round_length": 5,
     "player": {
       "status": "user-pending",
@@ -46,8 +46,7 @@
 ```json
 {
   "title": "zombieland",
-  "round_length": 5,
-  "status": "pending"
+  "round_length": 5
 }
 ```
 
