@@ -4,6 +4,8 @@ defmodule Scheduler.Job.Consumer do
   """
   use GenStage
 
+  @job_definitions Application.get_env(:scheduler, :job_definitions)
+
   def start_link do
     GenStage.start_link(__MODULE__, :ok)
   end
@@ -18,7 +20,11 @@ defmodule Scheduler.Job.Consumer do
 
   def handle_cast({:execute, job}, state) do
     # credo:disable-for-next-line
-    IO.inspect job
+
+    #execute job
+    @job_definitions.execute(job.name, job.params)
+
+    #delete from mnesia and then job set
     Scheduler.Job.Set.delete(job)
     {:noreply, [], state}
   end
