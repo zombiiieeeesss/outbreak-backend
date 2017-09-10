@@ -10,7 +10,7 @@ defmodule Scheduler.Job.Producer do
   end
 
   def init(:ok) do
-    :timer.apply_interval(60 * 100, __MODULE__, :cast_fetch_jobs, [])
+    :timer.apply_interval(fetch_interval() * 1000, __MODULE__, :cast_fetch_jobs, [])
     {:producer, {fetch_jobs(), 0}}
   end
 
@@ -33,5 +33,7 @@ defmodule Scheduler.Job.Producer do
     {:noreply, events, {pending_jobs, demand}}
   end
 
-  defp fetch_jobs, do: Scheduler.Job.fetch(60)
+  defp fetch_jobs, do: fetch_interval() |> Scheduler.Job.fetch
+
+  defp fetch_interval, do: Application.get_env(:scheduler, :fetch_interval)
 end
