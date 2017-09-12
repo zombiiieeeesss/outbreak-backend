@@ -5,7 +5,7 @@ defmodule DB.GameTest do
 
   @params %{
     title: "Obi-Wan's Game",
-    status: "pending",
+    status: "qualifying",
     round_length: 100,
     owner_id: 1
   }
