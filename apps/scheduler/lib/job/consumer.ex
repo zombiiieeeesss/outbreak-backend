@@ -19,13 +19,12 @@ defmodule Scheduler.Job.Consumer do
   end
 
   def handle_cast({:execute, job}, state) do
-    # credo:disable-for-next-line
+    with :ok <- @job_definitions.execute(job.name, job.params),
+         :ok <- Scheduler.Job.delete(job.id)
+    do
+      Scheduler.Job.Set.delete(job)
+    end
 
-    #execute job
-    @job_definitions.execute(job.name, job.params)
-
-    #delete from mnesia and then job set
-    Scheduler.Job.Set.delete(job)
     {:noreply, [], state}
   end
 
