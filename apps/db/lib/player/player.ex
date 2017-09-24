@@ -14,6 +14,7 @@ defmodule DB.Player do
   schema "players" do
     field :status, :string
 
+    embeds_one :stats, Player.Stats
     belongs_to :user, User
     belongs_to :game, Game
 
@@ -27,6 +28,12 @@ defmodule DB.Player do
     %Player{}
     |> changeset(attrs)
     |> Repo.insert
+  end
+
+  def update(id, attrs) do
+    Repo.get(Player, id)
+    |> changeset(attrs)
+    |> Repo.update
   end
 
   def bulk_create(attr_list) do
@@ -54,5 +61,6 @@ defmodule DB.Player do
     |> validate_inclusion(:status, @accepted_statuses)
     |> assoc_constraint(:user)
     |> assoc_constraint(:game)
+    |> cast_embed(:stats, with: &Player.Stats.changeset/2)
   end
 end

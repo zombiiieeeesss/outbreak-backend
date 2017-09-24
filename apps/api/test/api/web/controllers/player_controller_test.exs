@@ -49,6 +49,25 @@ defmodule API.Web.PlayerControllerTest do
     end
   end
 
+  describe "#update" do
+    test "with valid params", %{conn: conn, token: token} do
+      player = create_player()
+
+      res =
+        conn
+        |> put_req_header("authorization", token)
+        |> patch("#{@base_url}/#{player.id}", %{player: %{stats: %{steps: 100}}})
+
+      assert res.status == 200
+
+      body = json_response(res)
+      assert body.stats.steps == 100
+
+      player = DB.Repo.get(DB.Player, player.id)
+      assert player.stats.steps == 100
+    end
+  end
+
   describe "#delete" do
     setup context do
       {:ok, player} = API.Player.create(context.user.id, context.game.id)
