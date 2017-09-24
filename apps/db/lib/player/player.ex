@@ -31,7 +31,8 @@ defmodule DB.Player do
   end
 
   def update(id, attrs) do
-    Repo.get(Player, id)
+    Player
+    |> Repo.get(id)
     |> changeset(attrs)
     |> Repo.update
   end
