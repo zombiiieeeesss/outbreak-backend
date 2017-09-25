@@ -22,7 +22,7 @@ defmodule Scheduler.Job.Consumer do
     with :ok <- @job_definitions.execute(job.name, job.params),
          :ok <- Scheduler.Job.delete(job.id)
     do
-      Scheduler.Job.Set.delete(job)
+      Scheduler.Job.Set.update(job)
     end
 
     {:noreply, [], state}
