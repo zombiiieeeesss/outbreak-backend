@@ -23,6 +23,8 @@ defmodule Scheduler.Job.Consumer do
          :ok <- Scheduler.Job.delete(job.id)
     do
       Scheduler.Job.Set.update(job)
+    else
+      _ -> Scheduler.Job.Set.delete(job)
     end
 
     {:noreply, [], state}
