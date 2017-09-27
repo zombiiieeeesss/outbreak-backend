@@ -56,15 +56,15 @@ defmodule API.Web.PlayerControllerTest do
       res =
         conn
         |> put_req_header("authorization", token)
-        |> patch("#{@base_url}/#{player.id}", %{player: %{stats: %{steps: 100}}})
+        |> patch("#{@base_url}/#{player.id}", %{player: %{stats: %{distance: 100}}})
 
       assert res.status == 200
 
       body = json_response(res)
-      assert body.stats.steps == 100
+      assert body.stats.distance == 100
 
       player = DB.Repo.get(DB.Player, player.id)
-      assert player.stats.steps == 100
+      assert player.stats.distance == 100
     end
   end
 

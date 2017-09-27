@@ -74,7 +74,7 @@
 {
   "player": {
     "stats": {
-      "steps": 100
+      "distance": 100
     }
   }
 }
@@ -88,7 +88,7 @@
     "id": 115,
     "status": "user-pending",
     "stats": {
-      "steps": 100
+      "distance": 100
     },
     "user": {
       "email": "email-2@example.com",

@@ -7,10 +7,10 @@ defmodule DB.Player.Stats do
 
   @primary_key :false
   embedded_schema do
-    field :steps, :integer
+    field :distance, :integer
   end
 
-  @fields [:steps]
+  @fields [:distance]
 
   def changeset(struct, params) do
     struct
