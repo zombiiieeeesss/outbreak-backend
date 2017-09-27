@@ -4,8 +4,6 @@ defmodule Scheduler.Job.Consumer do
   """
   use GenStage
 
-  @job_definitions Application.get_env(:scheduler, :job_definitions)
-
   def start_link do
     GenStage.start_link(__MODULE__, :ok)
   end
@@ -14,27 +12,22 @@ defmodule Scheduler.Job.Consumer do
     {:consumer, state, subscribe_to: [Scheduler.Job.ProducerConsumer]}
   end
 
-  def send_after(job, send_after_time) do
-    Process.send_after(self(), {:"$gen_cast", {:execute, job}}, send_after_time)
+  def handle_events(jobs, _from, state) do
+    Enum.each(jobs, fn(job) ->
+      execute_job(job)
+    end)
+
+    {:noreply, [], state}
   end
 
-  def handle_cast({:execute, job}, state) do
-    with :ok <- @job_definitions.execute(job.name, job.params),
+  defp execute_job(job) do
+    {m, f, a} = :erlang.binary_to_term(job.params)
+    with :ok <- Kernel.apply(m, f, a),
          :ok <- Scheduler.Job.delete(job.id)
     do
       Scheduler.Job.Set.update(job)
     else
       _ -> Scheduler.Job.Set.delete(job)
     end
-
-    {:noreply, [], state}
-  end
-
-  def handle_events(jobs, _from, state) do
-    Enum.each(jobs, fn(job) ->
-      Scheduler.Job.Consumer.send_after(job, :rand.uniform(1000))
-    end)
-
-    {:noreply, [], state}
   end
 end

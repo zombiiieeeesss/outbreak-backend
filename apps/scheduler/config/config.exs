@@ -3,8 +3,7 @@
 use Mix.Config
 
 config :scheduler,
-  fetch_interval: System.get_env("FETCH_INTERVAL") || "60" |> String.to_integer,
-  job_definitions: JobDefinitions
+  fetch_interval: System.get_env("FETCH_INTERVAL") || "60" |> String.to_integer
 
 # This configuration is loaded before any dependency and is restricted
 # to this project. If another project depends on this project, this
