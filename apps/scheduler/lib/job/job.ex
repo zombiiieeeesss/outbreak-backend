@@ -16,6 +16,7 @@ defmodule Scheduler.Job do
         name: name,
         execute_at: execute_at,
         params: :erlang.term_to_binary(mfa),
+        status: "pending",
         timestamp: :erlang.system_time(:second)
       }
       |> Job.write
@@ -39,8 +40,40 @@ defmodule Scheduler.Job do
     time = :erlang.system_time(:second) + time_into_future
 
     Amnesia.transaction do
-      jobs = Job.where execute_at < time
-      Amnesia.Selection.values(jobs)
+      query = Job.where(execute_at < time and status != "failed")
+      Amnesia.Selection.values(query)
+    end
+  end
+
+  @doc """
+  Sets the status of the given Job to "failed". Failed jobs
+  do not get re-run, but are saved for later so that they
+  can be introspected.
+  """
+  def set_failed(job) do
+    Amnesia.transaction do
+      %Job{job | status: "failed"} |> Job.write
+    end
+  end
+
+  @doc """
+  Gets all the failed Jobs.
+  """
+  def get_failed_jobs do
+    Amnesia.transaction do
+      query = Job.where(status == "failed")
+      Amnesia.Selection.values(query)
+    end
+  end
+
+  @doc """
+  """
+  def clear_failed_jobs do
+    Amnesia.transaction do
+      query = Job.where(status == "failed")
+      query
+      |> Amnesia.Selection.values
+      |> Enum.each(fn job -> Job.delete(job) end)
     end
   end
 end

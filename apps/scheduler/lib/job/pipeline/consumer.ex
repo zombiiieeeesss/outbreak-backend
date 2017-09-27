@@ -27,7 +27,9 @@ defmodule Scheduler.Job.Consumer do
     do
       Scheduler.Job.Set.update(job)
     else
-      _ -> Scheduler.Job.Set.delete(job)
+      _ ->
+        Scheduler.Job.Set.delete(job)
+        Scheduler.Job.set_failed(job)
     end
   end
 end
