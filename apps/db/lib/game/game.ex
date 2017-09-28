@@ -14,6 +14,7 @@ defmodule DB.Game do
     field :title, :string
     field :owner_id, :integer
     field :round_length, :integer
+    field :start_time, :utc_datetime
 
     many_to_many :users, User, join_through: Player
     has_many :players, Player
@@ -21,8 +22,8 @@ defmodule DB.Game do
     timestamps()
   end
 
-  @fields [:status, :title, :owner_id, :round_length]
-  @required_fields [:status, :round_length, :owner_id]
+  @fields [:status, :title, :owner_id, :round_length, :start_time]
+  @required_fields [:status, :round_length, :owner_id, :start_time]
   @accepted_statuses ~w(qualifying active complete)
 
   def get(game_id), do: Repo.get(Game, game_id)

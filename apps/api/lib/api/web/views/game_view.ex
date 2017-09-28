@@ -16,6 +16,7 @@ defmodule API.Web.GameView do
       title: game.title,
       status: game.status,
       round_length: game.round_length,
+      start_time: game.start_time,
       player: get_player_info(user, game)
     }
   end
