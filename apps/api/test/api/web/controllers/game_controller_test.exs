@@ -7,7 +7,8 @@ defmodule API.Web.GameControllerTest do
 
   @game_params %{
     "title" => @title,
-    "round_length" => @round_length
+    "round_length" => @round_length,
+    "start_time" => DateTime.utc_now()
   }
 
   setup do

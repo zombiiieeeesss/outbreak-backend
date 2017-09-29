@@ -7,7 +7,8 @@ defmodule DB.GameTest do
     title: "Obi-Wan's Game",
     status: "qualifying",
     round_length: 100,
-    owner_id: 1
+    owner_id: 1,
+    start_time: DateTime.utc_now()
   }
 
   describe "#create" do
