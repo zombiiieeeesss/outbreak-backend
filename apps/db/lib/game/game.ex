@@ -14,7 +14,7 @@ defmodule DB.Game do
     field :title, :string
     field :owner_id, :integer
     field :round_length, :integer
-    field :start_time, :utc_datetime
+    field :start_time, :naive_datetime
 
     many_to_many :users, User, join_through: Player
     has_many :players, Player
