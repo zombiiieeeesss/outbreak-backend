@@ -18,6 +18,19 @@ defmodule API.Player do
     end
   end
 
+  def update(player_id, attrs) do
+    case DB.Player.update(player_id, attrs) do
+      {:ok, player} ->
+        player =
+          player
+          |> DB.Repo.preload(:user)
+
+        {:ok, player}
+
+      error -> error
+    end
+  end
+
   def bulk_create(user_ids, game_id) do
     players =
       user_ids

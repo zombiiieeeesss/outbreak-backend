@@ -12,7 +12,7 @@
 [
   {
     "title": "zombieland",
-    "status": "pending",
+    "status": "qualifying",
     "round_length": 5,
     "player": {
       "status": "user-pending",
@@ -36,10 +36,10 @@
 **Parameters:**
 
 |**Name**|**Type**|**Required**|**Description**|
-| ------------ |-------- | ---------- | ------------- |
-| status       | string  | Yes        | Must be one of `pending`, `active`, `complete` |
-| round_length | integer | Yes        | Length of the round in days |
-| title        | string  | No         | Optional name for the game |
+| ------------ |--------- | ---------- | ------------- |
+| round_length | integer  | Yes        | Length of the round in days |
+| start_time   | datetime | Yes        | The start time of the game |
+| title        | string   | No         | Optional name for the game |
 
 **Example Request:**
 
@@ -47,7 +47,7 @@
 {
   "title": "zombieland",
   "round_length": 5,
-  "status": "pending"
+  "start_time": "2017-09-28 06:05:00.926573Z"
 }
 ```
 

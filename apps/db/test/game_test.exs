@@ -5,9 +5,10 @@ defmodule DB.GameTest do
 
   @params %{
     title: "Obi-Wan's Game",
-    status: "pending",
+    status: "qualifying",
     round_length: 100,
-    owner_id: 1
+    owner_id: 1,
+    start_time: DateTime.utc_now()
   }
 
   describe "#create" do

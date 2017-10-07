@@ -1,15 +1,14 @@
 defmodule API.Web.GameControllerTest do
   use API.Web.ConnCase
 
-  @status "pending"
   @title "Zombieland"
   @round_length 5
   @base_url "/v1/games"
 
   @game_params %{
-    "status" => @status,
     "title" => @title,
-    "round_length" => @round_length
+    "round_length" => @round_length,
+    "start_time" => DateTime.utc_now()
   }
 
   setup do
@@ -29,7 +28,7 @@ defmodule API.Web.GameControllerTest do
       body = json_response(res)
       assert body.id
       assert body.title == @title
-      assert body.status == @status
+      assert body.status == "qualifying"
       assert body.round_length == @round_length
       assert body.owner_id == user.id
 

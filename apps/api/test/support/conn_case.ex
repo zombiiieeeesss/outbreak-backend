@@ -22,9 +22,10 @@ defmodule API.Web.ConnCase do
       import API.Web.Controller.TestHelper
       import API.Web.Router.Helpers
 
-      import API.User.Factory
       import API.Game.Factory
       import API.FriendRequest.Factory
+      import API.Player.Factory
+      import API.User.Factory
 
       # The default endpoint for testing
       @endpoint API.Web.Endpoint
