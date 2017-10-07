@@ -16,9 +16,16 @@ defmodule Scheduler.Counter do
     GenServer.call(__MODULE__, :clear)
   end
 
-  def delay_increment(delay, delta \\ 1) do
+  def delay_increment(delay, delta \\ 1, succeed \\ true)
+
+  def delay_increment(delay, delta, true) do
     :timer.sleep(delay * 2)
     GenServer.call(__MODULE__, {:increment, delta})
+  end
+
+  def delay_increment(delay, _delta, false) do
+    :timer.sleep(delay * 2)
+    GenServer.call(__MODULE__, :fail)
   end
 
   def init(v) do
@@ -35,5 +42,9 @@ defmodule Scheduler.Counter do
 
   def handle_call({:increment, delta}, _from, v) do
     {:reply, :ok, delta + v}
+  end
+
+  def handle_call(:fail, _from, v) do
+    {:reply, :error, v}
   end
 end

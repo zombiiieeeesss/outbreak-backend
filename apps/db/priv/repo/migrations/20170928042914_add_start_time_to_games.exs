@@ -3,7 +3,7 @@ defmodule DB.Repo.Migrations.AddStartTimeToGames do
 
   def change do
     alter table(:games) do
-      add :start_time, :naive_datetime, null: false
+      add :start_time, :utc_datetime, null: false
     end
   end
 end

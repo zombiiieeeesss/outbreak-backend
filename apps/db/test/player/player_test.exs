@@ -22,7 +22,7 @@ defmodule DB.PlayerTest do
     end
 
     test "with invalid game id", %{user: user} do
-      {:error, changeset} = Player.create(%{user_id: user.id, game_id: 3, status: "user-pending"})
+      {:error, changeset} = Player.create(%{user_id: user.id, game_id: -3, status: "user-pending"})
 
       assert %{errors: [game: _]} = changeset
     end
