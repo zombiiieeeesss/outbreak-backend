@@ -20,7 +20,7 @@ defmodule Scheduler.Job.ProducerConsumer  do
       |> Enum.filter(&Scheduler.Job.Set.insert(&1))
       |> Enum.sort(fn(job_one, job_two) -> job_one.execute_at < job_two.execute_at end)
 
-    Scheduler.Job.Set.delete()
+    Scheduler.Job.Set.clear()
 
     {:noreply, filtered_jobs, state}
   end

@@ -21,11 +21,12 @@ defmodule Scheduler.Job.Set do
     GenServer.call(__MODULE__, {:update, job})
   end
 
+  def clear do
+    GenServer.call(__MODULE__, :clear)
+  end
+
   def delete(job) do
     GenServer.call(__MODULE__, {:delete, job})
-  end
-  def delete() do
-    GenServer.call(__MODULE__, :delete)
   end
 
   defp lookup(table, job_id) do
@@ -51,12 +52,13 @@ defmodule Scheduler.Job.Set do
     end
   end
 
-  def handle_call({:delete, job}, _from, table) do
-    :ets.delete(table, job.id)
+  def handle_call(:clear, _from, table) do
+    :ets.match_delete(table, {:_, nil})
     {:reply, [], table}
   end
-  def handle_call(:delete, _from, table) do
-    :ets.match_delete(table, {:_, nil})
+
+  def handle_call({:delete, job}, _from, table) do
+    :ets.delete(table, job.id)
     {:reply, [], table}
   end
 end

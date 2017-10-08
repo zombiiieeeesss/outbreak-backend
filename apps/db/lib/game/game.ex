@@ -41,6 +41,12 @@ defmodule DB.Game do
     |> Repo.insert
   end
 
+  def update(game, attrs) do
+    game
+    |> changeset(attrs)
+    |> Repo.update
+  end
+
   defp changeset(struct, params) do
     struct
     |> cast(params, @fields)

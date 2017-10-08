@@ -30,6 +30,7 @@ defmodule Db.Mixfile do
       {:faker_elixir_octopus, "~> 1.0.0", only: :dev},
       {:postgrex, "~> 0.13.3"},
       {:comeonin, "~> 3.2"},
+      {:credo, "~> 0.8.4"}
     ]
   end
 end
