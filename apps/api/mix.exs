@@ -39,6 +39,7 @@ defmodule API.Mixfile do
      {:ex_machina, "~> 2.0", only: :test},
      {:db, in_umbrella: true},
      {:guardian, "~> 0.14"},
-     {:credo, "~> 0.8.4"}]
+     {:credo, "~> 0.8.4"},
+     {:scheduler, in_umbrella: true}]
   end
 end

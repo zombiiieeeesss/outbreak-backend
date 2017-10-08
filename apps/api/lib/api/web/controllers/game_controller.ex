@@ -33,8 +33,8 @@ defmodule API.Web.GameController do
         API.Player.create(user.id, game.id)
       end)
 
-      with {:ok, result} <-
-        DB.Repo.transaction(multi)
+      with {:ok, result} <- DB.Repo.transaction(multi),
+           _job           <- API.Job.schedule("game_create", result.game)
       do
         game = DB.Repo.preload(result.game, [:players])
         conn
