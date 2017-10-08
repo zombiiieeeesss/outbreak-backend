@@ -14,8 +14,8 @@ defmodule Scheduler.SchedulerTest do
 
   describe "when jobs succeed" do
     test "the scheduler executes jobs in the fetch_interval only once" do
-      Scheduler.Job.create("name", :erlang.system_time(:second), {Scheduler.Counter, :delay_increment, [@fetch_interval]})
-      Scheduler.Job.create("name", :erlang.system_time(:second) + @fetch_interval, {Scheduler.Counter, :delay_increment, [@fetch_interval]})
+      Scheduler.Job.create({Scheduler.Counter, :delay_increment, [@fetch_interval]}, :erlang.system_time(:second))
+      Scheduler.Job.create({Scheduler.Counter, :delay_increment, [@fetch_interval]}, :erlang.system_time(:second) + @fetch_interval)
       assert Scheduler.TimingFunctions.wait_for_execution(1)
       assert Scheduler.Counter.get == 1
       assert Scheduler.TimingFunctions.wait_for_execution(0)
@@ -25,7 +25,7 @@ defmodule Scheduler.SchedulerTest do
 
   describe "when jobs fail" do
     test "the job status gets updated" do
-      job = Scheduler.Job.create("name", :erlang.system_time(:second), {Scheduler.Counter, :delay_increment, [0, 1, false]})
+      job = Scheduler.Job.create({Scheduler.Counter, :delay_increment, [0, 1, false]}, :erlang.system_time(:second))
       assert Scheduler.TimingFunctions.wait_for_execution(0)
       assert Scheduler.Counter.get == 0
       [failed_job] = Scheduler.Job.get_failed_jobs()

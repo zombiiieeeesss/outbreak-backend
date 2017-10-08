@@ -6,14 +6,13 @@ defmodule Scheduler.Job do
   require Amnesia.Helper
 
   @doc """
-  Creates a new Job. It takes a name, a time to execute (in erlang system
+  Creates a new Job. It takes a time to execute (in erlang system
   time, seconds) and a tuple of {module, fun, args} that will be executed
   when the job is run.
   """
-  def create(name, execute_at, mfa) do
+  def create(mfa, execute_at) do
     Amnesia.transaction do
       %Job{
-        name: name,
         execute_at: execute_at,
         params: :erlang.term_to_binary(mfa),
         status: "pending",
@@ -75,5 +74,9 @@ defmodule Scheduler.Job do
       |> Amnesia.Selection.values
       |> Enum.each(fn job -> Job.delete(job) end)
     end
+  end
+
+  def job_count do
+    Amnesia.Table.count(Database.Job)
   end
 end
