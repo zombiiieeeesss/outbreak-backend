@@ -4,6 +4,7 @@ defmodule DB.Repo.Migrations.CreateGame do
   def change do
     create table(:games) do
       add :status, :string, null: false
+      add :round, :integer
       add :round_length, :integer
       add :owner_id, :integer
       add :title, :string

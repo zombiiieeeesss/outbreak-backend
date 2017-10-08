@@ -13,6 +13,7 @@ defmodule DB.Game do
     field :status, :string
     field :title, :string
     field :owner_id, :integer
+    field :round, :integer
     field :round_length, :integer
     field :start_time, :utc_datetime
 
@@ -22,8 +23,8 @@ defmodule DB.Game do
     timestamps()
   end
 
-  @fields [:status, :title, :owner_id, :round_length, :start_time]
-  @required_fields [:status, :round_length, :owner_id, :start_time]
+  @fields [:status, :round, :title, :owner_id, :round_length, :start_time]
+  @required_fields [:status, :round, :round_length, :owner_id, :start_time]
   @accepted_statuses ~w(qualifying active complete)
 
   def get(game_id), do: Repo.get(Game, game_id)
@@ -35,7 +36,7 @@ defmodule DB.Game do
   end
 
   def create(attrs) do
-    %Game{}
+    %Game{round: 1}
     |> changeset(attrs)
     |> Repo.insert
   end

@@ -13,6 +13,7 @@
   {
     "title": "zombieland",
     "status": "qualifying",
+    "round": 1,
     "round_length": 5,
     "player": {
       "status": "user-pending",
@@ -57,6 +58,7 @@
 {
   "title": "zombieland",
   "status": "pending",
+  "round": 1,
   "round_length": 5,
   "player": {
     "status": "user-pending",
