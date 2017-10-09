@@ -1,7 +1,10 @@
 defmodule API.Job.UpdateGame do
+  require Logger
+
   # This cold be in a @behaviour
   def schedule(game) do
     execute_at = calculate(game)
+    Logger.info("Scheduling #{__MODULE__}, game: #{game.id}")
     Scheduler.Job.create({__MODULE__, :run, game}, execute_at)
   end
 

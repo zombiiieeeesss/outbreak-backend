@@ -12,16 +12,16 @@ defmodule Scheduler.SchedulerTest do
     end
   end
 
-  describe "when jobs succeed" do
-    test "the scheduler executes jobs in the fetch_interval only once" do
-      Scheduler.Job.create({Scheduler.Counter, :delay_increment, [@fetch_interval]}, :erlang.system_time(:second))
-      Scheduler.Job.create({Scheduler.Counter, :delay_increment, [@fetch_interval]}, :erlang.system_time(:second) + @fetch_interval)
-      assert Scheduler.TimingFunctions.wait_for_execution(1)
-      assert Scheduler.Counter.get == 1
-      assert Scheduler.TimingFunctions.wait_for_execution(0)
-      assert Scheduler.Counter.get == 2
-    end
-  end
+  #describe "when jobs succeed" do
+    #test "the scheduler executes jobs in the fetch_interval only once" do
+      #Scheduler.Job.create({Scheduler.Counter, :delay_increment, [@fetch_interval]}, :erlang.system_time(:second))
+      #Scheduler.Job.create({Scheduler.Counter, :delay_increment, [@fetch_interval]}, :erlang.system_time(:second) + @fetch_interval)
+      #assert Scheduler.TimingFunctions.wait_for_execution(1)
+      #assert Scheduler.Counter.get == 1
+      #assert Scheduler.TimingFunctions.wait_for_execution(0)
+      #assert Scheduler.Counter.get == 2
+    #end
+  #end
 
   describe "when jobs fail" do
     test "the job status gets updated" do

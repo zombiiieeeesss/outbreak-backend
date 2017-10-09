@@ -3,6 +3,7 @@ defmodule Scheduler.Job.Consumer do
   Responsible for processing jobs.
   """
   use GenStage
+  require Logger
 
   def start_link do
     GenStage.start_link(__MODULE__, :ok)
@@ -25,6 +26,7 @@ defmodule Scheduler.Job.Consumer do
     with :ok <- Kernel.apply(m, f, a),
          :ok <- Scheduler.Job.delete(job.id)
     do
+      Logger.info("Executing #{m}")
       Scheduler.Job.Set.update(job)
     else
       _ ->
