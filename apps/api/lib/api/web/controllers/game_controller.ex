@@ -33,13 +33,25 @@ defmodule API.Web.GameController do
         API.Player.create(user.id, game.id)
       end)
 
-      with {:ok, result} <-
-        DB.Repo.transaction(multi)
-      do
-        game = DB.Repo.preload(result.game, [:players])
-        conn
-        |> put_status(:created)
-        |> render(%{user: user, game: game})
+    with {:ok, game} <-
+      game_create_transaction(multi)
+    do
+      conn
+      |> put_status(:created)
+      |> render(%{user: user, game: DB.Repo.preload(game, [:players])})
+    end
+  end
+
+  defp game_create_transaction(multi) do
+    with {:ok, result}   <-
+      DB.Repo.transaction(multi)
+    do
+      case API.Job.UpdateGame.schedule(result.game) do
+        %Database.Job{} -> {:ok, result.game}
+        _ ->
+          DB.Game.delete(result.game)
+          {:error, 500, ["Job could not be written"]}
       end
+    end
   end
 end

@@ -1,8 +1,8 @@
-defmodule Db.Mixfile do
+defmodule Scheduler.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :db,
+    [app: :scheduler,
      version: "0.1.0",
      build_path: "../../_build",
      config_path: "../../config/config.exs",
@@ -19,18 +19,14 @@ defmodule Db.Mixfile do
   defp elixirc_paths(_), do: ["lib"]
 
   def application do
-    [extra_applications: [:logger, :postgrex, :ecto, :comeonin],
-     mod: {DB.Application, []}]
+    [extra_applications: [:logger],
+     mod: {Scheduler.Application, []}]
   end
 
   defp deps do
     [
-      {:ecto, "~> 2.1"},
-      {:ex_machina, "~> 2.0", only: :test},
-      {:faker_elixir_octopus, "~> 1.0.0", only: :dev},
-      {:postgrex, "~> 0.13.3"},
-      {:comeonin, "~> 3.2"},
-      {:credo, "~> 0.8.4"}
+      {:amnesia, "~> 0.2.7"},
+      {:gen_stage, "~> 0.12.2"}
     ]
   end
 end

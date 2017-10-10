@@ -29,6 +29,7 @@ defmodule API.Web.GameControllerTest do
       assert body.id
       assert body.title == @title
       assert body.status == "qualifying"
+      assert body.round == 1
       assert body.round_length == @round_length
       assert body.owner_id == user.id
 

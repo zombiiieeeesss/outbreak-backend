@@ -36,6 +36,22 @@ defmodule DB.GameTest do
     end
   end
 
+  describe "#delete" do
+    test "with valid params" do
+      game = create_game()
+      {:ok, _game} = Game.delete(game)
+    end
+  end
+
+  describe "#update" do
+    test "with valid params" do
+      game = create_game()
+      {:ok, game} = Game.update(game, %{round: 2})
+
+      assert game.round == 2
+    end
+  end
+
   describe "#list_by_user" do
     test "given a user struct, returns a list of games for that user" do
       user = create_user()
