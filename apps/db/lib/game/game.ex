@@ -41,6 +41,10 @@ defmodule DB.Game do
     |> Repo.insert
   end
 
+  def delete(game) do
+    Repo.delete(game)
+  end
+
   def update(game, attrs) do
     game
     |> changeset(attrs)

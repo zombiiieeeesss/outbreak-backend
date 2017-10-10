@@ -36,6 +36,13 @@ defmodule DB.GameTest do
     end
   end
 
+  describe "#delete" do
+    test "with valid params" do
+      game = create_game()
+      {:ok, _game} = Game.delete(game)
+    end
+  end
+
   describe "#update" do
     test "with valid params" do
       game = create_game()
