@@ -15,7 +15,7 @@ use Mix.Config
 # which you typically run after static files are built.
 config :api, API.Web.Endpoint,
   load_from_system_env: true,
-  url: [scheme: "https", host: "zombees.herokuapp.com", port: 443],
+  url: [scheme: "${SCHEME}", host: "${HOST}", port: "${PORT}"],
   force_ssl: [rewrite_on: [:x_forwarded_proto]],
   secret_key_base: "${SECRET_KEY_BASE}",
   server: true

@@ -1,0 +1,26 @@
+db:
+  image: postgres:9.6
+  ports:
+    - "5432"
+web:
+  build: .
+  ports:
+    - "8000:8000"
+  links:
+    - db
+  command: >
+    sh -c "
+      ./_build/prod/rel/outbreak_backend_umbrella/bin/outbreak_backend_umbrella foreground
+    "
+  environment:
+    - GUARDIAN_KEY=cHvvEICoN0azBi61y6np0nC35e9cObFsH3Yio6LbEtFkwCG7qzqo/qFtVJ+TLTsA
+    - DB_USERNAME=postgres
+    - DB_HOSTNAME=db
+    - DB_PORT=5432
+    - DB_NAME=outbreak_backend_prod
+    - HOST=web
+    - PORT=8000
+    - REPLACE_OS_VARS=true
+    - SCHEME=http
+    - SECRET_KEY_BASE=cHvvEICoN0azBi61y6np0nC35e9cObFsH3Yio6LbEtFkwCG7qzqo/qFtVJ+TLTsA
+    - DATABASE_URL=postgres://postgres@db:5432/outbreak_backend_prod

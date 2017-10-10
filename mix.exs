@@ -22,7 +22,8 @@ defmodule OutbreakBackend.Umbrella.Mixfile do
   defp deps do
     [
       {:benchfella, "~> 0.3.0", only: :dev},
-      {:distillery, "~> 1.5"}
+      {:distillery, "~> 1.5"},
+      {:mix_docker, "~> 0.5.0"}
     ]
   end
 end

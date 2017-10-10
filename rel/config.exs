@@ -34,7 +34,7 @@ environment :dev do
 end
 
 environment :prod do
-  set include_erts: true
+  set include_erts: false
   set include_src: false
   set cookie: :"*EbY78Pg5O><2)R9/S%B/,P}?8l{`6i^oX0&2U&r}rR>[H*m.n|gHj;l1>^6AKK6"
 end
@@ -53,4 +53,3 @@ release :outbreak_backend_umbrella do
     scheduler: :permanent
   ]
 end
-

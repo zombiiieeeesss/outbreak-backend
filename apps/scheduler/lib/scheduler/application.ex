@@ -7,10 +7,10 @@ defmodule Scheduler.Application do
     import Supervisor.Spec, warn: false
 
     children = [
-      worker(Scheduler.Job.Set, []),
-      worker(Scheduler.Job.Producer, []),
-      worker(Scheduler.Job.ProducerConsumer, []),
-      worker(Scheduler.Job.Consumer, [])
+      #worker(Scheduler.Job.Set, []),
+      #worker(Scheduler.Job.Producer, []),
+      #worker(Scheduler.Job.ProducerConsumer, []),
+      #worker(Scheduler.Job.Consumer, [])
     ]
 
     opts = [strategy: :one_for_one, name: Scheduler.Supervisor]
