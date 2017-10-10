@@ -17,13 +17,14 @@ config :api, API.Web.Endpoint,
   load_from_system_env: true,
   url: [scheme: "https", host: "zombees.herokuapp.com", port: 443],
   force_ssl: [rewrite_on: [:x_forwarded_proto]],
-  secret_key_base: System.get_env("SECRET_KEY_BASE")
+  secret_key_base: "${SECRET_KEY_BASE}",
+  server: true
 
 config :guardian, Guardian,
  issuer: "API",
  ttl: {1, :days},
  allowed_drift: 2000,
- secret_key: System.get_env("GUARDIAN_KEY"),
+ secret_key: "${GUARDIAN_KEY}",
  serializer: API.GuardianSerializer
 
 # Do not print debug messages in production
