@@ -23,13 +23,14 @@ defmodule Scheduler.Job.Consumer do
 
   defp execute_job(job) do
     {m, f, a} = :erlang.binary_to_term(job.params)
+    Logger.info("Executing #{m}")
     with :ok <- Kernel.apply(m, f, a),
          :ok <- Scheduler.Job.delete(job.id)
     do
-      Logger.info("Executing #{m}")
       Scheduler.Job.Set.update(job)
     else
       _ ->
+        Logger.error("Job #{job.id} failed.")
         Scheduler.Job.Set.delete(job)
         Scheduler.Job.set_failed(job)
     end

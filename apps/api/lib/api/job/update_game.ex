@@ -1,7 +1,10 @@
 defmodule API.Job.UpdateGame do
+  @moduledoc """
+  This module is responsible for carrying out a job to update the
+  game status.
+  """
   require Logger
 
-  # This cold be in a @behaviour
   def schedule(game) do
     execute_at = calculate(game)
     Logger.info("Scheduling #{__MODULE__}, game: #{game.id}")
