@@ -46,7 +46,7 @@ defmodule API.Web.GameController do
     with {:ok, result}   <-
       DB.Repo.transaction(multi)
     do
-      case API.Job.schedule("update_game", result.game) do
+      case API.Job.UpdateGame.schedule(result.game) do
         %Database.Job{} -> {:ok, result.game}
         _ ->
           DB.Game.delete(result.game)

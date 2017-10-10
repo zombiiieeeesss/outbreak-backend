@@ -39,8 +39,6 @@ defmodule API.Web.GameControllerTest do
         |> DB.Repo.preload(:users)
         |> Map.get(:users)
       assert assoc_user.id == user.id
-
-      assert Scheduler.Job.job_count == 1
     end
 
     test "with invalid params", %{conn: conn, token: token} do
