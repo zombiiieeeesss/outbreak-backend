@@ -2,8 +2,8 @@ defmodule Scheduler.Job do
   @moduledoc """
   Module defining job functions
   """
-  use Database
-  require Amnesia.Helper
+  # use Database
+  # require Amnesia.Helper
 
   @doc """
   Creates a new Job. It takes a time to execute (in erlang system
@@ -11,24 +11,27 @@ defmodule Scheduler.Job do
   when the job is run.
   """
   def create(mfa, execute_at) do
-    Amnesia.transaction do
-      %Job{
-        execute_at: execute_at,
-        params: :erlang.term_to_binary(mfa),
-        status: "pending",
-        timestamp: :erlang.system_time(:second)
-      }
-      |> Job.write
-    end
+    DB.Job.create(%{params: :erlang.term_to_binary(mfa), execute_at: execute_at, status: "pending"})
+    # Amnesia.transaction do
+    #   %Job{
+    #     execute_at: execute_at,
+    #     params: :erlang.term_to_binary(mfa),
+    #     status: "pending",
+    #     timestamp: :erlang.system_time(:second)
+    #   }
+    #   |> Job.write
+    # end
   end
 
   @doc """
   Deletes a job by its Key.
   """
   def delete(id) do
-    Amnesia.transaction do
-      Job.delete(id)
-    end
+    DB.Job.delete(id)
+    :ok
+    # Amnesia.transaction do
+    #   Job.delete(id)
+    # end
   end
 
   @doc """
@@ -36,12 +39,13 @@ defmodule Scheduler.Job do
   in the future, which is provided as the argument.
   """
   def fetch(time_into_future) do
-    time = :erlang.system_time(:second) + time_into_future
-
-    Amnesia.transaction do
-      query = Job.where(execute_at < time and status != "failed")
-      Amnesia.Selection.values(query)
-    end
+    DB.Job.fetch(time_into_future)
+    # time = :erlang.system_time(:second) + time_into_future
+    #
+    # Amnesia.transaction do
+    #   query = Job.where(execute_at < time and status != "failed")
+    #   Amnesia.Selection.values(query)
+    # end
   end
 
   @doc """
@@ -50,33 +54,36 @@ defmodule Scheduler.Job do
   can be introspected.
   """
   def set_failed(job) do
-    Amnesia.transaction do
-      %Job{job | status: "failed"} |> Job.write
-    end
+    DB.Job.set_failed(job)
+    # Amnesia.transaction do
+    #   %Job{job | status: "failed"} |> Job.write
+    # end
   end
 
   @doc """
   Gets all the failed Jobs.
   """
   def get_failed_jobs do
-    Amnesia.transaction do
-      query = Job.where(status == "failed")
-      Amnesia.Selection.values(query)
-    end
+    DB.Job.get_failed_jobs()
+    # Amnesia.transaction do
+    #   query = Job.where(status == "failed")
+    #   Amnesia.Selection.values(query)
+    # end
   end
 
   @doc """
   """
-  def clear_failed_jobs do
-    Amnesia.transaction do
-      query = Job.where(status == "failed")
-      query
-      |> Amnesia.Selection.values
-      |> Enum.each(fn job -> Job.delete(job) end)
-    end
-  end
-
+  # def clear_failed_jobs do
+  #   Amnesia.transaction do
+  #     query = Job.where(status == "failed")
+  #     query
+  #     |> Amnesia.Selection.values
+  #     |> Enum.each(fn job -> Job.delete(job) end)
+  #   end
+  # end
+  #
   def job_count do
-    Amnesia.Table.count(Database.Job)
+    DB.Job.job_count()
+    # Amnesia.Table.count(Database.Job)
   end
 end

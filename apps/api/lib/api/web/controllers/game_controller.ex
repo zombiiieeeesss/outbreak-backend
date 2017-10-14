@@ -47,7 +47,7 @@ defmodule API.Web.GameController do
       DB.Repo.transaction(multi)
     do
       case API.Job.UpdateGame.schedule(result.game) do
-        %Database.Job{} -> {:ok, result.game}
+        %DB.Job{} -> {:ok, result.game}
         _ ->
           DB.Game.delete(result.game)
           {:error, 500, ["Job could not be written"]}

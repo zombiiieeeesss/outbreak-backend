@@ -2,6 +2,8 @@
 # and its dependencies with the aid of the Mix.Config module.
 use Mix.Config
 
+config :scheduler, ecto_repos: []
+
 config :scheduler,
   fetch_interval: System.get_env("FETCH_INTERVAL") || "60" |> String.to_integer
 

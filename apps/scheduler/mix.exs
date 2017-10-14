@@ -26,7 +26,8 @@ defmodule Scheduler.Mixfile do
   defp deps do
     [
       {:amnesia, "~> 0.2.7"},
-      {:gen_stage, "~> 0.12.2"}
+      {:gen_stage, "~> 0.12.2"},
+      {:db, in_umbrella: true}
     ]
   end
 end
