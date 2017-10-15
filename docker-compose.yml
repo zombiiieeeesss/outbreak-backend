@@ -1,0 +1,31 @@
+version: "3"
+
+services:
+  web:
+    build: .
+    ports:
+      - "4000:4000"
+    depends_on:
+      - db
+      - redis
+    volumes:
+       - .:/app
+    environment:
+      - GUARDIAN_KEY=cHvvEICoN0azBi61y6np0nC35e9cObFsH3Yio6LbEtFkwCG7qzqo/qFtVJ+TLTsA
+      - DB_USERNAME=postgres
+      - DB_HOSTNAME=db
+      - DB_PORT=5432
+      - DB_NAME=outbreak_backend_dev
+      - MIX_ENV=dev
+      - REPLACE_OS_VARS=true
+      - SCHEME=http
+      - SECRET_KEY_BASE=cHvvEICoN0azBi61y6np0nC35e9cObFsH3Yio6LbEtFkwCG7qzqo/qFtVJ+TLTsA
+      - VERK_REDIS_URL=redis://redis:6379
+  redis:
+    image: redis:3.2
+    ports:
+      - "6379"
+  db:
+    image: postgres:9.6
+    ports:
+      - "5432"
