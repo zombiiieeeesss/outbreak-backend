@@ -33,7 +33,6 @@ defmodule API.Web.ConnCase do
   end
 
   setup _tags do
-    Amnesia.Table.clear(Database.Job)
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(DB.Repo)
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end

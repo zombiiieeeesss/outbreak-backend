@@ -17,6 +17,15 @@ config :api, API.Web.Endpoint,
   pubsub: [name: API.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
+config :verk, queues: [default: 25, priority: 10],
+             max_retry_count: 10,
+             poll_interval: {:system, :integer, "VERK_POLL_INTERVAL", 5000},
+             start_job_log_level: :info,
+             done_job_log_level: :info,
+             fail_job_log_level: :info,
+             node_id: "1",
+             redis_url: {:system, "VERK_REDIS_URL", "redis://127.0.0.1:6379"}
+
 # This app does not have any Repos
 config :api, ecto_repos: []
 

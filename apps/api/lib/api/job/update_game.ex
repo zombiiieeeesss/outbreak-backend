@@ -6,25 +6,22 @@ defmodule API.Job.UpdateGame do
   require Logger
 
   def schedule(game) do
-    execute_at = calculate(game)
-    Logger.info("Scheduling #{__MODULE__}, game: #{game.id}")
-    Scheduler.Job.create({__MODULE__, :run, game}, execute_at)
+    job = %Verk.Job{
+      queue: :default,
+      class: __MODULE__,
+      args: [game.id, %{round: game.round + 1}]
+    }
+
+    Verk.schedule(job, perform_at(game))
   end
 
-  def run(game) do
-    with {:ok, _updated_game} <-
-      DB.Game.update(game, %{round: game.round + 1}),
-    do: :ok
+  def perform(id, attrs) do
+    id
+    |> DB.Game.get
+    |> DB.Game.update(attrs)
   end
 
-  def calculate(game) do
-    epoch =
-      game.start_time
-      |> API.TimeHelper.utc_to_epoch
-    round_in_seconds =
-      game.round_length
-      |> API.TimeHelper.days_to_seconds
-
-    epoch + (game.round * round_in_seconds)
+  def perform_at(game) do
+    Timex.shift(game.start_time, days: game.round_length)
   end
 end

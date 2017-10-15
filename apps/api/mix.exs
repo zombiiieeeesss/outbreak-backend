@@ -20,7 +20,7 @@ defmodule API.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {API.Application, []},
-     extra_applications: [:db, :logger, :guardian, :runtime_tools]]
+     extra_applications: [:db, :logger, :guardian, :runtime_tools, :verk]]
   end
 
   # Specifies which paths to compile per environment.
@@ -40,6 +40,7 @@ defmodule API.Mixfile do
      {:db, in_umbrella: true},
      {:guardian, "~> 0.14"},
      {:credo, "~> 0.8.4"},
-     {:scheduler, in_umbrella: true}]
+     {:timex, "~> 3.1"},
+     {:verk, "~> 1.0"}]
   end
 end
