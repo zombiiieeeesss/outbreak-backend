@@ -3,7 +3,7 @@ defmodule API.Job.UpdateGameTest do
 
   test "updates the game round" do
     game = API.Game.Factory.create_game()
-    API.Job.UpdateGame.run(game)
+    API.Job.UpdateGame.perform(game.id, %{round: game.round + 1})
     updated_game = DB.Game.get(game.id)
     assert updated_game.round == game.round + 1
   end
@@ -16,7 +16,12 @@ defmodule API.Job.UpdateGameTest do
     }
 
     game = API.Game.Factory.create_game(%{round_length: 1, start_time: start_time, round: 1})
-    execute_at = API.Job.UpdateGame.calculate(game)
-    assert execute_at == 1_416_596_299
+    perform_at = API.Job.UpdateGame.perform_at(game)
+    {:ok, datetime} = DateTime.from_unix(1_416_596_299)
+
+    assert perform_at.month == datetime.month
+    assert perform_at.day == datetime.day
+    assert perform_at.minute == datetime.minute
+    assert perform_at.second == datetime.second
   end
 end

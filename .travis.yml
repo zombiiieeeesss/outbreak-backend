@@ -3,7 +3,9 @@ elixir:
   - 1.4.5
 otp_release:
   - 19.1
-sudo: false # to use faster container based build environment
+sudo: false
+services:
+  - redis-server
 notifications:
   slack:
     rooms:
@@ -11,7 +13,6 @@ notifications:
 before_script:
   - mix do compile
   - export PATH=~/.mix:$PATH
-  - mix amnesia.create -d Database --disk
   - mix do ecto.create, ecto.migrate
 addons:
   postgresql: "9.4"
