@@ -29,7 +29,7 @@ defmodule DB.Seed do
     user
   end
 
-  defp create_friend_request(requesting_user_id \\ nil, requested_user_id \\ nil) do
+  defp create_friend_request(requested_user_id \\ nil, requesting_user_id \\ nil) do
     {:ok, fr} = DB.FriendRequest.create(
       requesting_user_id || create_user().id,
       requested_user_id || create_user().id,
@@ -60,7 +60,8 @@ defmodule DB.Seed do
       status: FakerElixir.Helper.pick(~w(pending active complete)),
       title: FakerElixir.Lorem.words,
       owner_id: user_id || create_user().id,
-      round_length: FakerElixir.Number.between(5..50)
+      round_length: FakerElixir.Number.between(5..50),
+      start_time: FakerElixir.Date.forward(2)
     })
 
     # credo:disable-for-next-line
