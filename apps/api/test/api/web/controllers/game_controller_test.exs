@@ -8,6 +8,7 @@ defmodule API.Web.GameControllerTest do
   @game_params %{
     "title" => @title,
     "round_length" => @round_length,
+    "round_limit" => @round_length,
     "start_time" => DateTime.utc_now()
   }
 
@@ -31,6 +32,7 @@ defmodule API.Web.GameControllerTest do
       assert body.status == "qualifying"
       assert body.round == 1
       assert body.round_length == @round_length
+      assert body.round_limit == @round_length
       assert body.owner_id == user.id
 
       [assoc_user] =

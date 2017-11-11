@@ -7,6 +7,7 @@ defmodule DB.GameTest do
     title: "Obi-Wan's Game",
     status: "qualifying",
     round_length: 100,
+    round_limit: 5,
     owner_id: 1,
     start_time: DateTime.utc_now()
   }
@@ -18,6 +19,7 @@ defmodule DB.GameTest do
       assert game.title == @params.title
       assert game.status == @params.status
       assert game.round_length == @params.round_length
+      assert game.round_limit == @params.round_limit
       assert game.owner_id == @params.owner_id
     end
 

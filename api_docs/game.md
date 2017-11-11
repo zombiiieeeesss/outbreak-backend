@@ -15,6 +15,7 @@
     "status": "qualifying",
     "round": 1,
     "round_length": 5,
+    "round_limit": 5,
     "player": {
       "status": "user-pending",
       "id": 1
@@ -39,6 +40,7 @@
 |**Name**|**Type**|**Required**|**Description**|
 | ------------ |--------- | ---------- | ------------- |
 | round_length | integer  | Yes        | Length of the round in days |
+| round_limit | integer  | Yes        | Length of the round in days |
 | start_time   | datetime | Yes        | The start time of the game |
 | title        | string   | No         | Optional name for the game |
 
@@ -48,6 +50,7 @@
 {
   "title": "zombieland",
   "round_length": 5,
+  "round_limit": 5,
   "start_time": "2017-09-28 06:05:00.926573Z"
 }
 ```
@@ -60,6 +63,7 @@
   "status": "pending",
   "round": 1,
   "round_length": 5,
+  "round_limit": 5,
   "player": {
     "status": "user-pending",
     "id": 1

@@ -12,6 +12,7 @@ defmodule DB.Game.Factory do
       title: "Obi-Wan's Game",
       status: "qualifying",
       round_length: 100,
+      round_limit: 5,
       owner_id: DB.User.Factory.create_user().id,
       start_time: DateTime.utc_now()
     }
