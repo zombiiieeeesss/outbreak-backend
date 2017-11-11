@@ -5,6 +5,7 @@ defmodule DB.Game do
   Ecto changesets.
   """
   use Ecto.Schema
+  import Ecto.Query, only: [from: 2]
   import Ecto.Changeset
 
   alias DB.{Game, Player, Repo, User}
@@ -28,6 +29,12 @@ defmodule DB.Game do
   @accepted_statuses ~w(qualifying active complete)
 
   def get(game_id), do: Repo.get(Game, game_id)
+
+  def get_players(game_id) do
+    from(p in Player,
+      where: p.game_id == ^game_id)
+    |> Repo.all
+  end
 
   def list_by_user(user) do
     user
