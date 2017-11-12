@@ -9,16 +9,22 @@ defmodule API.Job.UpdateGame do
     job = %Verk.Job{
       queue: :default,
       class: __MODULE__,
-      args: [game.id, %{round: game.round + 1}]
+      args: [game.id, game.round]
     }
 
     Verk.schedule(job, perform_at(game))
   end
 
-  def perform(id, attrs) do
-    id
-    |> DB.Game.get
-    |> DB.Game.update(attrs)
+  def perform(id, round) do
+    game = DB.Game.get(id)
+
+    if game.round == round do
+      selected_player = API.Lottery.select(id)
+      DB.Repo.transaction fn ->
+        DB.Game.update(game, %{round: (round + 1)})
+        DB.Player.update(selected_player, %{is_human: false})
+      end
+    end
   end
 
   def perform_at(game) do
