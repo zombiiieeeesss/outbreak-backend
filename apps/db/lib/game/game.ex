@@ -31,9 +31,7 @@ defmodule DB.Game do
   def get(game_id), do: Repo.get(Game, game_id)
 
   def get_players(game_id) do
-    from(p in Player,
-      where: p.game_id == ^game_id)
-    |> Repo.all
+    Repo.all(from(p in Player, where: p.game_id == ^game_id))
   end
 
   def list_by_user(user) do

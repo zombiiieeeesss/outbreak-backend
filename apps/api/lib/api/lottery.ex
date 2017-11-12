@@ -24,8 +24,7 @@ defmodule API.Lottery do
   end
 
   defp qualifying_calculation(player, total_steps, number_of_players) do
-    ((1 - (player.stats.distance/total_steps)) * number_of_players)
-    |> round
+    round(((1 - (player.stats.distance / total_steps)) * number_of_players))
   end
 
   defp total_steps(players) do
