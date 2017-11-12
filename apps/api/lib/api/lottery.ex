@@ -18,7 +18,7 @@ defmodule API.Lottery do
     number_of_players = length(players)
     Enum.reduce(players, [], fn(player, acc) ->
       number_of_tickets = qualifying_calculation(player, total_steps, number_of_players)
-      tickets = List.duplicate(player, number_of_tickets)
+      tickets = List.duplicate(player.id, number_of_tickets)
       tickets ++ acc
     end)
   end

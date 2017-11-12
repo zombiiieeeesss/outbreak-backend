@@ -8,7 +8,7 @@ defmodule API.LotteryTest do
       player_two = create_player(%{game_id: game.id, stats: %{distance: 3000}})
       player = API.Lottery.select(game.id)
 
-      assert player == player_one || player == player_two
+      assert player == player_one.id || player == player_two.id
     end
   end
 end
