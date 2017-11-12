@@ -11,6 +11,7 @@ defmodule API.Lottery do
 
     players
     |> build_qualifying_pool(total_steps)
+    |> List.flatten
     |> Enum.random
   end
 
@@ -19,7 +20,7 @@ defmodule API.Lottery do
     Enum.reduce(players, [], fn(player, acc) ->
       number_of_tickets = qualifying_calculation(player, total_steps, number_of_players)
       tickets = List.duplicate(player.id, number_of_tickets)
-      tickets ++ acc
+      [tickets | acc]
     end)
   end
 
