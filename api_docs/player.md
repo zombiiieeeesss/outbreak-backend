@@ -31,6 +31,7 @@
 [
   {
     "game_id": 93,
+    "is_human": true,
     "id": 115,
     "status": "user-pending",
     "user": {
@@ -41,6 +42,7 @@
   },
   {
     "game_id": 93,
+    "is_human": true,
     "id": 116,
     "status": "user-pending",
     "user": {
@@ -85,6 +87,7 @@
 ```json
   {
     "game_id": 93,
+    "is_human": true,
     "id": 115,
     "status": "user-pending",
     "stats": {

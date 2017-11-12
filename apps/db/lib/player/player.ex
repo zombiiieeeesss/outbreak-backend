@@ -13,6 +13,7 @@ defmodule DB.Player do
 
   schema "players" do
     field :status, :string
+    field :is_human, :boolean
 
     embeds_one :stats, Player.Stats
     belongs_to :user, User
@@ -21,7 +22,7 @@ defmodule DB.Player do
     timestamps()
   end
 
-  @fields [:user_id, :game_id, :status]
+  @fields [:user_id, :game_id, :is_human, :status]
   @accepted_statuses ~w(user-pending active)
 
   def create(attrs) do

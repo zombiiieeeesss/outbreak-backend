@@ -57,7 +57,8 @@ defmodule API.Player do
     %{
       user_id: user_id,
       game_id: game_id,
-      status: "user-pending"
+      status: "user-pending",
+      is_human: true
     }
   end
 end
