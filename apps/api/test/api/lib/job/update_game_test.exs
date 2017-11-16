@@ -14,8 +14,8 @@ defmodule API.Job.UpdateGameTest do
 
       assert updated_game.round == game.round + 1
 
-      refute player_one.is_human
-      assert player_two.is_human
+      refute player_one.stats.is_human
+      assert player_two.stats.is_human
     end
 
     test "qualifying round -- it is idempotent" do
@@ -33,8 +33,8 @@ defmodule API.Job.UpdateGameTest do
 
       assert updated_game.round == game.round + 1
 
-      refute player_one.is_human
-      assert player_two.is_human
+      refute player_one.stats.is_human
+      assert player_two.stats.is_human
     end
   end
 
