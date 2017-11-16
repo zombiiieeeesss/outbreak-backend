@@ -9,7 +9,6 @@ defmodule API.Web.PlayerView do
     %{
       id: player.id,
       game_id: player.game_id,
-      is_human: player.is_human,
       user: API.Web.UserView.render_user(player.user),
       stats: player.stats,
       status: player.status,

@@ -6,7 +6,6 @@ defmodule DB.Repo.Migrations.CreatePlayer do
       add :user_id, references(:users, on_delete: :delete_all)
       add :game_id, references(:games, on_delete: :delete_all)
       add :status, :string, null: false
-      add :is_human, :boolean, null: false
       add :stats,  :map
 
       timestamps()

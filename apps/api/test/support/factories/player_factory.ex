@@ -11,7 +11,6 @@ defmodule API.Player.Factory do
     %{
       user_id: DB.User.Factory.create_user().id,
       game_id: DB.Game.Factory.create_game().id,
-      is_human: true,
       status: "user-pending"
     }
   end
