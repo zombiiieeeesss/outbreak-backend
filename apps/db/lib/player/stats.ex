@@ -6,11 +6,13 @@ defmodule DB.Player.Stats do
   import Ecto.Changeset
 
   @primary_key :false
+
   embedded_schema do
     field :distance, :integer
+    field :is_human, :boolean, default: true
   end
 
-  @fields [:distance]
+  @fields [:distance, :is_human]
 
   def changeset(struct, params) do
     struct

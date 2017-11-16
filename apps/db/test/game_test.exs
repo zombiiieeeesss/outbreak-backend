@@ -54,6 +54,17 @@ defmodule DB.GameTest do
     end
   end
 
+  describe "#get_players" do
+    test "with valid params" do
+      game = create_game()
+      player_one = create_player(%{game_id: game.id})
+      player_two = create_player(%{game_id: game.id})
+      players = Game.get_players(game.id)
+      assert player_one in players
+      assert player_two in players
+    end
+  end
+
   describe "#list_by_user" do
     test "given a user struct, returns a list of games for that user" do
       user = create_user()

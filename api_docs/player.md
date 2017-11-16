@@ -43,6 +43,7 @@
     "game_id": 93,
     "id": 116,
     "status": "user-pending",
+    "stats": null,
     "user": {
       "email": "email-3@example.com",
       "id": 728,
@@ -66,7 +67,7 @@
 |**Name**|**Type**|**Required**|**Description**|
 | ------------ |-------- | ---------- | ------------- |
 | player_id | integer  | Yes | ID of the player being updated |
-| player | map | Yes  | Map containing attrs to be updated on existing player |
+| player | map | Yes  | Object containing attrs to be updated on existing player |
 
 **Example Request:**
 
@@ -74,7 +75,8 @@
 {
   "player": {
     "stats": {
-      "distance": 100
+      "is_human": true,
+      "distance": 100,
     }
   }
 }
@@ -88,12 +90,13 @@
     "id": 115,
     "status": "user-pending",
     "stats": {
+      "is_human": true,
       "distance": 100
     },
     "user": {
       "email": "email-2@example.com",
-       "id": 727,
-       "username": "email-2@example.com"
+      "id": 727,
+      "username": "email-2@example.com"
     }
   }
 ```
