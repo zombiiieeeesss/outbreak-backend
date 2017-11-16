@@ -61,6 +61,7 @@ defmodule DB.Seed do
       title: FakerElixir.Lorem.words,
       owner_id: user_id || create_user().id,
       round_length: FakerElixir.Number.between(5..50),
+      round_limit: FakerElixir.Number.between(5..10),
       start_time: DateTime.utc_now
     })
 

@@ -6,6 +6,7 @@ defmodule DB.Repo.Migrations.CreateGame do
       add :status, :string, null: false
       add :round, :integer
       add :round_length, :integer
+      add :round_limit, :integer
       add :owner_id, :integer
       add :title, :string
 
