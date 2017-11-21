@@ -19,7 +19,7 @@ defmodule API.Job.UpdateGame do
     game = DB.Game.get(id)
 
     if game.round == round do
-      selected_player = API.Lottery.select(id)
+      selected_player = API.Lottery.select(id, round)
       DB.Repo.transaction fn ->
         DB.Game.update(game, %{round: (round + 1)})
         DB.Player.update(selected_player, %{stats: %{is_human: false}})
