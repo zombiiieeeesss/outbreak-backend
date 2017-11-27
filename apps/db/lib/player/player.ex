@@ -14,7 +14,7 @@ defmodule DB.Player do
   schema "players" do
     field :status, :string
 
-    embeds_one :stats, Player.Stats
+    embeds_one :stats, Player.Stats, on_replace: :update
     belongs_to :user, User
     belongs_to :game, Game
 
